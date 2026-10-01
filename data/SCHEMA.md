@@ -14,6 +14,7 @@ The file was assembled from, in order:
 2. Findings notes from that research.
 3. The "Family History Notes" Google Sheet (`fhn_oct1.xlsx` plus the `fix_*.csv` / `fix2_*.csv` corrections of 1 Oct 2026).
 4. The Havana Church Records and AI Transcription Tracking tabs. The Bermúdez descendants (Vázquez daughters and their spouses) come from the research memory notes only.
+5. Kyler Rasmussen's FamilySearch Family Tree (read-only capture, 1 Oct 2026). Records attached there count as verified and carry `humanVerified` by "Kyler Rasmussen (FamilySearch tree)". Tree facts with no attached record are `probable` and cite `fs-tree-kyler-2026-10-01`. Conflicts with the image-verified data are kept as open notes; the image-verified readings still win.
 
 Where these conflict, the image-verified readings and the 1 Oct corrections win.
 
@@ -48,7 +49,7 @@ These status and quality values are the research assistant's assessment. They ar
 | `sex` | `M` / `F` |
 | `alsoKnownAs[]` | spelling variants and index forms |
 | `birth`, `death` | `{date, place, quality, sourceIds[], details?}`. Birth may be a baptism (see details) |
-| `events[]` | `{type, date, place, quality, sourceIds[], details}`. Types used: residence, occupation, military, arrest, burial, office |
+| `events[]` | `{type, date, place, quality, sourceIds[], details}`. Types used: residence, occupation, military, arrest, burial, office, immigration, social security application |
 | `parents[]` | person ids (husband and wife of the family listing this person as a child) |
 | `parentLinks[]` | `{id, status, familyId}`: how certain each parent link is. The tree draws a solid line for `verified`, dashed for `probable`, and dotted for `proposed`. |
 | `spouses[]` | person ids |
