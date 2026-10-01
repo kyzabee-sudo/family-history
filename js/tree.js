@@ -251,16 +251,18 @@ export function layoutTree(model, focusId, options = {}) {
       centerX = (left + right) / 2;
       topY = Math.min(focus.y, spouseNode.y);
     }
-    placeAncestors(focusId, centerX, topY, new Set([focusId]));
+    const ancestorGens = String(depth) === 'all' ? 12 : Math.max(0, Number(depth) || 2);
+    if (ancestorGens > 0) placeAncestors(focusId, centerX, topY, new Set([focusId]), ancestorGens);
   }
 
-  function pedWidth(id, seen) {
+  function pedWidth(id, seen, remaining) {
+    if (remaining <= 1) return CARD_W;
     const parents = orderedParents(id, seen);
     if (!parents.length) return CARD_W;
-    if (parents.length === 1) return Math.max(CARD_W, pedWidth(parents[0], new Set([...seen, id])));
+    if (parents.length === 1) return Math.max(CARD_W, pedWidth(parents[0], new Set([...seen, id]), remaining - 1));
     return Math.max(
       CARD_W,
-      pedWidth(parents[0], new Set([...seen, id])) + SIB_GAP + pedWidth(parents[1], new Set([...seen, id])),
+      pedWidth(parents[0], new Set([...seen, id]), remaining - 1) + SIB_GAP + pedWidth(parents[1], new Set([...seen, id]), remaining - 1),
     );
   }
 
@@ -272,11 +274,12 @@ export function layoutTree(model, focusId, options = {}) {
     return ids;
   }
 
-  function placeAncestors(childId, centerX, cardTop, seen) {
+  function placeAncestors(childId, centerX, cardTop, seen, remaining) {
+    if (remaining <= 0) return;
     const parents = orderedParents(childId, seen);
     if (!parents.length) return;
     const nextSeen = new Set([...seen, childId]);
-    const widths = parents.map((pid) => pedWidth(pid, nextSeen));
+    const widths = parents.map((pid) => pedWidth(pid, nextSeen, remaining));
     const total = widths.reduce((sum, width) => sum + width, 0) + (parents.length === 2 ? SIB_GAP : 0);
     let cursor = centerX - total / 2;
     const y = cardTop - GEN_GAP - CARD_H;
@@ -286,7 +289,7 @@ export function layoutTree(model, focusId, options = {}) {
       const cardX = cursor + (width - CARD_W) / 2;
       addNode({ id: pid, x: cardX, y, tier: 'anc' });
       placed.push({ id: pid, x: cardX, mid: cardX + CARD_W / 2 });
-      placeAncestors(pid, cardX + CARD_W / 2, y, nextSeen);
+      placeAncestors(pid, cardX + CARD_W / 2, y, nextSeen, remaining - 1);
       cursor += width + (index === 0 && parents.length === 2 ? SIB_GAP : 0);
     });
     if (placed.length === 2) {
@@ -418,9 +421,14 @@ function nodeMarkup(node, person, { selected, focus }) {
     <g class="${classes.join(' ')}" data-id="${xml(node.id)}" transform="translate(${node.x} ${node.y})" tabindex="0" role="button">
       <title>${xml(personName(person))}</title>
       <rect class="card" width="${CARD_W}" height="${CARD_H}" rx="10" stroke="${color}"></rect>
-      <text class="given" x="12" y="28">${xml(clip(person.given, 20))}</text>
-      <text class="surnames" x="12" y="46">${xml(clip(person.surnames || '—', 22))}</text>
-      <text class="meta" x="12" y="66">${xml(clip(cardMeta(person), 26))}</text>
+      <text class="given" x="12" y="28">${xml(clip(person.given, 16))}</text>
+      <text class="surnames" x="12" y="46">${xml(clip(person.surnames || '—', 16))}</text>
+      <text class="meta" x="12" y="66">${xml(clip(cardMeta(person), 22))}</text>
+      <g class="set-root" data-id="${xml(node.id)}" transform="translate(148 6)" tabindex="0" role="button" aria-label="Set as root">
+        <title>Set as root</title>
+        <rect width="22" height="22" rx="6"></rect>
+        <path d="M6 15.5h10M11 15.5V7.5M8 10.2l3-3 3 3"></path>
+      </g>
     </g>`;
 }
 
@@ -472,9 +480,8 @@ export function mountTree(container, model, state, hooks) {
       forcedClosed: state.forcedClosed,
     });
     const caption = hud.querySelector('.tree-caption');
-    const extra = layout.shown < layout.total ? ` of ${layout.total} in this tree` : '';
-    const anc = state.ancestors ? ' Ancestors are included.' : '';
-    caption.textContent = `${layout.generations} generations · ${layout.shown} people shown${extra}.${anc} Solid verified, dashed probable, dotted proposed.`;
+    const anc = state.ancestors ? `${state.depth} generations of ancestors` : `${state.depth} generations`;
+    caption.textContent = `${layout.shown} people shown. ${anc}.`;
     paintWorld();
   }
 
@@ -548,7 +555,7 @@ export function mountTree(container, model, state, hooks) {
     if (event.button != null && event.button !== 0) return;
     svg.setPointerCapture?.(event.pointerId);
     pointers.set(event.pointerId, pointerPoint(event));
-    const interactive = event.target.closest?.('.node, .expander');
+    const interactive = event.target.closest?.('.set-root, .expander, .node');
     drag = {
       x: event.clientX,
       y: event.clientY,
@@ -601,16 +608,12 @@ export function mountTree(container, model, state, hooks) {
       return;
     }
     if (!drag.moved && drag.interactive) {
-      const expander = drag.interactive.closest?.('.expander') || (drag.interactive.classList?.contains('expander') ? drag.interactive : null);
+      const setRoot = drag.interactive.closest?.('.set-root');
+      const expander = drag.interactive.closest?.('.expander');
       const node = drag.interactive.closest?.('.node');
-      if (expander) hooks.onExpand?.(expander.getAttribute('data-id'));
-      else if (node) {
-        selectedId = node.getAttribute('data-id');
-        svg.querySelectorAll('.node').forEach((el) => {
-          el.classList.toggle('is-selected', el.getAttribute('data-id') === selectedId);
-        });
-        hooks.onSelect?.(selectedId);
-      }
+      if (setRoot) hooks.onSetRoot?.(setRoot.getAttribute('data-id'));
+      else if (expander) hooks.onExpand?.(expander.getAttribute('data-id'));
+      else if (node) hooks.onOpen?.(node.getAttribute('data-id'));
     }
     drag = null;
   }
@@ -622,16 +625,13 @@ export function mountTree(container, model, state, hooks) {
   }
 
   function onKey(event) {
-    const node = event.target.closest?.('.node, .expander');
+    const node = event.target.closest?.('.set-root, .expander, .node');
     if (!node) return;
     if (event.key !== 'Enter' && event.key !== ' ') return;
     event.preventDefault();
-    if (node.classList.contains('expander')) hooks.onExpand?.(node.getAttribute('data-id'));
-    else {
-      selectedId = node.getAttribute('data-id');
-      paintWorld();
-      hooks.onSelect?.(selectedId);
-    }
+    if (node.classList.contains('set-root')) hooks.onSetRoot?.(node.getAttribute('data-id'));
+    else if (node.classList.contains('expander')) hooks.onExpand?.(node.getAttribute('data-id'));
+    else hooks.onOpen?.(node.getAttribute('data-id'));
   }
 
   function onHudClick(event) {

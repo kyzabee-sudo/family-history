@@ -2,9 +2,9 @@
 
 Static dashboard for the Valdés, Nieto, Uría, Sánchez, Menéndez and Rodríguez research (Cenero / Porceyo / Gijón) and the Havana Bermúdez line. The site reads [`data/data.json`](data/data.json) in the browser. There are no per-person pages to edit.
 
-After GitHub Pages is enabled, the site is published at <https://kyzabee-sudo.github.io/family-history/>.
+The site is published at <https://kyzabee-sudo.github.io/family-history/>. Pushes to `main` are deployed by [`.github/workflows/pages.yml`](.github/workflows/pages.yml) (Pages source: GitHub Actions).
 
-**Pages setting:** Settings → Pages → Build and deployment → Source: **GitHub Actions**. The workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml) validates the data, then deploys on every push to `main`.
+The default tree is Juan Valdés (`juan-valdes-grandfather`), Kyler Rasmussen's grandfather. He is the child in `fam-juan-antonio-valdes-nieto` (father Juan Antonio Valdés Nieto, mother unknown). That relationship is family knowledge (`probable`), not yet checked against a record. Family pages are `#/families` and `#/family/<id>`.
 
 ## Update the data
 

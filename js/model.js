@@ -1,9 +1,10 @@
 /** Pure helpers and the in-memory index over data.json. */
 
-export const DEFAULT_ROOT = 'juan-de-valdes-fl1773';
+export const DEFAULT_ROOT = 'juan-valdes-grandfather';
+export const DEFAULT_DEPTH = 2;
 
 export const LINE_ROOTS = [
-  ['Valdés', 'juan-de-valdes-fl1773'],
+  ['Valdés', 'juan-valdes-grandfather'],
   ['Sánchez', 'francisco-sanchez-fl1780'],
   ['Menéndez', 'manuel-menendez-tuya-fl1787'],
   ['Nieto', 'jose-nieto-fl1798'],
@@ -80,6 +81,18 @@ export function lifeSpan(person) {
   return `d. ${death}`;
 }
 
+/** Birth place, otherwise a baptism parish or event place. Empty when neither is recorded. */
+export function birthplace(person) {
+  const direct = String(person?.birth?.place || '').trim();
+  if (direct) return direct;
+  const events = person?.events || [];
+  const baptism = events.find((event) => {
+    const kind = `${event.type || ''} ${event.details || ''}`;
+    return /baptis|bautiz/i.test(kind) && String(event.place || '').trim();
+  });
+  return String(baptism?.place || '').trim();
+}
+
 export function noteFallbackId(personId, index) {
   return `${personId}-n${index}`;
 }
@@ -102,6 +115,8 @@ export function buildIndex(data) {
   const peopleById = Object.fromEntries(data.people.map((p) => [p.id, p]));
   const familiesById = Object.fromEntries(data.families.map((f) => [f.id, f]));
   const sourcesById = Object.fromEntries(data.sources.map((s) => [s.id, s]));
+  const sourcesByLower = Object.fromEntries(data.sources.map((s) => [s.id.toLowerCase(), s]));
+  const familiesByLower = Object.fromEntries(data.families.map((f) => [f.id.toLowerCase(), f]));
   const leadsByPerson = new Map();
   for (const lead of data.researchLeads) {
     for (const id of lead.personIds || []) {
@@ -121,6 +136,8 @@ export function buildIndex(data) {
     peopleById,
     familiesById,
     sourcesById,
+    sourcesByLower,
+    familiesByLower,
     notesById,
     leadsByPerson,
     excludedByPerson,
