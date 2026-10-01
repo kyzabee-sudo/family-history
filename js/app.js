@@ -1,6 +1,9 @@
 import {
+  DEFAULT_DEPTH,
   DEFAULT_ROOT,
   LINE_ROOTS,
+  birthplace,
+  dateSortKey,
   esc,
   fold,
   lifeSpan,
@@ -30,6 +33,9 @@ import {
   verifierName,
 } from './verify.js';
 
+const SITE = 'Valdés Family History';
+const MAX_GEN = 8;
+const QUEUE_CAP = 16;
 const HUMAN_ICON = `<svg class="ico" viewBox="0 0 20 20" aria-hidden="true"><circle cx="7.2" cy="6.2" r="2.7" fill="currentColor"></circle><path d="M2.2 15.2c.5-2.4 2.5-3.7 5-3.7s4.5 1.3 5 3.7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path><path d="M12.6 8.4l1.5 1.5 3.2-3.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>`;
 
 let INDEX = null;
@@ -40,8 +46,10 @@ const ui = {
   onlyUnattached: false,
   openVerify: null,
   peopleLine: 'all',
+  peopleSort: { key: 'name', dir: 1 },
   sourceType: 'all',
   sourceVerify: 'all',
+  familiesQuery: '',
 };
 const treeState = { forcedOpen: new Set(), forcedClosed: new Set() };
 let treeHandle = null;
@@ -54,6 +62,10 @@ function cap(value) {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
+function dash(value) {
+  return value ? esc(value) : '—';
+}
+
 function statusBadge(status) {
   const value = status || 'unknown';
   return `<span class="badge ${esc(value)}">${esc(cap(value))}</span>`;
@@ -63,7 +75,7 @@ function humanBadge(verification) {
   if (!verification) return '';
   const bits = ['Human-verified', verification.date, verification.by].filter(Boolean);
   const title = verification.comment ? ` title="${esc(verification.comment)}"` : '';
-  const pending = verification.origin === 'local' ? '<span class="pending-flag">pending commit</span>' : '';
+  const pending = verification.origin === 'local' ? '<span class="pending-flag">saved here</span>' : '';
   return `<span class="badge human"${title}>${HUMAN_ICON}<span>${esc(bits.join(' · '))}</span></span>${pending}`;
 }
 
@@ -86,12 +98,68 @@ function sourceHref(id) {
   return `#/source/${encodeURIComponent(id)}`;
 }
 
-function treeHref(id, { depth = '3', ancestors = false } = {}) {
+function familyHref(id) {
+  return `#/family/${encodeURIComponent(id)}`;
+}
+
+function findSource(id) {
+  if (!id || !INDEX) return null;
+  return INDEX.sourcesById[id] || INDEX.sourcesByLower[String(id).toLowerCase()] || null;
+}
+
+function findFamily(id) {
+  if (!id || !INDEX) return null;
+  return INDEX.familiesById[id] || INDEX.familiesByLower[String(id).toLowerCase()] || null;
+}
+
+function familyLabel(family) {
+  const husband = personName(INDEX.peopleById[family.husband]);
+  const wife = family.wife ? personName(INDEX.peopleById[family.wife]) : 'wife unknown';
+  return `${husband} and ${wife}`;
+}
+
+function familyLink(id, label = 'Family') {
+  const family = findFamily(id);
+  if (!family) return '';
+  return `<a href="${familyHref(family.id)}">${esc(label)}</a>`;
+}
+
+function linkify(text) {
+  return String(text ?? '').split(/(fam-[A-Za-z0-9-]+)/).map((part) => {
+    if (/^fam-[A-Za-z0-9-]+$/i.test(part)) {
+      const family = findFamily(part);
+      if (family) return `<a href="${familyHref(family.id)}">${esc(part)}</a>`;
+    }
+    return esc(part);
+  }).join('');
+}
+
+function crumbs(items) {
+  const lis = items.map((item, index) => {
+    if (index === items.length - 1 || !item[0]) return `<li aria-current="page">${esc(item[1])}</li>`;
+    return `<li><a href="${item[0]}">${esc(item[1])}</a></li>`;
+  }).join('');
+  return `<nav class="crumbs" aria-label="Breadcrumb"><ol>${lis}</ol></nav>`;
+}
+
+function treeHref(id, { depth = String(DEFAULT_DEPTH), ancestors = true } = {}) {
   const params = new URLSearchParams();
-  if (depth && String(depth) !== '3') params.set('depth', String(depth));
-  if (ancestors) params.set('ancestors', '1');
+  if (String(depth) !== String(DEFAULT_DEPTH)) params.set('depth', String(depth));
+  if (!ancestors) params.set('ancestors', '0');
   const query = params.toString();
   return `#/tree/${encodeURIComponent(id)}${query ? `?${query}` : ''}`;
+}
+
+function treeDepth() {
+  const raw = current.params.get('depth') || String(DEFAULT_DEPTH);
+  if (raw === 'all') return String(MAX_GEN);
+  const number = Number(raw);
+  if (!Number.isFinite(number)) return String(DEFAULT_DEPTH);
+  return String(Math.min(MAX_GEN, Math.max(1, Math.round(number))));
+}
+
+function treeAncestors() {
+  return current.params.get('ancestors') !== '0';
 }
 
 function setLive(message) {
@@ -120,7 +188,7 @@ async function copyText(text, button) {
       button.textContent = previous;
     }, 1400);
   }
-  setLive('Copied to clipboard');
+  setLive('Copied');
 }
 
 function verifyControls(kind, id, record) {
@@ -143,14 +211,14 @@ function verifyControls(kind, id, record) {
     </form>`;
 }
 
-function filterButtons(action, current) {
+function filterButtons(action, currentFilter) {
   const options = [
     ['all', 'All'],
     ['verified', 'Human-verified'],
     ['unverified', 'Not yet verified'],
   ];
   return `<div class="segment" role="group" aria-label="Human verification filter">${options.map(([key, label]) => `
-    <button type="button" class="${current === key ? 'is-on' : ''}" aria-pressed="${current === key}" data-action="${action}" data-filter="${key}">${label}</button>`).join('')}</div>`;
+    <button type="button" class="${currentFilter === key ? 'is-on' : ''}" aria-pressed="${currentFilter === key}" data-action="${action}" data-filter="${key}">${label}</button>`).join('')}</div>`;
 }
 
 function bindThumbs(root) {
@@ -172,7 +240,38 @@ function bindThumbs(root) {
   });
 }
 
-function sourceCard(source, { personId = null, candidate = false } = {}) {
+function bindCarousels(root) {
+  const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  root.querySelectorAll('[data-carousel]').forEach((carousel) => {
+    const track = carousel.querySelector('.carousel-track');
+    const scrollByDir = (dir) => {
+      const amount = Math.max(220, track.clientWidth * 0.85) * dir;
+      track.scrollBy({ left: amount, behavior: reduce ? 'auto' : 'smooth' });
+    };
+    carousel.querySelectorAll('[data-carousel-dir]').forEach((button) => {
+      button.addEventListener('click', () => scrollByDir(Number(button.dataset.carouselDir)));
+    });
+    track.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        scrollByDir(1);
+      }
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        scrollByDir(-1);
+      }
+    });
+  });
+}
+
+function sourceTitleHtml(source) {
+  if (source.url) {
+    return `<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title)}</a>`;
+  }
+  return `<a href="${sourceHref(source.id)}">${esc(source.title)}</a>`;
+}
+
+function sourceCard(source, { personId = null, candidate = false, onDetail = false } = {}) {
   const people = (source.personIds || []).map((id) => personLink(id)).join(', ') || '<span class="muted">None</span>';
   const image = source.imageUrl || source.thumbUrl || '';
   const thumb = source.thumbUrl || source.imageUrl || '';
@@ -181,15 +280,12 @@ function sourceCard(source, { personId = null, candidate = false } = {}) {
         <img class="thumb" src="${esc(thumb)}" alt="Thumbnail of ${esc(source.title)}" data-full="${esc(image || thumb)}" loading="lazy" decoding="async">
       </a>`
     : '<p class="thumb-fallback">No record image linked.</p>';
-  const urlButtons = source.url
-    ? `<a class="btn btn-small" href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">Archive record</a>
-       <button type="button" class="btn btn-small btn-ghost" data-action="copy" data-copy="url" data-source="${esc(source.id)}">Copy URL</button>`
-    : '<span class="muted">No archive URL</span>';
+  const urlButton = source.url
+    ? `<button type="button" class="btn btn-small btn-ghost" data-action="copy" data-copy="url" data-source="${esc(source.id)}">Copy URL</button>`
+    : '';
+  const details = onDetail ? '' : `<a class="btn btn-small" href="${sourceHref(source.id)}">Details</a>`;
   const alts = (source.altUrls || []).map((url, index) =>
     `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Alternate link ${index + 1}</a>`).join(' · ');
-  const derived = source.urlDerived
-    ? '<p class="warn">This URL was derived from the folder pattern, not copied verbatim. Check it before attaching.</p>'
-    : '';
   const checklist = personId
     ? `<label class="check"><input type="checkbox" data-action="fs" data-person="${esc(personId)}" data-source="${esc(source.id)}" ${isAttached(personId, source.id) ? 'checked' : ''}> Added on FamilySearch</label>`
     : '';
@@ -199,17 +295,17 @@ function sourceCard(source, { personId = null, candidate = false } = {}) {
       <div class="source-body">
         ${candidateNote}
         <p class="kicker">${esc(source.type || 'Source')} · ${esc(source.id)}</p>
-        <h3><a href="${sourceHref(source.id)}">${esc(source.title)}</a></h3>
+        <h3>${sourceTitleHtml(source)}</h3>
         <p class="meta-line">${esc([source.date, source.place, source.repository].filter(Boolean).join(' · '))}</p>
         <div class="badge-row">${humanBadge(effectiveVerification(source, 'source', source.id))}</div>
         <div class="verify-slot">${verifyControls('source', source.id, source)}</div>
-        ${derived}
         <h4>Transcription</h4>
         <p class="transcription">${esc(source.transcription || 'No transcription')}</p>
         <div class="btn-row">
           <button type="button" class="btn btn-small btn-primary" data-action="copy" data-copy="citation" data-source="${esc(source.id)}">Copy citation</button>
           <button type="button" class="btn btn-small" data-action="copy" data-copy="title" data-source="${esc(source.id)}">Copy title</button>
-          ${urlButtons}
+          ${urlButton}
+          ${details}
         </div>
         ${alts ? `<p class="meta-line">${alts}</p>` : ''}
         <p class="meta-line"><span class="muted">People:</span> ${people}</p>
@@ -220,7 +316,11 @@ function sourceCard(source, { personId = null, candidate = false } = {}) {
 }
 
 function noteArticle(person, note) {
-  const sources = (note.sourceIds || []).map((id) => `<a href="${sourceHref(id)}">${esc(INDEX.sourcesById[id]?.id || id)}</a>`).join(', ');
+  const sources = (note.sourceIds || []).map((id) => {
+    const source = findSource(id);
+    const label = source?.id || id;
+    return `<a href="${sourceHref(source?.id || id)}">${esc(label)}</a>`;
+  }).join(', ');
   return `
     <article class="note" id="note-${esc(note.id)}">
       <header class="note-head">
@@ -229,7 +329,7 @@ function noteArticle(person, note) {
         ${humanBadge(effectiveVerification(note, 'note', note.id))}
         ${verifyControls('note', note.id, note)}
       </header>
-      <p>${esc(note.text)}</p>
+      <p>${linkify(note.text)}</p>
       ${sources ? `<p class="meta-line"><span class="muted">Sources:</span> ${sources}</p>` : ''}
     </article>`;
 }
@@ -243,7 +343,11 @@ function notesHtml(person) {
 function fsProgressHtml(person) {
   const { confirmed } = sourcesForPerson(INDEX, person.id);
   const attached = confirmed.filter((source) => isAttached(person.id, source.id)).length;
-  return `Added on FamilySearch: ${attached} of ${confirmed.length}. The ticks stay in this browser.`;
+  return `Checked off: ${attached} of ${confirmed.length}.`;
+}
+
+function unattachedLabel() {
+  return ui.onlyUnattached ? 'Showing records not checked off' : 'Show records not checked off';
 }
 
 function personSourcesHtml(person) {
@@ -262,7 +366,7 @@ function personSourcesHtml(person) {
 
 function familyHtml(person) {
   const parentBits = (person.parentLinks || []).map((link) =>
-    `<div class="rel">${personLink(link.id)} ${statusBadge(link.status)}</div>`);
+    `<div class="rel">${personLink(link.id)} ${statusBadge(link.status)} ${familyLink(link.familyId)}</div>`);
   const parents = parentBits.length ? parentBits.join('') : '<p class="muted">None recorded</p>';
   const spouseBits = (person.spouses || []).map((id) => {
     const family = INDEX.data.families.find((item) =>
@@ -271,13 +375,15 @@ function familyHtml(person) {
     const when = marriage && (marriage.date || marriage.place)
       ? `<p class="meta-line">${esc([marriage.date, marriage.place].filter(Boolean).join(' · '))} ${statusBadge(marriage.quality)}</p>`
       : '';
-    const notes = (family?.notes || []).map((note) => `<p class="family-note">${esc(note)}</p>`).join('');
-    return `<div class="rel">${personLink(id)} ${family ? statusBadge(family.coupleStatus) : ''}${when}${notes}</div>`;
+    const notes = (family?.notes || []).map((note) => `<p class="family-note">${linkify(note)}</p>`).join('');
+    return `<div class="rel">${personLink(id)} ${family ? statusBadge(family.coupleStatus) : ''} ${family ? familyLink(family.id) : ''}${when}${notes}</div>`;
   });
   const spouses = spouseBits.length ? spouseBits.join('') : '<p class="muted">None recorded</p>';
   const childItems = [];
+  const familyLinks = [];
   for (const family of INDEX.data.families) {
     if (family.husband !== person.id && family.wife !== person.id) continue;
+    familyLinks.push(familyLink(family.id));
     for (const childId of family.children || []) {
       const link = (family.childLinks || []).find((item) => item.id === childId);
       const child = INDEX.peopleById[childId];
@@ -296,6 +402,7 @@ function familyHtml(person) {
     </section>
     <section>
       <h2>Children</h2>
+      ${familyLinks.length ? `<p class="meta-line">${familyLinks.join(' · ')}</p>` : ''}
       ${children}
     </section>`;
 }
@@ -365,16 +472,16 @@ function renderPerson(id) {
     : '';
   return `
     <article class="wrap person-page">
-      <p class="kicker"><a href="#/people">People</a> · ${esc(person.line || '')}</p>
+      ${crumbs([['#/', 'Home'], ['#/people', 'People'], [null, personName(person)]])}
       <header class="person-head">
         <div>
           <h1>${esc(personName(person))}</h1>
           ${aka}
-          <p class="badge-row">${esc(person.sex === 'F' ? 'Female' : 'Male')} ${livingBadge(person)} <span class="muted">${esc(person.id)}</span></p>
+          <p class="badge-row">${esc(person.sex === 'F' ? 'Female' : 'Male')} ${livingBadge(person)} <span class="muted">${esc(person.line || '')}</span></p>
         </div>
         <div class="btn-row">
           ${pid}
-          <a class="btn btn-small btn-primary" href="${treeHref(person.id, { ancestors: true, depth: currentTreeDepth() })}">Show in tree</a>
+          <a class="btn btn-small btn-primary" href="${treeHref(person.id, { ancestors: true, depth: treeDepth() })}">Show in tree</a>
         </div>
       </header>
       <div class="person-layout">
@@ -398,7 +505,7 @@ function renderPerson(id) {
               <h2>Research notes</h2>
               <div id="person-filter">${filterButtons('person-verify', ui.verifyFilter)}</div>
             </div>
-            <p class="hint">This filter applies to notes and sources. Coloured status is the research assessment. Human-verified is a separate mark, stored in this browser until it is committed to data.json.</p>
+            <p class="hint">This filter applies to notes and sources. The coloured label is how sure the research is. Human-verified is a separate check.</p>
             <div id="notes-mount">${notesHtml(person)}</div>
             <h2>Research leads</h2>
             ${leadsHtml(person.id)}
@@ -408,7 +515,7 @@ function renderPerson(id) {
         <section class="panel person-sources">
           <div class="section-head">
             <h2>Sources</h2>
-            <button type="button" class="btn btn-small ${ui.onlyUnattached ? 'btn-primary' : ''}" data-action="toggle-unattached">${ui.onlyUnattached ? 'Showing sources not yet attached' : 'Show sources not yet attached'}</button>
+            <button type="button" class="btn btn-small ${ui.onlyUnattached ? 'btn-primary' : ''}" data-action="toggle-unattached">${unattachedLabel()}</button>
           </div>
           <p class="hint" id="fs-progress">${fsProgressHtml(person)}</p>
           <div id="sources-mount">${personSourcesHtml(person)}</div>
@@ -417,17 +524,13 @@ function renderPerson(id) {
     </article>`;
 }
 
-function currentTreeDepth() {
-  return current.params?.get?.('depth') || '3';
-}
-
 function searchResultsHtml(query) {
   const result = searchAll(INDEX, query);
   if (!fold(query).trim()) return '';
   const people = result.people.map((person) => `
     <li><a href="${personHref(person.id)}"><strong>${esc(personName(person))}</strong> <span class="muted">${esc(lifeSpan(person))} · ${esc(person.line || '')}</span></a></li>`).join('');
   const sources = result.sources.map((source) => `
-    <li><a href="${sourceHref(source.id)}"><strong>${esc(source.title)}</strong> <span class="muted">${esc(source.date || source.type || '')}</span></a></li>`).join('');
+    <li><a href="${source.url ? esc(source.url) : sourceHref(source.id)}" ${source.url ? 'target="_blank" rel="noopener noreferrer"' : ''}><strong>${esc(source.title)}</strong> <span class="muted">${esc(source.date || source.type || '')}</span></a></li>`).join('');
   return `
     <div class="split">
       <section>
@@ -444,45 +547,115 @@ function searchResultsHtml(query) {
 
 function pendingPanel() {
   const entries = pendingEntries(INDEX);
-  const rows = entries.map((entry) => `
+  const rows = entries.map((entry) => {
+    const noteRow = entry.kind === 'note' ? INDEX.notesById.get(entry.id) : null;
+    const href = noteRow
+      ? `${personHref(noteRow.person.id)}?note=${encodeURIComponent(entry.id)}`
+      : sourceHref(findSource(entry.id)?.id || entry.id);
+    return `
     <li>
       <strong>${entry.kind === 'note' ? 'Note' : 'Source'}</strong>
-      <code>${esc(entry.id)}</code>
-      <span class="muted">${esc(entry.label)}</span>
+      <a href="${href}">${esc(entry.label || entry.id)}</a>
       <span>${esc(entry.by)} · ${esc(entry.date)}${entry.comment ? ` · ${esc(entry.comment)}` : ''}</span>
       <button type="button" class="btn btn-small btn-ghost" data-action="clear-verify" data-kind="${esc(entry.kind)}" data-id="${esc(entry.id)}">Remove</button>
-    </li>`).join('');
+    </li>`;
+  }).join('');
   return `
     <section class="panel pending-panel" id="pending-panel">
       <div class="section-head">
-        <h2>Pending verifications <span class="muted">${entries.length}</span></h2>
+        <h2>Saved checks <span class="muted">${entries.length}</span></h2>
         <div class="btn-row">
-          <button type="button" class="btn btn-small btn-primary" data-action="open-issue" ${entries.length ? '' : 'disabled'}>Open GitHub issue</button>
-          <button type="button" class="btn btn-small" data-action="copy-json" ${entries.length ? '' : 'disabled'}>Copy JSON</button>
+          <button type="button" class="btn btn-small btn-primary" data-action="open-issue" ${entries.length ? '' : 'disabled'}>Send these checks</button>
+          <button type="button" class="btn btn-small" data-action="copy-json" ${entries.length ? '' : 'disabled'}>Copy list</button>
         </div>
       </div>
-      <p class="hint">Marks live in this browser. The issue asks the research assistant to write <code>humanVerified</code> into data.json. After that commit, the saved field replaces the browser mark.</p>
-      ${entries.length ? `<ul class="pending-list">${rows}</ul>` : '<p class="empty">No pending marks.</p>'}
+      <p class="hint">These checks are saved on this computer. Send them so they can be added to the family record.</p>
+      ${entries.length ? `<ul class="pending-list">${rows}</ul>` : '<p class="empty">No saved checks.</p>'}
     </section>`;
+}
+
+function noteCard(note, person) {
+  return `
+    <article class="note carousel-card">
+      <p class="kicker">${esc(note.date)} · ${esc(cap(note.status))}</p>
+      <h3><a href="${personHref(person.id)}?note=${encodeURIComponent(note.id)}">${esc(personName(person))}</a></h3>
+      ${humanBadge(effectiveVerification(note, 'note', note.id))}
+      <p class="clamp">${linkify(note.text)}</p>
+    </article>`;
+}
+
+function leadCard(lead) {
+  const personId = (lead.personIds || [])[0];
+  const href = personId ? personHref(personId) : '#/leads';
+  return `
+    <article class="lead carousel-card">
+      <p class="kicker">${esc(cap(lead.status || 'open'))}</p>
+      <h3><a href="${href}">${esc(lead.title)}</a></h3>
+      <p class="clamp">${esc(lead.detail)}</p>
+    </article>`;
+}
+
+function sourceQueueCard(source) {
+  return `
+    <article class="note carousel-card">
+      <p class="kicker">Source${source.type ? ` · ${esc(source.type)}` : ''}</p>
+      <h3>${sourceTitleHtml(source)}</h3>
+      <p class="clamp">${esc([source.date, source.place].filter(Boolean).join(' · '))}</p>
+      <p><a href="${sourceHref(source.id)}">Details</a></p>
+    </article>`;
+}
+
+function carouselHtml(id, title, viewHref, cards, empty) {
+  return `
+    <section class="band panel" id="${id}">
+      <div class="section-head">
+        <h2>${esc(title)}</h2>
+        <a class="more" href="${viewHref}">View all →</a>
+      </div>
+      <div class="carousel" data-carousel>
+        <button type="button" class="carousel-btn" data-carousel-dir="-1" aria-label="Scroll ${esc(title)} backward">‹</button>
+        <div class="carousel-track" tabindex="0" aria-label="${esc(title)}">
+          ${cards || `<p class="empty">${esc(empty)}</p>`}
+        </div>
+        <button type="button" class="carousel-btn" data-carousel-dir="1" aria-label="Scroll ${esc(title)} forward">›</button>
+      </div>
+    </section>`;
+}
+
+function allNotes() {
+  const rows = [];
+  for (const { note, person } of INDEX.notesById.values()) rows.push({ note, person });
+  rows.sort((a, b) => (b.note.date || '').localeCompare(a.note.date || '') || personName(a.person).localeCompare(personName(b.person)));
+  return rows;
+}
+
+function unverifiedNotes() {
+  return allNotes().filter(({ note }) => !effectiveVerification(note, 'note', note.id));
+}
+
+function unverifiedSources() {
+  return INDEX.data.sources.filter((source) => !effectiveVerification(source, 'source', source.id));
+}
+
+function verificationQueue(limit = QUEUE_CAP) {
+  const notes = unverifiedNotes();
+  const sources = unverifiedSources();
+  const sourceSlots = notes.length && sources.length ? Math.min(4, sources.length, Math.max(0, limit - 8)) : Math.min(sources.length, limit);
+  const noteSlots = Math.min(notes.length, limit - (notes.length && sources.length ? sourceSlots : 0));
+  return {
+    notes: notes.slice(0, noteSlots),
+    sources: sources.slice(0, limit - noteSlots),
+  };
 }
 
 function renderHome() {
   const { data } = INDEX;
   const counts = verificationCounts(INDEX);
-  const notes = recentNotes(INDEX, 8).map(({ note, person }) => `
-    <li>
-      <a href="${personHref(person.id)}?note=${encodeURIComponent(note.id)}"><strong>${esc(personName(person))}</strong></a>
-      <span class="muted">${esc(note.date)}</span>
-      ${statusBadge(note.status)}
-      ${humanBadge(effectiveVerification(note, 'note', note.id))}
-      <p class="clamp">${esc(note.text)}</p>
-    </li>`).join('');
-  const leads = data.researchLeads.map((lead) => `
-    <article class="lead">
-      <h3>${esc(lead.title)} ${statusBadge(lead.status)}</h3>
-      <p>${esc(lead.detail)}</p>
-      <p class="meta-line">${(lead.personIds || []).length ? (lead.personIds || []).map(personLink).join(', ') : '<span class="muted">No person linked</span>'}</p>
-    </article>`).join('');
+  const notes = recentNotes(INDEX, 24).map(({ note, person }) => noteCard(note, person)).join('');
+  const leads = data.researchLeads.map((lead) => leadCard(lead)).join('');
+  const queue = verificationQueue();
+  const needs = queue.notes.map(({ note, person }) => noteCard(note, person)).join('')
+    + queue.sources.map((source) => sourceQueueCard(source)).join('');
   const excluded = data.excluded.map((item) => `
     <li>
       <strong>${esc(item.candidate)}</strong>
@@ -494,33 +667,26 @@ function renderHome() {
     <div class="wrap">
       <header class="page-intro">
         <p class="kicker">Cenero · Porceyo · Gijón · Havana</p>
-        <h1>${esc(data.meta.title)}</h1>
-        <p class="lede">Research dashboard for the Asturian lines and the Havana Bermúdez line. Generated ${esc(data.meta.generated)}. Everything on this site is read from <code>data/data.json</code>.</p>
+        <h1>${SITE}</h1>
+        <p class="lede">Genealogy research notes for the Asturian lines and the Havana Bermúdez line.</p>
       </header>
       <div class="stats">
         <a class="stat" href="#/people"><span class="stat-value">${data.people.length}</span><span class="stat-label">People</span></a>
-        <div class="stat"><span class="stat-value">${data.families.length}</span><span class="stat-label">Families</span></div>
+        <a class="stat" href="#/families"><span class="stat-value">${data.families.length}</span><span class="stat-label">Families</span></a>
         <a class="stat" href="#/sources"><span class="stat-value">${data.sources.length}</span><span class="stat-label">Sources</span></a>
-        <button type="button" class="stat" data-action="jump" data-target="leads"><span class="stat-value">${data.researchLeads.length}</span><span class="stat-label">Open leads</span></button>
-        <div class="stat"><span class="stat-value">${counts.notesVerified}<span class="stat-of">/${counts.notesTotal}</span></span><span class="stat-label">Notes human-verified</span></div>
-        <div class="stat"><span class="stat-value">${counts.sourcesVerified}<span class="stat-of">/${counts.sourcesTotal}</span></span><span class="stat-label">Sources human-verified</span></div>
+        <a class="stat" href="#/?at=open-leads"><span class="stat-value">${data.researchLeads.length}</span><span class="stat-label">Open leads</span></a>
+        <a class="stat" href="#/?at=recent-notes"><span class="stat-value">${counts.notesVerified}<span class="stat-of">/${counts.notesTotal}</span></span><span class="stat-label">Notes human-verified</span></a>
+        <a class="stat" href="#/sources?verify=human"><span class="stat-value">${counts.sourcesVerified}<span class="stat-of">/${counts.sourcesTotal}</span></span><span class="stat-label">Sources human-verified</span></a>
       </div>
-      <p class="hint">Human-verified counts include marks saved in this browser until they are committed. Not yet verified: ${counts.notesTotal - counts.notesVerified} notes, ${counts.sourcesTotal - counts.sourcesVerified} sources.</p>
       <form class="search" role="search" onsubmit="return false">
         <label for="q">Search people and sources</label>
         <input id="q" type="search" placeholder="Try Valdes, Porceyo, Bermúdez" autocomplete="off">
       </form>
       <div id="search-results"></div>
-      ${pendingPanel()}
-      <div class="split">
-        <section class="panel">
-          <h2>Recently updated notes</h2>
-          <ul class="note-list">${notes}</ul>
-        </section>
-        <section class="panel" id="leads">
-          <h2>Open research leads</h2>
-          ${leads}
-        </section>
+      <div class="bands">
+        ${carouselHtml('recent-notes', 'Recently updated notes', '#/notes', notes, 'No notes yet.')}
+        ${carouselHtml('open-leads', 'Open research leads', '#/leads', leads, 'No open leads.')}
+        ${carouselHtml('needs-verification', 'Needs verification', '#/unverified', needs, 'Nothing is waiting for a check.')}
       </div>
       <details class="excluded">
         <summary>Excluded candidates <span class="muted">${data.excluded.length} ruled out — do not re-check</span></summary>
@@ -529,23 +695,78 @@ function renderHome() {
     </div>`;
 }
 
+function comparePeople(a, b) {
+  const { key, dir } = ui.peopleSort;
+  const name = (person) => fold(personName(person));
+  let av;
+  let bv;
+  if (key === 'birth') {
+    av = a.birth?.date ? dateSortKey(a.birth.date) : null;
+    bv = b.birth?.date ? dateSortKey(b.birth.date) : null;
+  } else if (key === 'death') {
+    av = a.death?.date ? dateSortKey(a.death.date) : null;
+    bv = b.death?.date ? dateSortKey(b.death.date) : null;
+  } else if (key === 'place') {
+    av = birthplace(a);
+    bv = birthplace(b);
+    const aEmpty = !av;
+    const bEmpty = !bv;
+    if (aEmpty || bEmpty) {
+      if (aEmpty && bEmpty) return name(a).localeCompare(name(b));
+      return aEmpty ? 1 : -1;
+    }
+    const place = fold(av).localeCompare(fold(bv));
+    return place ? place * dir : name(a).localeCompare(name(b));
+  } else {
+    const byName = name(a).localeCompare(name(b));
+    return byName * dir;
+  }
+  if (av == null || bv == null) {
+    if (av == null && bv == null) return name(a).localeCompare(name(b));
+    return av == null ? 1 : -1;
+  }
+  if (av < bv) return -dir;
+  if (av > bv) return dir;
+  return name(a).localeCompare(name(b));
+}
+
+function sortHeader(key, label) {
+  const on = ui.peopleSort.key === key;
+  const mark = on ? (ui.peopleSort.dir > 0 ? ' ↑' : ' ↓') : '';
+  const aria = on ? (ui.peopleSort.dir > 0 ? 'ascending' : 'descending') : 'none';
+  return `<th aria-sort="${aria}"><button type="button" data-action="people-sort" data-key="${key}">${label}${mark}</button></th>`;
+}
+
 function peopleListHtml(query) {
   const needle = fold(query).trim();
   const people = INDEX.data.people.filter((person) => {
     if (ui.peopleLine !== 'all' && lineKey(person.line) !== ui.peopleLine) return false;
     if (!needle) return true;
-    return fold([person.given, person.surnames, person.id, person.line, ...(person.alsoKnownAs || [])].join(' ')).includes(needle);
-  }).sort((a, b) => lineKey(a.line).localeCompare(lineKey(b.line)) || fold(personName(a)).localeCompare(fold(personName(b))));
+    return fold([person.given, person.surnames, person.id, person.line, person.birth?.place, ...(person.alsoKnownAs || [])].join(' ')).includes(needle);
+  }).sort(comparePeople);
   if (!people.length) return '<p class="empty">No people match.</p>';
-  return `<p class="hint">${people.length} people</p><ul class="people-list">${people.map((person) => `
-    <li>
-      <a href="${personHref(person.id)}">
-        <strong>${esc(personName(person))}</strong>
-        <span>${esc(lifeSpan(person) || 'dates unknown')}</span>
-        <span class="muted">${esc(person.line || '')}</span>
-        ${livingBadge(person)}
-      </a>
-    </li>`).join('')}</ul>`;
+  const rows = people.map((person) => `
+    <tr>
+      <td><a href="${personHref(person.id)}">${esc(personName(person))}</a> ${livingBadge(person)}</td>
+      <td>${dash(person.birth?.date)}</td>
+      <td>${dash(person.death?.date)}</td>
+      <td>${dash(birthplace(person))}</td>
+    </tr>`).join('');
+  return `
+    <p class="hint">${people.length} people</p>
+    <div class="table-scroll">
+      <table class="people-table">
+        <thead>
+          <tr>
+            ${sortHeader('name', 'Name')}
+            ${sortHeader('birth', 'Birth date')}
+            ${sortHeader('death', 'Death date')}
+            ${sortHeader('place', 'Birthplace')}
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
 }
 
 function renderPeople() {
@@ -553,6 +774,7 @@ function renderPeople() {
     <button type="button" class="${ui.peopleLine === name ? 'is-on' : ''}" data-action="people-line" data-line="${esc(name)}">${name === 'all' ? 'All lines' : esc(name)}</button>`).join('');
   return `
     <div class="wrap">
+      ${crumbs([['#/', 'Home'], [null, 'People']])}
       <h1>People</h1>
       <p class="lede">${INDEX.data.people.length} people. Search ignores accents, so Valdes finds Valdés.</p>
       <div class="segment wrap-segment">${chips}</div>
@@ -564,6 +786,131 @@ function renderPeople() {
     </div>`;
 }
 
+function renderFamilies() {
+  const needle = fold(ui.familiesQuery).trim();
+  const families = INDEX.data.families.filter((family) => {
+    if (!needle) return true;
+    const label = familyLabel(family);
+    const kids = (family.children || []).map((id) => personName(INDEX.peopleById[id])).join(' ');
+    return fold(`${family.id} ${label} ${kids}`).includes(needle);
+  }).sort((a, b) => fold(familyLabel(a)).localeCompare(fold(familyLabel(b))));
+  const rows = families.map((family) => `
+    <li>
+      <a href="${familyHref(family.id)}">
+        <strong>${esc(familyLabel(family))}</strong>
+        <span class="muted">${(family.children || []).length} ${(family.children || []).length === 1 ? 'child' : 'children'}</span>
+      </a>
+    </li>`).join('');
+  return `
+    <div class="wrap">
+      ${crumbs([['#/', 'Home'], [null, 'Families']])}
+      <h1>Families</h1>
+      <p class="lede">${INDEX.data.families.length} families.</p>
+      <form class="search" role="search" onsubmit="return false">
+        <label for="families-q">Filter</label>
+        <input id="families-q" type="search" autocomplete="off" value="${esc(ui.familiesQuery)}">
+      </form>
+      <div id="families-mount">
+        <p class="hint">${families.length} families</p>
+        ${rows ? `<ul class="family-list">${rows}</ul>` : '<p class="empty">No families match.</p>'}
+      </div>
+    </div>`;
+}
+
+function renderFamily(id) {
+  const family = findFamily(id);
+  if (!family) return missing('family', id);
+  const label = familyLabel(family);
+  const marriage = family.marriage || {};
+  const children = (family.children || []).map((childId) => {
+    const link = (family.childLinks || []).find((item) => item.id === childId);
+    const child = INDEX.peopleById[childId];
+    return `<li>${personLink(childId)} ${statusBadge(link?.status || 'unknown')} <span class="muted">${esc(child ? lifeSpan(child) : '')}</span></li>`;
+  }).join('');
+  const notes = (family.notes || []).map((note) => `<p>${linkify(note)}</p>`).join('') || '<p class="empty">No family notes.</p>';
+  return `
+    <div class="wrap">
+      ${crumbs([['#/', 'Home'], ['#/families', 'Families'], [null, label]])}
+      <h1>${esc(label)}</h1>
+      <p class="badge-row">${statusBadge(family.coupleStatus)}</p>
+      <section class="panel">
+        <h2>Couple</h2>
+        <p>Husband: ${personLink(family.husband)}</p>
+        <p>Wife: ${family.wife ? personLink(family.wife) : '<span class="muted">Unknown</span>'}</p>
+        <p class="meta-line">${esc([marriage.date, marriage.place].filter(Boolean).join(' · ') || 'Marriage date unknown')} ${statusBadge(marriage.quality)}</p>
+      </section>
+      <section class="panel">
+        <h2>Children</h2>
+        ${children ? `<ul class="child-list">${children}</ul>` : '<p class="empty">No children recorded.</p>'}
+      </section>
+      <section class="panel">
+        <h2>Notes</h2>
+        ${notes}
+      </section>
+    </div>`;
+}
+
+function renderNotes() {
+  const rows = allNotes().map(({ note, person }) => `
+    <li class="note">
+      <p class="kicker">${esc(note.date)} · ${esc(cap(note.status))}</p>
+      <h3><a href="${personHref(person.id)}?note=${encodeURIComponent(note.id)}">${esc(personName(person))}</a></h3>
+      ${humanBadge(effectiveVerification(note, 'note', note.id))}
+      <p>${linkify(note.text)}</p>
+    </li>`).join('');
+  return `
+    <div class="wrap">
+      ${crumbs([['#/', 'Home'], [null, 'Notes']])}
+      <h1>Notes</h1>
+      <p class="lede">${allNotes().length} research notes, newest first.</p>
+      <ul class="plain">${rows}</ul>
+    </div>`;
+}
+
+function renderLeads() {
+  const rows = INDEX.data.researchLeads.map((lead) => `
+    <article class="lead">
+      <h3>${esc(lead.title)} ${statusBadge(lead.status)}</h3>
+      <p>${esc(lead.detail)}</p>
+      <p class="meta-line">${(lead.personIds || []).length ? (lead.personIds || []).map(personLink).join(', ') : '<span class="muted">No person linked</span>'}</p>
+    </article>`).join('');
+  return `
+    <div class="wrap">
+      ${crumbs([['#/', 'Home'], [null, 'Open research leads']])}
+      <h1>Open research leads</h1>
+      ${rows || '<p class="empty">No open leads.</p>'}
+    </div>`;
+}
+
+function renderUnverified() {
+  const notes = unverifiedNotes().map(({ note, person }) => `
+    <li class="note">
+      <p class="kicker">${esc(note.date)} · ${esc(cap(note.status))}</p>
+      <h3><a href="${personHref(person.id)}?note=${encodeURIComponent(note.id)}">${esc(personName(person))}</a></h3>
+      <p>${linkify(note.text)}</p>
+    </li>`).join('');
+  const sources = unverifiedSources().map((source) => `
+    <li>
+      <h3>${sourceTitleHtml(source)}</h3>
+      <p class="meta-line">${esc([source.date, source.place].filter(Boolean).join(' · '))}</p>
+      <p><a href="${sourceHref(source.id)}">Details</a></p>
+    </li>`).join('');
+  return `
+    <div class="wrap">
+      ${crumbs([['#/', 'Home'], [null, 'Needs verification']])}
+      <h1>Needs verification</h1>
+      <p class="lede">Notes and sources that do not have a human-verified check yet.</p>
+      <section>
+        <h2>Notes <span class="muted">${unverifiedNotes().length}</span></h2>
+        ${notes ? `<ul class="plain">${notes}</ul>` : '<p class="empty">Every note has been checked.</p>'}
+      </section>
+      <section>
+        <h2>Sources <span class="muted">${unverifiedSources().length}</span></h2>
+        ${sources ? `<ul class="plain">${sources}</ul>` : '<p class="empty">Every source has been checked.</p>'}
+      </section>
+    </div>`;
+}
+
 function sourceListHtml() {
   const needle = fold(document.getElementById('source-q')?.value || '').trim();
   const sources = [...INDEX.data.sources].filter((source) => {
@@ -572,10 +919,11 @@ function sourceListHtml() {
     if (!needle) return true;
     return fold([source.id, source.title, source.type, source.date, source.place, source.repository, source.transcription, source.citationText].join(' ')).includes(needle);
   }).sort((a, b) => {
-    const year = yearOf(a.date).localeCompare(yearOf(b.date));
-    if (year && yearOf(a.date) && yearOf(b.date)) return Number(yearOf(a.date)) - Number(yearOf(b.date));
-    if (!yearOf(a.date)) return 1;
-    if (!yearOf(b.date)) return -1;
+    const yearA = yearOf(a.date);
+    const yearB = yearOf(b.date);
+    if (yearA && yearB && yearA !== yearB) return Number(yearA) - Number(yearB);
+    if (!yearA) return 1;
+    if (!yearB) return -1;
     return a.title.localeCompare(b.title);
   });
   if (!sources.length) return '<p class="empty">No sources in this filter.</p>';
@@ -588,8 +936,9 @@ function renderSources() {
     `<option value="${esc(type)}" ${ui.sourceType === type ? 'selected' : ''}>${esc(type)}</option>`)].join('');
   return `
     <div class="wrap">
+      ${crumbs([['#/', 'Home'], [null, 'Sources']])}
       <h1>Sources</h1>
-      <p class="lede">Citations are ready to paste into FamilySearch. Copy the citation, open the archive record, and tick sources on each person page as you attach them.</p>
+      <p class="lede">Open a record, copy the citation, and tick it off on the person page once you have added it on FamilySearch.</p>
       <div class="toolbar">
         ${filterButtons('source-verify', ui.sourceVerify)}
         <label class="inline">Type <select id="source-type">${options}</select></label>
@@ -603,23 +952,28 @@ function renderSources() {
 }
 
 function renderSource(id) {
-  const source = INDEX.sourcesById[id];
+  const source = findSource(id);
   if (!source) return missing('source', id);
   return `
     <div class="wrap">
-      <p class="kicker"><a href="#/sources">Sources</a></p>
-      ${sourceCard(source)}
+      ${crumbs([['#/', 'Home'], ['#/sources', 'Sources'], [null, source.title]])}
+      ${sourceCard(source, { onDetail: true })}
     </div>`;
 }
 
 function renderPending() {
-  return `<div class="wrap"><h1>Pending verifications</h1>${pendingPanel()}</div>`;
+  return `
+    <div class="wrap">
+      ${crumbs([['#/', 'Home'], [null, 'Saved checks']])}
+      <h1>Saved checks</h1>
+      ${pendingPanel()}
+    </div>`;
 }
 
 function renderTree(id) {
   const focusId = INDEX.peopleById[id] ? id : DEFAULT_ROOT;
-  const depth = current.params.get('depth') || '3';
-  const ancestors = current.params.get('ancestors') === '1';
+  const depth = treeDepth();
+  const ancestors = treeAncestors();
   const key = `${focusId}|${depth}|${ancestors}`;
   if (key !== lastTreeKey) {
     treeState.forcedOpen.clear();
@@ -627,15 +981,14 @@ function renderTree(id) {
     lastTreeKey = key;
   }
   const person = INDEX.peopleById[focusId];
-  const depths = [['3', '3'], ['4', '4'], ['5', '5'], ['all', 'All']];
   const chips = LINE_ROOTS.map(([name, root]) => `
     <button type="button" class="${lineKey(person.line) === name ? 'is-on' : ''}" data-action="tree-line" data-root="${esc(root)}">${esc(name)}</button>`).join('');
   return `
     <div class="tree-page">
       <div class="tree-toolbar">
         <div>
-          <p class="kicker">Tree</p>
-          <h1>Descendants of ${esc(personName(person))}</h1>
+          ${crumbs([['#/', 'Home'], [null, 'Tree']])}
+          <h1>${esc(personName(person))} Family Tree</h1>
         </div>
         <div class="segment wrap-segment" aria-label="Line">${chips}</div>
         <div class="toolbar-row">
@@ -644,9 +997,13 @@ function renderTree(id) {
             <input id="tree-find" type="search" placeholder="Name, accent optional" autocomplete="off">
             <ul id="tree-suggest" class="suggest" hidden></ul>
           </div>
-          <div class="segment" aria-label="Generations shown">${depths.map(([value, label]) => `
-            <button type="button" class="${String(depth) === value ? 'is-on' : ''}" data-action="tree-depth" data-depth="${value}">${label}</button>`).join('')}</div>
-          <label class="check"><input id="ancestors-toggle" type="checkbox" ${ancestors ? 'checked' : ''}> Show ancestors</label>
+          <div class="stepper" role="group" aria-labelledby="gen-label">
+            <span id="gen-label">Generations shown</span>
+            <button type="button" class="btn btn-small" data-action="tree-depth-step" data-delta="-1" aria-label="Show fewer generations" ${Number(depth) <= 1 ? 'disabled' : ''}>−</button>
+            <span class="stepper-value" aria-live="polite">${esc(depth)}</span>
+            <button type="button" class="btn btn-small" data-action="tree-depth-step" data-delta="1" aria-label="Show more generations" ${Number(depth) >= MAX_GEN ? 'disabled' : ''}>+</button>
+          </div>
+          <label class="check"><input id="ancestors-toggle" type="checkbox" ${ancestors ? 'checked' : ''}> Include ancestors</label>
           <p class="legend" aria-hidden="true"><span><i class="swatch verified"></i>Verified</span><span><i class="swatch probable"></i>Probable</span><span><i class="swatch proposed"></i>Proposed</span></p>
         </div>
       </div>
@@ -668,16 +1025,18 @@ function dockHtml(id) {
     </div>
     <div class="btn-row">
       <a class="btn btn-small btn-primary" href="${personHref(person.id)}">Open profile</a>
-      <button type="button" class="btn btn-small" data-action="focus-person" data-id="${esc(person.id)}">Make root</button>
     </div>`;
 }
 
 function missing(kind, id) {
-  return `<div class="wrap"><h1>Not found</h1><p>No ${esc(kind)} with id <code>${esc(id)}</code>.</p><p><a href="#/">Back to the dashboard</a></p></div>`;
+  return `<div class="wrap"><h1>Not found</h1><p>No ${esc(kind)} matches <code>${esc(id)}</code>.</p><p><a href="#/">Back home</a></p></div>`;
 }
 
 function updateChrome() {
-  const name = current.name === 'person' ? 'people' : current.name === 'source' ? 'sources' : current.name;
+  let name = current.name;
+  if (name === 'person') name = 'people';
+  if (name === 'source') name = 'sources';
+  if (name === 'family') name = 'families';
   document.querySelectorAll('[data-nav]').forEach((link) => {
     if (link.dataset.nav === name) link.setAttribute('aria-current', 'page');
     else link.removeAttribute('aria-current');
@@ -689,21 +1048,24 @@ function updateChrome() {
     pill.hidden = count === 0;
   }
   const footer = document.getElementById('footer');
-  if (footer) {
-    const meta = INDEX.data.meta;
-    footer.textContent = `${meta.title}. Data generated ${meta.generated}. The site renders from data/data.json only.`;
-  }
+  if (footer) footer.textContent = SITE;
 }
 
 function titles(route) {
-  if (route.name === 'home') return 'Family history';
-  if (route.name === 'people') return 'People · Family history';
-  if (route.name === 'person') return `${personName(INDEX.peopleById[route.id]) || 'Person'} · Family history`;
-  if (route.name === 'sources') return 'Sources · Family history';
-  if (route.name === 'source') return `${INDEX.sourcesById[route.id]?.title || 'Source'} · Family history`;
-  if (route.name === 'tree') return 'Tree · Family history';
-  if (route.name === 'pending') return 'Pending verifications · Family history';
-  return 'Family history';
+  const person = INDEX.peopleById[route.id];
+  if (route.name === 'home') return SITE;
+  if (route.name === 'people') return `People · ${SITE}`;
+  if (route.name === 'person') return `${personName(person) || 'Person'} · ${SITE}`;
+  if (route.name === 'families') return `Families · ${SITE}`;
+  if (route.name === 'family') return `${findFamily(route.id) ? familyLabel(findFamily(route.id)) : 'Family'} · ${SITE}`;
+  if (route.name === 'sources') return `Sources · ${SITE}`;
+  if (route.name === 'source') return `${findSource(route.id)?.title || 'Source'} · ${SITE}`;
+  if (route.name === 'tree') return `${personName(person || INDEX.peopleById[DEFAULT_ROOT])} Family Tree · ${SITE}`;
+  if (route.name === 'notes') return `Notes · ${SITE}`;
+  if (route.name === 'leads') return `Open research leads · ${SITE}`;
+  if (route.name === 'unverified') return `Needs verification · ${SITE}`;
+  if (route.name === 'pending') return `Saved checks · ${SITE}`;
+  return SITE;
 }
 
 function paint() {
@@ -715,14 +1077,20 @@ function paint() {
   if (route.name === 'home') html = renderHome();
   else if (route.name === 'people') html = renderPeople();
   else if (route.name === 'person') html = renderPerson(route.id);
+  else if (route.name === 'families') html = renderFamilies();
+  else if (route.name === 'family') html = renderFamily(route.id);
   else if (route.name === 'sources') html = renderSources();
   else if (route.name === 'source') html = renderSource(route.id);
   else if (route.name === 'tree') html = renderTree(route.id);
+  else if (route.name === 'notes') html = renderNotes();
+  else if (route.name === 'leads') html = renderLeads();
+  else if (route.name === 'unverified') html = renderUnverified();
   else if (route.name === 'pending') html = renderPending();
   else html = missing('page', route.name);
   main().innerHTML = html;
   updateChrome();
   bindThumbs(main());
+  bindCarousels(main());
   if (route.name === 'tree') {
     const focusId = INDEX.peopleById[route.id] ? route.id : DEFAULT_ROOT;
     const stage = document.getElementById('tree-stage');
@@ -731,15 +1099,15 @@ function paint() {
       families: INDEX.data.families,
     }, {
       focusId,
-      depth: route.params.get('depth') || '3',
-      ancestors: route.params.get('ancestors') === '1',
+      depth: treeDepth(),
+      ancestors: treeAncestors(),
       forcedOpen: treeState.forcedOpen,
       forcedClosed: treeState.forcedClosed,
     }, {
-      onSelect: (id) => {
-        const dock = document.getElementById('tree-dock');
-        if (dock) dock.innerHTML = dockHtml(id);
+      onOpen: (id) => {
+        location.hash = personHref(id);
       },
+      onSetRoot: (id) => goTree(id),
       onExpand: (id) => treeHandle?.expand(id),
     });
     const dock = document.getElementById('tree-dock');
@@ -751,6 +1119,9 @@ function paint() {
   }
   if (route.name === 'person' && route.params.get('note')) {
     document.getElementById(`note-${route.params.get('note')}`)?.scrollIntoView({ block: 'center' });
+  }
+  if (route.name === 'home' && route.params.get('at')) {
+    document.getElementById(route.params.get('at'))?.scrollIntoView({ block: 'start' });
   }
 }
 
@@ -772,9 +1143,14 @@ function parseRoute() {
 }
 
 function goTree(id, overrides = {}) {
-  const depth = overrides.depth ?? (current.params.get('depth') || '3');
-  const ancestors = overrides.ancestors ?? (current.params.get('ancestors') === '1');
+  const depth = overrides.depth ?? treeDepth();
+  const ancestors = overrides.ancestors ?? treeAncestors();
   location.hash = treeHref(id, { depth, ancestors });
+}
+
+function refreshPeopleList() {
+  const mount = document.getElementById('people-mount');
+  if (mount) mount.innerHTML = peopleListHtml(document.getElementById('people-q')?.value || '');
 }
 
 function refreshVisible() {
@@ -793,7 +1169,7 @@ function refreshVisible() {
     if (filter) filter.innerHTML = filterButtons('person-verify', ui.verifyFilter);
     const toggle = document.querySelector('[data-action="toggle-unattached"]');
     if (toggle) {
-      toggle.textContent = ui.onlyUnattached ? 'Showing sources not yet attached' : 'Show sources not yet attached';
+      toggle.textContent = unattachedLabel();
       toggle.classList.toggle('btn-primary', ui.onlyUnattached);
     }
     updateChrome();
@@ -812,7 +1188,7 @@ function refreshVisible() {
     document.querySelector('.verify-form input[name="by"]')?.focus();
     return;
   }
-  if (current.name === 'home' || current.name === 'pending' || current.name === 'source') paint();
+  if (current.name === 'home' || current.name === 'pending' || current.name === 'source' || current.name === 'unverified' || current.name === 'notes') paint();
   else updateChrome();
 }
 
@@ -820,12 +1196,8 @@ function onClick(event) {
   const button = event.target.closest('[data-action]');
   if (!button) return;
   const action = button.dataset.action;
-  if (action === 'jump') {
-    document.getElementById(button.dataset.target)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    return;
-  }
   if (action === 'copy') {
-    const source = INDEX.sourcesById[button.dataset.source];
+    const source = findSource(button.dataset.source);
     if (!source) return;
     const kind = button.dataset.copy;
     const text = kind === 'title' ? source.title : kind === 'url' ? source.url : source.citationText;
@@ -869,16 +1241,23 @@ function onClick(event) {
     document.querySelectorAll('[data-action="people-line"]').forEach((chip) => {
       chip.classList.toggle('is-on', chip.dataset.line === ui.peopleLine);
     });
-    const mount = document.getElementById('people-mount');
-    if (mount) mount.innerHTML = peopleListHtml(document.getElementById('people-q')?.value || '');
+    refreshPeopleList();
+    return;
+  }
+  if (action === 'people-sort') {
+    const key = button.dataset.key;
+    if (ui.peopleSort.key === key) ui.peopleSort.dir *= -1;
+    else ui.peopleSort = { key, dir: 1 };
+    refreshPeopleList();
     return;
   }
   if (action === 'tree-line') {
     goTree(button.dataset.root);
     return;
   }
-  if (action === 'tree-depth') {
-    goTree(current.id || DEFAULT_ROOT, { depth: button.dataset.depth });
+  if (action === 'tree-depth-step') {
+    const next = Math.min(MAX_GEN, Math.max(1, Number(treeDepth()) + Number(button.dataset.delta)));
+    goTree(current.id || DEFAULT_ROOT, { depth: String(next) });
     return;
   }
   if (action === 'focus-person') {
@@ -891,7 +1270,7 @@ function onClick(event) {
     const link = issueLink(entries);
     if (link.tooLong) {
       copyText(JSON.stringify(verificationPayload(entries), null, 2));
-      setLive('The GitHub link was too long. JSON copied — paste it into the issue.');
+      setLive('The form link was too long. The list was copied — paste it into the form that opens.');
       window.open(`https://github.com/kyzabee-sudo/family-history/issues/new?${new URLSearchParams({ title: 'Human verifications', labels: 'verification' })}`, '_blank', 'noopener');
       return;
     }
@@ -919,7 +1298,7 @@ function onSubmit(event) {
   markLocal(form.dataset.kind, form.dataset.id, { by, date, comment });
   ui.openVerify = null;
   refreshVisible();
-  setLive('Saved in this browser. Open the pending verifications panel to commit it.');
+  setLive('Saved on this computer.');
 }
 
 function onInput(event) {
@@ -927,9 +1306,18 @@ function onInput(event) {
     const mount = document.getElementById('search-results');
     if (mount) mount.innerHTML = searchResultsHtml(event.target.value);
   }
-  if (event.target.id === 'people-q') {
-    const mount = document.getElementById('people-mount');
-    if (mount) mount.innerHTML = peopleListHtml(event.target.value);
+  if (event.target.id === 'people-q') refreshPeopleList();
+  if (event.target.id === 'families-q') {
+    ui.familiesQuery = event.target.value;
+    const caret = event.target.selectionStart;
+    main().innerHTML = renderFamilies();
+    const input = document.getElementById('families-q');
+    input.focus();
+    try {
+      if (caret != null) input.setSelectionRange(caret, caret);
+    } catch {
+      /* Some browsers reject a caret on search inputs. */
+    }
   }
   if (event.target.id === 'source-q') {
     const mount = document.getElementById('source-mount');
@@ -976,15 +1364,41 @@ function onChange(event) {
   }
 }
 
+function canonicalRedirect() {
+  if (current.name === 'source') {
+    const source = findSource(current.id);
+    if (source && source.id !== current.id) {
+      const params = current.params.toString();
+      location.replace(`#/source/${encodeURIComponent(source.id)}${params ? `?${params}` : ''}`);
+      return true;
+    }
+  }
+  if (current.name === 'family') {
+    const family = findFamily(current.id);
+    if (family && family.id !== current.id) {
+      location.replace(familyHref(family.id));
+      return true;
+    }
+  }
+  return false;
+}
+
 function route() {
   current = parseRoute();
   if (current.name === 'tree' && !current.id) {
     location.replace(treeHref(DEFAULT_ROOT));
     return;
   }
+  if (canonicalRedirect()) return;
+  if (current.name === 'sources') {
+    const verify = current.params.get('verify');
+    if (verify === 'human' || verify === 'verified') ui.sourceVerify = 'verified';
+    else if (verify === 'unverified') ui.sourceVerify = 'unverified';
+    else if (verify === 'all') ui.sourceVerify = 'all';
+  }
   ui.openVerify = null;
   const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-  if (!reduce) window.scrollTo(0, 0);
+  if (!reduce && !(current.name === 'home' && current.params.get('at'))) window.scrollTo(0, 0);
   paint();
 }
 
@@ -992,7 +1406,7 @@ async function start() {
   try {
     INDEX = await loadDataset();
   } catch (error) {
-    main().innerHTML = `<div class="wrap"><h1>Could not load the dataset</h1><p>${esc(error.message)}</p></div>`;
+    main().innerHTML = `<div class="wrap"><h1>Could not load the family history</h1><p>${esc(error.message)}</p></div>`;
     return;
   }
   reconcileStore(INDEX);

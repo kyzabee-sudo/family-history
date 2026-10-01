@@ -2729,7 +2729,55 @@
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
-    "fam-juan-valdes-filomena-nieto"
+    "fam-juan-valdes-filomena-nieto",
+    "fam-juan-antonio-valdes-nieto"
+   ]
+  },
+  {
+   "id": "juan-valdes-grandfather",
+   "given": "Juan",
+   "surnames": "Valdés",
+   "sex": "M",
+   "alsoKnownAs": [],
+   "birth": {
+    "date": null,
+    "place": null,
+    "quality": "unknown",
+    "sourceIds": []
+   },
+   "death": {
+    "date": null,
+    "place": null,
+    "quality": "unknown",
+    "sourceIds": []
+   },
+   "events": [],
+   "parents": [
+    "juan-antonio-valdes-nieto-abt1895"
+   ],
+   "parentLinks": [
+    {
+     "id": "juan-antonio-valdes-nieto-abt1895",
+     "status": "probable",
+     "familyId": "fam-juan-antonio-valdes-nieto"
+    }
+   ],
+   "spouses": [],
+   "notes": [
+    {
+     "id": "juan-valdes-grandfather-n0",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "Juan Valdés is Kyler Rasmussen's grandfather, and the son of Juan Antonio Valdés Nieto. This comes from family knowledge stated by Kyler Rasmussen. It has not yet been checked against a record.",
+     "sourceIds": []
+    }
+   ],
+   "sourceIds": [],
+   "familySearchPid": null,
+   "line": "Valdés",
+   "livingStatus": "deceased-or-presumed",
+   "familyIds": [
+    "fam-juan-antonio-valdes-nieto"
    ]
   },
   {
@@ -10873,6 +10921,30 @@
    "notes": [
     "Married by ~1894 (first child ~1895). Cenero parish books burned 1936; civil marriage not online.",
     "Luis (1910, 3 months) may be the same child as José (~1910)."
+   ]
+  },
+  {
+   "id": "fam-juan-antonio-valdes-nieto",
+   "husband": "juan-antonio-valdes-nieto-abt1895",
+   "wife": null,
+   "coupleStatus": "probable",
+   "children": [
+    "juan-valdes-grandfather"
+   ],
+   "childLinks": [
+    {
+     "id": "juan-valdes-grandfather",
+     "status": "probable"
+    }
+   ],
+   "marriage": {
+    "date": null,
+    "place": null,
+    "quality": "unknown",
+    "source": null
+   },
+   "notes": [
+    "Wife unknown. The son Juan Valdés is identified from family knowledge (Kyler Rasmussen's grandfather), not yet checked against a record."
    ]
   },
   {
