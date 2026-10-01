@@ -305,18 +305,29 @@ export function layoutTree(model, focusId, options = {}) {
     const busY = y + CARD_H + 26;
     const statuses = placed.map((parent) => parentStatus(people, childId, parent.id));
     const shared = statuses.every((status) => status === statuses[0]) ? statuses[0] : 'neutral';
-    for (const parent of placed) {
+    if (placed.length === 1) {
+      const parent = placed[0];
       edges.push({
         kind: 'parent',
-        status: parentStatus(people, childId, parent.id),
-        points: [[parent.mid, y + CARD_H], [parent.mid, busY], [centerX, busY]],
+        status: statuses[0],
+        points: [[parent.mid, y + CARD_H], [parent.mid, busY], [centerX, busY], [centerX, cardTop]],
+      });
+    } else {
+      placed.forEach((parent, index) => {
+        edges.push({
+          kind: 'parent',
+          status: statuses[index],
+          // The shared drop carries the label when every parent link agrees.
+          label: statuses[index] !== shared,
+          points: [[parent.mid, y + CARD_H], [parent.mid, busY], [centerX, busY]],
+        });
+      });
+      edges.push({
+        kind: 'parent',
+        status: shared,
+        points: [[centerX, busY], [centerX, cardTop]],
       });
     }
-    edges.push({
-      kind: 'parent',
-      status: shared,
-      points: [[centerX, busY], [centerX, cardTop]],
-    });
   }
 
   let minX = Infinity;
@@ -403,6 +414,7 @@ function edgeMarkup(edge) {
 }
 
 function edgeLabelMarkup(edge) {
+  if (edge.label === false) return '';
   if (!edge.status || edge.status === 'verified' || edge.status === 'neutral') return '';
   const style = STATUS_STYLE[edge.status] || STATUS_STYLE.neutral;
   const x = edge.points ? edge.points[edge.points.length - 1][0] : edge.x2;
