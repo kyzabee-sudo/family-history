@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family history</title>
+  <meta name="description" content="Family history dashboard for the Valdés Nieto lines of Cenero, Porceyo and Gijón, and the Bermúdez line of Havana.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>
+          <span class="brand-title">Family history</span>
+          <span class="brand-sub">Valdés Nieto · Bermúdez</span>
+        </span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="#/" data-nav="home">Home</a>
+        <a href="#/tree/juan-de-valdes-fl1773" data-nav="tree">Tree</a>
+        <a href="#/people" data-nav="people">People</a>
+        <a href="#/sources" data-nav="sources">Sources</a>
+        <a href="#/pending" data-nav="pending">Pending <span id="pending-count" class="count-pill" hidden>0</span></a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" tabindex="-1">
+    <p class="wrap">Loading the family file…</p>
+  </main>
+  <footer class="site-footer"><div class="footer-inner" id="footer"></div></footer>
+  <div id="live" class="sr-only" role="status" aria-live="polite"></div>
+  <noscript><p class="wrap">This dashboard needs JavaScript. It still only reads <code>data/data.json</code> — there is no account and no server.</p></noscript>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
