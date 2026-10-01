@@ -4,7 +4,7 @@ Static dashboard for the Valdés, Nieto, Uría, Sánchez, Menéndez and Rodrígu
 
 The site is published at <https://kyzabee-sudo.github.io/family-history/>. Pushes to `main` are deployed by [`.github/workflows/pages.yml`](.github/workflows/pages.yml) (Pages source: GitHub Actions).
 
-The default tree is Juan Valdés (`juan-valdes-grandfather`), Kyler Rasmussen's grandfather. He is the child in `fam-juan-antonio-valdes-nieto` (father Juan Antonio Valdés Nieto, mother unknown). That relationship is family knowledge (`probable`), not yet checked against a record. Family pages are `#/families` and `#/family/<id>`.
+The default tree is Juan Rafael Valdés Pedrayes (`juan-rafael-valdes-pedrayes`, FamilySearch GDML-8JK, 1924–2014), Kyler Rasmussen's maternal grandfather. He is a child in `fam-juan-antonio-valdes-nieto` (Juan Valdés Nieto × Elvira Rosa Pedrayes, married abt 1922 in Havana). The link comes from Kyler's FamilySearch tree. The old placeholder id `juan-valdes-grandfather` was merged into him on 1 Oct 2026. Family pages are `#/families` and `#/family/<id>`.
 
 ## Update the data
 

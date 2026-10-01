@@ -8,7 +8,8 @@
    "/workspace/gijon-rc/findings*.md",
    "Google Sheet \"Family History Notes\" (fhn_oct1.xlsx + fix_*/fix2_* corrections)",
    "Havana Church Records and AI Transcription Tracking tabs",
-   "Research memory notes (Bermúdez descendants only)"
+   "Research memory notes (Bermúdez descendants only)",
+   "FamilySearch Family Tree, Kyler Rasmussen's tree (read-only capture, 1 Oct 2026): records attached there count as verified; tree facts with no attached record are probable"
   ],
   "privacyWarning": "No privacy filter has been applied. People flagged livingStatus=\"possibly-living\" were born 1910 or later with no recorded death."
  },
@@ -190,7 +191,9 @@
    "given": "Santiago",
    "surnames": "Valdés",
    "sex": "M",
-   "alsoKnownAs": [],
+   "alsoKnownAs": [
+    "Santiago Valdes Suarez"
+   ],
    "birth": {
     "date": "bet 1787 and 1794",
     "place": "Porceyo, Gijón, Asturias, Spain",
@@ -260,9 +263,46 @@
      "status": "probable",
      "text": "Link to parents (fam-juan-de-valdes) is PROBABLE — see the family notes.",
      "sourceIds": []
+    },
+    {
+     "id": "santiago-valdes-fl1824-n2",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID 9V7Q-7L2 (Santiago Valdes Suarez), born Porceyo (no year; agrees). Attached records: FamilySearch index entries for the deaths of Antonia (29 Dec 1843) and José (13 Jan 1844), which are the acts RCGijón1843D0093r and RCGijón1844D0022v; the 1854 marriage RCGijón1854M0036v (all already in this file, now marked humanVerified); and an 1866 civil record naming him (event not captured; new source). Tree children: Antonia 1825, José Antonio 1829, Juan Antonio 1832, Antonio 1835, Josefa 1836.",
+     "sourceIds": [
+      "rc-1843D0093r",
+      "rc-1844D0022v",
+      "rc-1854M0036v",
+      "fs-spain-civil-1866-santiago-teresa"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID 9V7Q-7L2"
+     }
+    },
+    {
+     "id": "santiago-valdes-fl1824-n3",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "FamilySearch attaches an 1866 civil record (65SW-MD2Q) naming Santiago Valdez and Teresa Uria; the event and whether they are named as living or deceased were not captured. Read it: it may bear on his death date (currently \"aft 1832\").",
+     "sourceIds": [
+      "fs-spain-civil-1866-santiago-teresa"
+     ]
+    },
+    {
+     "id": "santiago-valdes-fl1824-n4",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch gives his second surname as Suárez (\"Santiago Valdes Suarez\"); our records do not state it. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
+    "fs-spain-civil-1866-santiago-teresa",
+    "fs-tree-kyler-2026-10-01",
     "hid-1787-L32-0122v",
     "hid-1794-L33-0073r",
     "hid-1801-L34-0127r",
@@ -277,7 +317,7 @@
     "rc-1854M0036v",
     "rc-1858M0029v"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "9V7Q-7L2",
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -294,10 +334,13 @@
     "Theresa la Uría"
    ],
    "birth": {
-    "date": null,
-    "place": null,
-    "quality": "unknown",
-    "sourceIds": []
+    "date": "abt 1800",
+    "place": "Porceyo, Gijón, Asturias, Spain",
+    "quality": "probable",
+    "sourceIds": [
+     "fs-tree-kyler-2026-10-01"
+    ],
+    "details": "FamilySearch tree (Kyler), no record attached"
    },
    "death": {
     "date": null,
@@ -337,9 +380,28 @@
      "status": "excluded",
      "text": "Teresa Uría deaths of 4 Jan 1855 (RCGijón1855D0026r, casada, daughter of Domingo × Manuela Sánchez) and 8 Sep 1859 (RCGijón1859D0109r, 52, casada, daughter of Antonio × María Argüelles) are NOT her.",
      "sourceIds": []
+    },
+    {
+     "id": "teresa-uria-porceyo-n2",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID 9V7Q-7LL; birth abt 1800 Porceyo (tree fact, probable); the same attached records as Santiago (1843 and 1844 deaths of their children, 1854 marriage, 1866 record). No parents in the tree.",
+     "sourceIds": [
+      "rc-1843D0093r",
+      "rc-1844D0022v",
+      "rc-1854M0036v",
+      "fs-spain-civil-1866-santiago-teresa"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID 9V7Q-7LL"
+     }
     }
    ],
    "sourceIds": [
+    "fs-spain-civil-1866-santiago-teresa",
+    "fs-tree-kyler-2026-10-01",
     "rc-1817N0057r",
     "rc-1817N0057v",
     "rc-1817N0113r",
@@ -350,7 +412,7 @@
     "rc-1854M0036v",
     "rc-1858M0029v"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "9V7Q-7LL",
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -504,12 +566,22 @@
      "sourceIds": [
       "rc-1843D0093r"
      ]
+    },
+    {
+     "id": "antonia-valdes-uria-abt1825-n1",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch tree lists this person as PID GRSZ-SVM (Antonia Valdés Uría, 1825–1843, child of Santiago × Teresa); the person page itself was not captured. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
+    "fs-tree-kyler-2026-10-01",
     "rc-1843D0093r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "GRSZ-SVM",
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -588,13 +660,34 @@
       "rc-1817N0113v",
       "rc-1844D0022v"
      ]
+    },
+    {
+     "id": "jose-antonio-valdes-uria-1826-n2",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch tree lists this person as PID GRSZ-95Q (José Antonio Valdés Uría, 1829–1844, child of Santiago × Teresa); the person page itself was not captured. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
+    },
+    {
+     "id": "jose-antonio-valdes-uria-1826-n3",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "Birth-year conflict: FamilySearch (GRSZ-95Q) gives 1829–1844; our image-verified baptism is 4 May 1826, and the baptism of 3 Apr 1829 is a different child (Juan Antonio, juan-antonio-valdes-uria-1829). Kept 1826. The 1844 death at age 16 already raises a 1826/1827 question (note -n1).",
+     "sourceIds": [
+      "rc-1817N0113v",
+      "rc-1817N0057r",
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
+    "fs-tree-kyler-2026-10-01",
     "rc-1817N0113v",
     "rc-1844D0022v"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "GRSZ-95Q",
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -733,6 +826,22 @@
       "rc-1854M0036v",
       "cen-1900-pinera"
      ]
+    },
+    {
+     "id": "juan-antonio-valdes-uria-1832-n1",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID 9V7Q-7LZ; birth 17 Mar 1832 Cenero (agrees); attached records: rural birth list RCGijón1817N0057r, 1854 marriage RCGijón1854M0036v and the 1900 padrón, all already in this file and now marked humanVerified. Tree children Juan Valdés Sánchez (PFF7-31T) and Rosaura Valdés (PN77-R8H). The tree sibling list has no Manuel Antonio (1822) and no Juan Antonio (1829), and adds Josefa (1836).",
+     "sourceIds": [
+      "rc-1817N0057r",
+      "rc-1854M0036v",
+      "cen-1900-pinera"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID 9V7Q-7LZ"
+     }
     }
    ],
    "sourceIds": [
@@ -740,7 +849,7 @@
     "rc-1817N0057r",
     "rc-1854M0036v"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "9V7Q-7LZ",
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -797,18 +906,90 @@
      "sourceIds": [
       "rc-1858M0029v"
      ]
+    },
+    {
+     "id": "antonio-valdes-uria-1835-n1",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch tree lists this person as PID 9V7Q-7LD (Antonio Valdés Uría, 1835–Deceased, child of Santiago × Teresa); the person page itself was not captured. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
+    "fs-tree-kyler-2026-10-01",
     "rc-1817N0057v",
     "rc-1858M0029v"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "9V7Q-7LD",
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
     "fam-santiago-valdes-teresa-uria",
     "fam-antonio-valdes-isabel-garcia"
+   ]
+  },
+  {
+   "id": "josefa-valdes-uria-1836",
+   "given": "Josefa",
+   "surnames": "Valdés Uría",
+   "sex": "F",
+   "alsoKnownAs": [
+    "Josefa VALDÉS URÍA"
+   ],
+   "birth": {
+    "date": "1836",
+    "place": null,
+    "quality": "probable",
+    "sourceIds": [
+     "fs-tree-kyler-2026-10-01"
+    ],
+    "details": "FamilySearch tree (Kyler), no record attached; year from the sibling list on 9V7Q-7LZ (person page not captured)"
+   },
+   "death": {
+    "date": null,
+    "place": null,
+    "quality": "unknown",
+    "sourceIds": []
+   },
+   "events": [],
+   "parents": [
+    "santiago-valdes-fl1824",
+    "teresa-uria-porceyo"
+   ],
+   "parentLinks": [
+    {
+     "id": "santiago-valdes-fl1824",
+     "status": "probable",
+     "familyId": "fam-santiago-valdes-teresa-uria"
+    },
+    {
+     "id": "teresa-uria-porceyo",
+     "status": "probable",
+     "familyId": "fam-santiago-valdes-teresa-uria"
+    }
+   ],
+   "spouses": [],
+   "notes": [
+    {
+     "id": "josefa-valdes-uria-1836-n0",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch contributed: new person, PID KVV8-6V5, listed as a child of Santiago Valdés × Teresa Uría born 1836. Female births were not copied into the Libro 02 rural list, so this file has no record of her yet. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
+    }
+   ],
+   "sourceIds": [
+    "fs-tree-kyler-2026-10-01"
+   ],
+   "familySearchPid": "KVV8-6V5",
+   "line": "Valdés",
+   "livingStatus": "deceased-or-presumed",
+   "familyIds": [
+    "fam-santiago-valdes-teresa-uria"
    ]
   },
   {
@@ -977,6 +1158,23 @@
      "status": "probable",
      "text": "Link to parents (fam-juan-antonio-valdes-maria-sanchez) is PROBABLE — see the family notes.",
      "sourceIds": []
+    },
+    {
+     "id": "juan-valdes-sanchez-abt1872-n3",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PFF7-31T; birth 1872 Cenero (agrees with our padrón estimate); attached records: 1900, 1910 (attached twice), 1914 and 1919 (both pages) padrones, all already in this file and now marked humanVerified (1900 attachment note: \"His name is on the source as head of household\"). Tree parents Juan Antonio Valdés Uría (9V7Q-7LZ) × María Sánchez Menéndez (PN77-BD5) agree with our PROBABLE link, but no attached record proves the parentage, so it stays probable. The tree lists 12 children, including both José (PNMD-9L9) and Luis (PNM8-YDY) born 1910.",
+     "sourceIds": [
+      "cen-1900-pinera",
+      "cen-1910-pinera",
+      "cen-1914-pinera",
+      "cen-1919-pinera"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PFF7-31T"
+     }
     }
    ],
    "sourceIds": [
@@ -987,7 +1185,7 @@
     "cen-1920-pinera3",
     "fs-alistamiento-1916"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PFF7-31T",
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -1100,6 +1298,23 @@
      "status": "probable",
      "text": "Link to parents (fam-manuel-nieto-cristina-uria) is PROBABLE — see the family notes.",
      "sourceIds": []
+    },
+    {
+     "id": "filomena-nieto-uria-abt1876-n3",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PFFQ-CZ3; birth 1876 Cenero (agrees with our estimate); attached records: 1900, 1910, 1914 and 1919 (both pages) padrones, all already in this file and now marked humanVerified. Tree parents Manuel Antonio Nieto Menéndez (PSSN-SWT) × Cristina Uría Rodríguez (PFL3-YNL) agree with our PROBABLE link; no attached record proves it, so it stays probable.",
+     "sourceIds": [
+      "cen-1900-pinera",
+      "cen-1910-pinera",
+      "cen-1914-pinera",
+      "cen-1919-pinera"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PFFQ-CZ3"
+     }
     }
    ],
    "sourceIds": [
@@ -1111,7 +1326,7 @@
     "cen-1920-pinera3",
     "fs-alistamiento-1916"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PFFQ-CZ3",
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -1169,11 +1384,22 @@
     }
    ],
    "spouses": [],
-   "notes": [],
-   "sourceIds": [
-    "cen-1900-pinera"
+   "notes": [
+    {
+     "id": "rosaura-valdes-sanchez-abt1876-n0",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch tree lists this person as PID PN77-R8H (Rosaura Valdés, 1876–Deceased, child of 9V7Q-7LZ × PN77-BD5); the person page itself was not captured. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
+    }
    ],
-   "familySearchPid": null,
+   "sourceIds": [
+    "cen-1900-pinera",
+    "fs-tree-kyler-2026-10-01"
+   ],
+   "familySearchPid": "PN77-R8H",
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -2638,22 +2864,30 @@
    "given": "Juan Antonio",
    "surnames": "Valdés Nieto",
    "sex": "M",
-   "alsoKnownAs": [],
+   "alsoKnownAs": [
+    "Juan Valdés Nieto",
+    "Juan Valdes Nieto",
+    "Juan Valdes"
+   ],
    "birth": {
-    "date": "abt 1895",
+    "date": "1895-09-15",
     "place": "Cenero, Gijón, Asturias, Spain",
-    "quality": "estimated",
+    "quality": "probable",
     "sourceIds": [
      "cen-1900-pinera",
-     "cen-1910-pinera"
+     "cen-1910-pinera",
+     "fs-tree-kyler-2026-10-01"
     ],
-    "details": "Ages 5 (1900), 15 (1910); 1916 quinta"
+    "details": "Ages 5 (1900), 15 (1910); 1916 quinta. Exact date 15 Sep 1895 from the FamilySearch tree (Kyler), no record attached for the day (the padrones and 1916 quinta support ~1895); previously recorded as \"abt 1895\" (estimated). Place kept as Cenero from our padrón reading; FamilySearch says Pedrera (open conflict note)."
    },
    "death": {
-    "date": null,
+    "date": "1948-02-25",
     "place": null,
-    "quality": "unknown",
-    "sourceIds": []
+    "quality": "probable",
+    "sourceIds": [
+     "fs-tree-kyler-2026-10-01"
+    ],
+    "details": "FamilySearch tree (Kyler), no record attached; place not given"
    },
    "events": [
     {
@@ -2701,7 +2935,9 @@
      "familyId": "fam-juan-valdes-filomena-nieto"
     }
    ],
-   "spouses": [],
+   "spouses": [
+    "elvira-rosa-pedrayes-1896"
+   ],
    "notes": [
     {
      "id": "juan-antonio-valdes-nieto-abt1895-n0",
@@ -2718,14 +2954,53 @@
      "status": "open",
      "text": "Absent in 1914 (probably) and 1919. Probably emigrated; the strongest candidate in the family for a long-term emigrant (Cuba suspected). No record in PARES Movimientos Migratorios, Santander Pérez y Cía passenger books 1914–1923, or FamilySearch searches; navegante.es, Archivo de Indianos and CubaGenWeb were unreachable.",
      "sourceIds": []
+    },
+    {
+     "id": "juan-antonio-valdes-nieto-abt1895-n2",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID KH44-RC2 (Juan Valdés Nieto). Attached records: the 1900 and 1910 padrones and the 1916 alistamiento (all already in this file, now marked humanVerified), and the NUMIDENT entry of his son Rolando naming Rolando's parents Juan Valdes and Elvira Pedrayes. Tree facts without a record: born 15 Sep 1895 (Pedrera), died 25 Feb 1948, married Elvira Rosa Pedrayes abt 1922 in Havana; sons Juan Rafael (1924–2014) and Rolando (1928–2002), both born in Havana. This answers the emigration question in note -n1: he went to Cuba.",
+     "sourceIds": [
+      "cen-1900-pinera",
+      "cen-1910-pinera",
+      "fs-alistamiento-1916",
+      "fs-numident-rolando-valdes"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID KH44-RC2"
+     }
+    },
+    {
+     "id": "juan-antonio-valdes-nieto-abt1895-n3",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "Birthplace conflict: FamilySearch (KH44-RC2) gives Pedrera, Gijón; our padrón readings give Cenero (the family lived in Piñera, Cenero; naturaleza Cenero in 1914/1919). Kept Cenero. No birth record is attached on FamilySearch.",
+     "sourceIds": [
+      "cen-1900-pinera",
+      "cen-1910-pinera",
+      "fs-tree-kyler-2026-10-01"
+     ]
+    },
+    {
+     "id": "juan-antonio-valdes-nieto-abt1895-n4",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "Capture discrepancy: the pedigree view showed his NUMIDENT entry (6K9F-Y3NV) only as an unattached \"+ Add\" suggestion, while the person-page capture lists it as attached (18 Jun 2023). It is linked here through Rolando's NUMIDENT, which is certainly attached to Rolando (26K6-LL7). The same applies to Elvira (6K9F-BDN2).",
+     "sourceIds": [
+      "fs-numident-rolando-valdes"
+     ]
     }
    ],
    "sourceIds": [
     "cen-1900-pinera",
     "cen-1910-pinera",
-    "fs-alistamiento-1916"
+    "fs-alistamiento-1916",
+    "fs-numident-rolando-valdes",
+    "fs-tree-kyler-2026-10-01"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "KH44-RC2",
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -2734,47 +3009,341 @@
    ]
   },
   {
-   "id": "juan-valdes-grandfather",
-   "given": "Juan",
-   "surnames": "Valdés",
-   "sex": "M",
-   "alsoKnownAs": [],
+   "id": "elvira-rosa-pedrayes-1896",
+   "given": "Elvira Rosa",
+   "surnames": "Pedrayes",
+   "sex": "F",
+   "alsoKnownAs": [
+    "Elvira Pedrayes"
+   ],
    "birth": {
-    "date": null,
-    "place": null,
-    "quality": "unknown",
-    "sourceIds": []
+    "date": "1896-07-11",
+    "place": "Havana, Cuba",
+    "quality": "verified",
+    "sourceIds": [
+     "fs-ssdi-1984-elvira-pedrayes",
+     "fs-tree-kyler-2026-10-01"
+    ],
+    "details": "Date from the Social Security Death Index; the place Havana comes from the FamilySearch tree (Kyler), no record attached for the place"
    },
    "death": {
-    "date": null,
-    "place": null,
-    "quality": "unknown",
-    "sourceIds": []
+    "date": "Jun 1984",
+    "place": "Hudson, New Jersey, United States",
+    "quality": "verified",
+    "sourceIds": [
+     "fs-ssdi-1984-elvira-pedrayes"
+    ],
+    "details": "SSDI: death Jun 1984, residence Hudson, New Jersey"
    },
    "events": [],
-   "parents": [
+   "parents": [],
+   "parentLinks": [],
+   "spouses": [
     "juan-antonio-valdes-nieto-abt1895"
+   ],
+   "notes": [
+    {
+     "id": "elvira-rosa-pedrayes-1896-n0",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: new person, PID KZ19-XD6. Wife of Juan Valdés Nieto (marriage abt 1922, Havana: tree fact, probable); mother of Juan Rafael (1924–2014) and Rolando (1928–2002). Attached records: SSDI (birth 11 Jul 1896, death Jun 1984, Hudson, New Jersey) and her son Rolando's NUMIDENT naming his mother Elvira Pedrayes. No parents in the tree.",
+     "sourceIds": [
+      "fs-ssdi-1984-elvira-pedrayes",
+      "fs-numident-rolando-valdes"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID KZ19-XD6"
+     }
+    }
+   ],
+   "sourceIds": [
+    "fs-numident-rolando-valdes",
+    "fs-ssdi-1984-elvira-pedrayes",
+    "fs-tree-kyler-2026-10-01"
+   ],
+   "familySearchPid": "KZ19-XD6",
+   "line": "Valdés",
+   "livingStatus": "deceased-or-presumed",
+   "familyIds": [
+    "fam-juan-antonio-valdes-nieto"
+   ]
+  },
+  {
+   "id": "juan-rafael-valdes-pedrayes",
+   "given": "Juan Rafael",
+   "surnames": "Valdés Pedrayes",
+   "sex": "M",
+   "alsoKnownAs": [
+    "Juan Rafael Valdes-Pedrayes",
+    "Juan Valdés",
+    "Juan R Valdes",
+    "Juan Valdes-Pedrayes"
+   ],
+   "birth": {
+    "date": "1924-02-15",
+    "place": "Havana, Havana, Cuba",
+    "quality": "probable",
+    "sourceIds": [
+     "fs-tree-kyler-2026-10-01",
+     "note-research-log-2026-08-27"
+    ],
+    "details": "FamilySearch tree (Kyler), no record attached (only a Legacy NFS \"Memory of Someone\" source). Earlier research notes gave the year 1924."
+   },
+   "death": {
+    "date": "2014-05-08",
+    "place": "Miami, Miami-Dade, Florida, United States",
+    "quality": "probable",
+    "sourceIds": [
+     "fs-tree-kyler-2026-10-01",
+     "note-research-log-2026-08-27"
+    ],
+    "details": "FamilySearch tree (Kyler), no record attached. Earlier research notes gave the year 2014."
+   },
+   "events": [
+    {
+     "type": "immigration",
+     "date": "1954",
+     "place": "New York City, New York, United States",
+     "quality": "verified",
+     "sourceIds": [
+      "fs-nypl-1954-juan-r-valdes"
+     ],
+     "details": "Passenger list, Cuba to New York (Juan R Valdes)"
+    },
+    {
+     "type": "residence",
+     "date": "2007-07-01",
+     "place": "Surfside, Florida, United States",
+     "quality": "verified",
+     "sourceIds": [
+      "fs-uspr-2007-juan-r-valdes"
+     ],
+     "details": "US public records, list year 2007; prior residence Tampa, Florida"
+    }
+   ],
+   "parents": [
+    "juan-antonio-valdes-nieto-abt1895",
+    "elvira-rosa-pedrayes-1896"
    ],
    "parentLinks": [
     {
      "id": "juan-antonio-valdes-nieto-abt1895",
-     "status": "probable",
+     "status": "verified",
+     "familyId": "fam-juan-antonio-valdes-nieto"
+    },
+    {
+     "id": "elvira-rosa-pedrayes-1896",
+     "status": "verified",
      "familyId": "fam-juan-antonio-valdes-nieto"
     }
    ],
-   "spouses": [],
+   "spouses": [
+    "marina-petrona-vazquez-bermudez"
+   ],
    "notes": [
+    {
+     "id": "juan-rafael-valdes-pedrayes-n0",
+     "date": "2026-08-27",
+     "status": "probable",
+     "text": "Husband of Marina Petrona Vázquez Bermúdez (research notes). No link to the Asturian Valdés line is known.",
+     "sourceIds": [
+      "note-research-log-2026-08-27"
+     ]
+    },
+    {
+     "id": "juan-rafael-valdes-pedrayes-n1",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "Couple fam-juan-rafael-valdes-marina-vazquez is PROBABLE — see the family notes.",
+     "sourceIds": []
+    },
     {
      "id": "juan-valdes-grandfather-n0",
      "date": "2026-10-01",
      "status": "probable",
      "text": "Juan Valdés is Kyler Rasmussen's grandfather, and the son of Juan Antonio Valdés Nieto. This comes from family knowledge stated by Kyler Rasmussen. It has not yet been checked against a record.",
      "sourceIds": []
+    },
+    {
+     "id": "juan-rafael-valdes-pedrayes-n2",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "Kyler Rasmussen's maternal grandfather, per FamilySearch tree (GDML-8JK). Same man as the former placeholder record juan-valdes-grandfather (merged 1 Oct 2026; its note is kept below as juan-valdes-grandfather-n0). Son of Juan Valdés Nieto (KH44-RC2 = juan-antonio-valdes-nieto-abt1895) and Elvira Rosa Pedrayes (KZ19-XD6). This supersedes note juan-rafael-valdes-pedrayes-n0 (\"no link to the Asturian Valdés line is known\").",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID GDML-8JK"
+     }
+    },
+    {
+     "id": "juan-rafael-valdes-pedrayes-n3",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID GDML-8JK; birth 15 Feb 1924 Havana and death 8 May 2014 Miami (tree facts whose only source is a Legacy NFS memory entry, so probable); parents Juan Valdés Nieto × Elvira Rosa Pedrayes; attached records: 1954 New York passenger list (Cuba to New York) and US Public Records 2007 (Surfside, Florida; earlier Tampa).",
+     "sourceIds": [
+      "fs-nypl-1954-juan-r-valdes",
+      "fs-uspr-2007-juan-r-valdes"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID GDML-8JK"
+     }
+    },
+    {
+     "id": "juan-rafael-valdes-pedrayes-n4",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "FamilySearch tree error (not imported): GDML-8JK lists Rolando Valdés Pedrayes (26K6-LL7, 1928–2002) as a child of Juan Rafael and Marina. Rolando is Juan Rafael's brother (both are children of KH44-RC2 × KZ19-XD6, and Rolando's NUMIDENT names his parents Juan Valdes and Elvira Pedrayes). The child link should be removed on FamilySearch.",
+     "sourceIds": [
+      "fs-numident-rolando-valdes"
+     ]
+    },
+    {
+     "id": "juan-rafael-valdes-pedrayes-n5",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "Couple with Marina Petrona Vázquez Bermúdez: FamilySearch shows them as spouses with no marriage event; Marina's death index is under the married name Marina Valdes. Couple status left probable (no marriage record). Their living daughter is not recorded in this file.",
+     "sourceIds": [
+      "fs-ssdi-2000-marina-valdes",
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
-   "sourceIds": [],
-   "familySearchPid": null,
+   "sourceIds": [
+    "fs-nypl-1954-juan-r-valdes",
+    "fs-tree-kyler-2026-10-01",
+    "fs-uspr-2007-juan-r-valdes",
+    "note-research-log-2026-08-27"
+   ],
+   "familySearchPid": "GDML-8JK",
    "line": "Valdés",
+   "livingStatus": "deceased-or-presumed",
+   "familyIds": [
+    "fam-juan-antonio-valdes-nieto",
+    "fam-juan-rafael-valdes-marina-vazquez"
+   ]
+  },
+  {
+   "id": "rolando-valdes-pedrayes-1928",
+   "given": "Rolando",
+   "surnames": "Valdés Pedrayes",
+   "sex": "M",
+   "alsoKnownAs": [
+    "Rolando Valdes-Pedrayes",
+    "Rolando Valdes",
+    "Ronaldo Valdes"
+   ],
+   "birth": {
+    "date": "1928-09-12",
+    "place": "Havana, Cuba",
+    "quality": "verified",
+    "sourceIds": [
+     "fs-numident-rolando-valdes",
+     "fs-ssdi-2002-rolando-valdes"
+    ],
+    "details": "Date from the SSDI; birthplace Havana from the NUMIDENT"
+   },
+   "death": {
+    "date": "2002-07-16",
+    "place": "Miami, Miami-Dade, Florida, United States",
+    "quality": "verified",
+    "sourceIds": [
+     "fs-numident-rolando-valdes",
+     "fs-ssdi-2002-rolando-valdes",
+     "fs-tree-kyler-2026-10-01"
+    ],
+    "details": "Date from the SSDI and NUMIDENT (last residence Florida, ZIP 33154); the place Miami comes from the FamilySearch tree"
+   },
+   "events": [
+    {
+     "type": "immigration",
+     "date": "1954",
+     "place": "New York City, New York, United States",
+     "quality": "verified",
+     "sourceIds": [
+      "fs-nypl-1954-rolando-valdes"
+     ],
+     "details": "Passenger list"
+    },
+    {
+     "type": "social security application",
+     "date": "Oct 1960",
+     "place": "United States",
+     "quality": "verified",
+     "sourceIds": [
+      "fs-numident-rolando-valdes"
+     ],
+     "details": "Social Program Application (NUMIDENT)"
+    },
+    {
+     "type": "residence",
+     "date": null,
+     "place": "Miami Beach, Miami-Dade, Florida, United States",
+     "quality": "verified",
+     "sourceIds": [
+      "fs-numident-rolando-valdes"
+     ],
+     "details": "Previous residence (NUMIDENT)"
+    }
+   ],
+   "parents": [
+    "juan-antonio-valdes-nieto-abt1895",
+    "elvira-rosa-pedrayes-1896"
+   ],
+   "parentLinks": [
+    {
+     "id": "juan-antonio-valdes-nieto-abt1895",
+     "status": "verified",
+     "familyId": "fam-juan-antonio-valdes-nieto"
+    },
+    {
+     "id": "elvira-rosa-pedrayes-1896",
+     "status": "verified",
+     "familyId": "fam-juan-antonio-valdes-nieto"
+    }
+   ],
+   "spouses": [],
+   "notes": [
+    {
+     "id": "rolando-valdes-pedrayes-1928-n0",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: new person, PID 26K6-LL7, brother of Juan Rafael. Attached records: 1954 New York passenger list, SSDI (born 12 Sep 1928, died 16 Jul 2002) and NUMIDENT (born Havana; parents Juan Valdes and Elvira Pedrayes; Miami Beach). No spouse or children in the tree. A fourth attached item is a Legacy NFS memory entry, not a record.",
+     "sourceIds": [
+      "fs-nypl-1954-rolando-valdes",
+      "fs-ssdi-2002-rolando-valdes",
+      "fs-numident-rolando-valdes"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID 26K6-LL7"
+     }
+    },
+    {
+     "id": "rolando-valdes-pedrayes-1928-n1",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "FamilySearch tree error (not imported): Juan Rafael Valdés Pedrayes's page (GDML-8JK) also lists Rolando as a child of Juan Rafael and Marina. Rolando is Juan Rafael's brother; his NUMIDENT names his parents Juan Valdes and Elvira Pedrayes.",
+     "sourceIds": [
+      "fs-numident-rolando-valdes"
+     ]
+    }
+   ],
+   "sourceIds": [
+    "fs-numident-rolando-valdes",
+    "fs-nypl-1954-rolando-valdes",
+    "fs-ssdi-2002-rolando-valdes",
+    "fs-tree-kyler-2026-10-01"
+   ],
+   "familySearchPid": "26K6-LL7",
+   "line": "Valdés (collateral)",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
     "fam-juan-antonio-valdes-nieto"
@@ -2866,14 +3435,43 @@
      "status": "open",
      "text": "Not in the 1919 household. Alvaro Valdés Álvarez (El Suco Libro 7) is not him.",
      "sourceIds": []
+    },
+    {
+     "id": "alvaro-valdes-nieto-abt1897-n2",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PNM8-GC3 (Alvaro Valdes Nieto, born 1898, Cenero; child of PFF7-31T × PFFQ-CZ3). Attached records: padrón 1900, 1910, 1914 (already in this file, now marked humanVerified). No death, spouse or children in the tree.",
+     "sourceIds": [
+      "cen-1900-pinera",
+      "cen-1910-pinera",
+      "cen-1914-pinera"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PNM8-GC3"
+     }
+    },
+    {
+     "id": "alvaro-valdes-nieto-abt1897-n3",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "Birth-year difference: FamilySearch (PNM8-GC3) gives 1898; we keep \"abt 1897\" from the padrón ages (Ages ~2 (1900), 13 (1910), probably 17 (1914)). FamilySearch has no birth record attached.",
+     "sourceIds": [
+      "cen-1900-pinera",
+      "cen-1910-pinera",
+      "cen-1914-pinera",
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
     "cen-1900-pinera",
     "cen-1910-pinera",
-    "cen-1914-pinera"
+    "cen-1914-pinera",
+    "fs-tree-kyler-2026-10-01"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PNM8-GC3",
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -2956,14 +3554,43 @@
      "status": "open",
      "text": "Gone by 1919: married or died ~1914–19. Lead: local marriage ~1915–20 in Registro Civil de Gijón.",
      "sourceIds": []
+    },
+    {
+     "id": "maria-valdes-nieto-abt1898-n1",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PNM8-CLT (Maria Valdes Nieto, born 1899, Cenero; child of PFF7-31T × PFFQ-CZ3). Attached records: padrón 1900, 1910, 1914 (already in this file, now marked humanVerified). No death, spouse or children in the tree.",
+     "sourceIds": [
+      "cen-1900-pinera",
+      "cen-1910-pinera",
+      "cen-1914-pinera"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PNM8-CLT"
+     }
+    },
+    {
+     "id": "maria-valdes-nieto-abt1898-n2",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "Birth-year difference: FamilySearch (PNM8-CLT) gives 1899; we keep \"abt 1898\" from the padrón ages (Ages 1 (1900), 12 (1910), 15 (1914)). FamilySearch has no birth record attached.",
+     "sourceIds": [
+      "cen-1900-pinera",
+      "cen-1910-pinera",
+      "cen-1914-pinera",
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
     "cen-1900-pinera",
     "cen-1910-pinera",
-    "cen-1914-pinera"
+    "cen-1914-pinera",
+    "fs-tree-kyler-2026-10-01"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PNM8-CLT",
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -3055,15 +3682,44 @@
      "status": "open",
      "text": "Not at Piñera nº 3 in the 1920 census. Leads: RC Gijón marriages ~1920–35; alistamiento quinta ~1922. Marcelino Nieto Nieto (fusilado 1938) is a different man.",
      "sourceIds": []
+    },
+    {
+     "id": "marcelino-valdes-nieto-abt1901-n2",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PNM8-PDD (Marcelino Valdes Nieto, born 1900, Cenero; child of PFF7-31T × PFFQ-CZ3). Attached records: padrón 1910, 1914, 1919 (already in this file, now marked humanVerified). No death, spouse or children in the tree.",
+     "sourceIds": [
+      "cen-1910-pinera",
+      "cen-1914-pinera",
+      "cen-1919-pinera"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PNM8-PDD"
+     }
+    },
+    {
+     "id": "marcelino-valdes-nieto-abt1901-n3",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "Birth-year difference: FamilySearch (PNM8-PDD) gives 1900; we keep \"abt 1901\" from the padrón ages (Ages 10 (1910), 12 (1914), 18 (1919)). FamilySearch has no birth record attached.",
+     "sourceIds": [
+      "cen-1910-pinera",
+      "cen-1914-pinera",
+      "cen-1919-pinera",
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
     "cdmh-fichero66-valdes-nieto",
     "cen-1910-pinera",
     "cen-1914-pinera",
-    "cen-1919-pinera"
+    "cen-1919-pinera",
+    "fs-tree-kyler-2026-10-01"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PNM8-PDD",
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -3146,14 +3802,43 @@
      "status": "open",
      "text": "Not at Piñera nº 3 in 1920; no El Suco burial (Nieves Valdés Núñez is not her); no esquela.",
      "sourceIds": []
+    },
+    {
+     "id": "nieves-valdes-nieto-abt1903-n1",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PNM8-SV9 (Nieves Valdes Nieto, born 1902, Cenero; child of PFF7-31T × PFFQ-CZ3). Attached records: padrón 1910, 1914, 1919 (already in this file, now marked humanVerified). No death, spouse or children in the tree.",
+     "sourceIds": [
+      "cen-1910-pinera",
+      "cen-1914-pinera",
+      "cen-1919-pinera"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PNM8-SV9"
+     }
+    },
+    {
+     "id": "nieves-valdes-nieto-abt1903-n2",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "Birth-year difference: FamilySearch (PNM8-SV9) gives 1902; we keep \"abt 1903\" from the padrón ages (Ages 8 (1910), 11 (1914), 16 (1919)). FamilySearch has no birth record attached.",
+     "sourceIds": [
+      "cen-1910-pinera",
+      "cen-1914-pinera",
+      "cen-1919-pinera",
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
     "cen-1910-pinera",
     "cen-1914-pinera",
-    "cen-1919-pinera"
+    "cen-1919-pinera",
+    "fs-tree-kyler-2026-10-01"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PNM8-SV9",
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -3245,15 +3930,44 @@
      "status": "open",
      "text": "Rebollada 1920 Manuel Valdés Álvarez ~27 is NOT him. Quinta ~1927 unsearched.",
      "sourceIds": []
+    },
+    {
+     "id": "manuel-valdes-nieto-abt1906-n2",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PNM8-GT5 (Manuel Valdes Nieto, born 1904, Cenero; child of PFF7-31T × PFFQ-CZ3). Attached records: padrón 1910, 1914, 1919 (already in this file, now marked humanVerified). No death, spouse or children in the tree.",
+     "sourceIds": [
+      "cen-1910-pinera",
+      "cen-1914-pinera",
+      "cen-1919-pinera"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PNM8-GT5"
+     }
+    },
+    {
+     "id": "manuel-valdes-nieto-abt1906-n3",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "Birth-year difference: FamilySearch (PNM8-GT5) gives 1904; we keep \"abt 1906\" from the padrón ages (Ages 6 (1910), 9 (1914), 13 (1919)). FamilySearch has no birth record attached.",
+     "sourceIds": [
+      "cen-1910-pinera",
+      "cen-1914-pinera",
+      "cen-1919-pinera",
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
     "cdmh-fichero66-valdes-nieto",
     "cen-1910-pinera",
     "cen-1914-pinera",
-    "cen-1919-pinera"
+    "cen-1919-pinera",
+    "fs-tree-kyler-2026-10-01"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PNM8-GT5",
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -3338,15 +4052,44 @@
      "sourceIds": [
       "cdmh-fichero66-valdes-nieto"
      ]
+    },
+    {
+     "id": "bautista-valdes-nieto-abt1908-n1",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PNM8-RS4 (Bautista Valdes Nieto, born 1906, Cenero; child of PFF7-31T × PFFQ-CZ3). Attached records: padrón 1910, 1914, 1919 (already in this file, now marked humanVerified). No death, spouse or children in the tree.",
+     "sourceIds": [
+      "cen-1910-pinera",
+      "cen-1914-pinera",
+      "cen-1919-pinera"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PNM8-RS4"
+     }
+    },
+    {
+     "id": "bautista-valdes-nieto-abt1908-n2",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "Birth-year difference: FamilySearch (PNM8-RS4) gives 1906; we keep \"abt 1908\" from the padrón ages (Ages ~4 (1910), 7 (1914), 11 (1919)). FamilySearch has no birth record attached.",
+     "sourceIds": [
+      "cen-1910-pinera",
+      "cen-1914-pinera",
+      "cen-1919-pinera",
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
     "cdmh-fichero66-valdes-nieto",
     "cen-1910-pinera",
     "cen-1914-pinera",
-    "cen-1919-pinera"
+    "cen-1919-pinera",
+    "fs-tree-kyler-2026-10-01"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PNM8-RS4",
    "line": "Valdés",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -3450,6 +4193,32 @@
      "sourceIds": [
       "cen-1910-pinera"
      ]
+    },
+    {
+     "id": "jose-valdes-nieto-abt1910-n3",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PNMD-9L9 (Jose Valdes Nieto, born 1910, Cenero; child of PFF7-31T × PFFQ-CZ3). Attached records: padrón 1914, 1919 (already in this file, now marked humanVerified). No death, spouse or children in the tree.",
+     "sourceIds": [
+      "cen-1914-pinera",
+      "cen-1919-pinera"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PNMD-9L9"
+     }
+    },
+    {
+     "id": "jose-valdes-nieto-abt1910-n4",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "FamilySearch has José (PNMD-9L9) and Luis (PNM8-YDY), both born 1910, as separate children; Luis has only the 1910 padrón attached and José only 1914/1919. The possible-duplicate question stays open.",
+     "sourceIds": [
+      "cen-1910-pinera",
+      "cen-1914-pinera",
+      "cen-1919-pinera"
+     ]
     }
    ],
    "sourceIds": [
@@ -3459,7 +4228,7 @@
     "cen-1914-pinera",
     "cen-1919-pinera"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PNMD-9L9",
    "line": "Valdés",
    "livingStatus": "possibly-living",
    "familyIds": [
@@ -3471,7 +4240,9 @@
    "given": "Hortensia",
    "surnames": "Valdés Nieto",
    "sex": "F",
-   "alsoKnownAs": [],
+   "alsoKnownAs": [
+    "Ortensia Valdes Nieto"
+   ],
    "birth": {
     "date": "abt 1912",
     "place": "Cenero, Gijón, Asturias, Spain",
@@ -3532,13 +4303,28 @@
      "status": "open",
      "text": "Hortensia Valdés Álvarez (El Suco Libro 7) and Hortensia Valdés Busto (d. Candás 2007) are NOT her.",
      "sourceIds": []
+    },
+    {
+     "id": "hortensia-valdes-nieto-abt1912-n1",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PNM8-VMQ (Ortensia Valdes Nieto, born 1912, Cenero; child of PFF7-31T × PFFQ-CZ3). Attached records: padrón 1914, 1919 (already in this file, now marked humanVerified). No death, spouse or children in the tree.",
+     "sourceIds": [
+      "cen-1914-pinera",
+      "cen-1919-pinera"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PNM8-VMQ"
+     }
     }
    ],
    "sourceIds": [
     "cen-1914-pinera",
     "cen-1919-pinera"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PNM8-VMQ",
    "line": "Valdés",
    "livingStatus": "possibly-living",
    "familyIds": [
@@ -3601,12 +4387,26 @@
      "status": "open",
      "text": "Not at Piñera nº 3 in 1920; no El Suco burial; no esquela. A weak modern rare-name lead is NOT PROVEN and deliberately not published here.",
      "sourceIds": []
+    },
+    {
+     "id": "alvarina-valdes-nieto-abt1914-n1",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PNM8-BDF (Alvarina Valdes Nieto, born 1914, Cenero; child of PFF7-31T × PFFQ-CZ3). Attached records: padrón 1919 (already in this file, now marked humanVerified). No death, spouse or children in the tree.",
+     "sourceIds": [
+      "cen-1919-pinera"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PNM8-BDF"
+     }
     }
    ],
    "sourceIds": [
     "cen-1919-pinera"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PNM8-BDF",
    "line": "Valdés",
    "livingStatus": "possibly-living",
    "familyIds": [
@@ -3678,13 +4478,27 @@
      "status": "open",
      "text": "Aurelio Valdés Valdés (d. Gijón 2011) is NOT him. Quinta ~1938 unsearched.",
      "sourceIds": []
+    },
+    {
+     "id": "aurelio-valdes-nieto-abt1917-n2",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PNMD-3ZY (Aurelio Valdes Nieto, born 1917, Cenero; child of PFF7-31T × PFFQ-CZ3). Attached records: padrón 1919 (already in this file, now marked humanVerified). No death, spouse or children in the tree.",
+     "sourceIds": [
+      "cen-1919-pinera"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PNMD-3ZY"
+     }
     }
    ],
    "sourceIds": [
     "cdmh-fichero66-valdes-nieto",
     "cen-1919-pinera"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PNMD-3ZY",
    "line": "Valdés",
    "livingStatus": "possibly-living",
    "familyIds": [
@@ -3749,12 +4563,37 @@
      "sourceIds": [
       "cen-1910-pinera"
      ]
+    },
+    {
+     "id": "luis-valdes-nieto-1910-n1",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PNM8-YDY (Luis Valdes Nieto, born 1910, Cenero; child of PFF7-31T × PFFQ-CZ3). Attached records: padrón 1910 (already in this file, now marked humanVerified). No death, spouse or children in the tree.",
+     "sourceIds": [
+      "cen-1910-pinera"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PNM8-YDY"
+     }
+    },
+    {
+     "id": "luis-valdes-nieto-1910-n2",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "FamilySearch has Luis (PNM8-YDY, 1910, only the 1910 padrón attached) and José (PNMD-9L9, 1910, the 1914 and 1919 padrones attached) as two separate children. That matches how this file records them but does not settle whether the 3-month-old Luis of 1910 is the later José. Kept separate.",
+     "sourceIds": [
+      "cen-1910-pinera",
+      "cen-1914-pinera",
+      "cen-1919-pinera"
+     ]
     }
    ],
    "sourceIds": [
     "cen-1910-pinera"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PNM8-YDY",
    "line": "Valdés",
    "livingStatus": "possibly-living",
    "familyIds": [
@@ -4121,6 +4960,20 @@
      "status": "probable",
      "text": "Link to parents (fam-francisco-sanchez) is PROBABLE — see the family notes.",
      "sourceIds": []
+    },
+    {
+     "id": "antonio-sanchez-bef1801-n3",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PN7W-7Q3 (Antonio Sánchez); no dates or places in the tree; attached record: the 1854 marriage of their daughter María (RCGijón1854M0036v, already in this file, now marked humanVerified; URL not shown on the collapsed card, matched by title).",
+     "sourceIds": [
+      "rc-1854M0036v"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PN7W-7Q3"
+     }
     }
    ],
    "sourceIds": [
@@ -4140,7 +4993,7 @@
     "rc-1866D0141v",
     "rc-1866D0157v"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PN7W-7Q3",
    "line": "Sánchez",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -4228,6 +5081,20 @@
      "status": "probable",
      "text": "Link to parents (fam-jose-menendez-cecilia-perez) is PROBABLE — see the family notes.",
      "sourceIds": []
+    },
+    {
+     "id": "maria-menendez-fuya-perez-abt1803-n4",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PN77-FCT (María Menéndez Fuya); no dates or places in the tree; attached record: the 1854 marriage of their daughter María (RCGijón1854M0036v, already in this file, now marked humanVerified; URL not shown on the collapsed card, matched by title).",
+     "sourceIds": [
+      "rc-1854M0036v"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PN77-FCT"
+     }
     }
    ],
    "sourceIds": [
@@ -4243,7 +5110,7 @@
     "rc-1854M0036v",
     "rc-1866D0141v"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PN77-FCT",
    "line": "Sánchez",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -4594,13 +5461,28 @@
      "status": "open",
      "text": "No birth/baptism found: the Porceyo rural copy in Libro 02 is male-only. Next: Porceyo parish female baptisms ~1831–34.",
      "sourceIds": []
+    },
+    {
+     "id": "maria-sanchez-menendez-abt1833-n2",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PN77-BD5 (María Sánchez Menédez); birth 1832 Porceyo (fits our abt 1831–1833); parents Antonio Sánchez (PN7W-7Q3) × María Menéndez Fuya (PN77-FCT); attached records: the 1900 padrón and the 1854 marriage (already in this file, now marked humanVerified).",
+     "sourceIds": [
+      "cen-1900-pinera",
+      "rc-1854M0036v"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PN77-BD5"
+     }
     }
    ],
    "sourceIds": [
     "cen-1900-pinera",
     "rc-1854M0036v"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PN77-BD5",
    "line": "Sánchez",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -4952,11 +5834,17 @@
     }
    ],
    "parents": [
-    "manuel-menendez-tuya-fl1787"
+    "manuel-menendez-tuya-fl1787",
+    "josefa-sanchez-wife-of-manuel-menendez-tuya"
    ],
    "parentLinks": [
     {
      "id": "manuel-menendez-tuya-fl1787",
+     "status": "proposed",
+     "familyId": "fam-manuel-menendez-tuya"
+    },
+    {
+     "id": "josefa-sanchez-wife-of-manuel-menendez-tuya",
      "status": "proposed",
      "familyId": "fam-manuel-menendez-tuya"
     }
@@ -5572,7 +6460,9 @@
    ],
    "parents": [],
    "parentLinks": [],
-   "spouses": [],
+   "spouses": [
+    "josefa-sanchez-wife-of-manuel-menendez-tuya"
+   ],
    "notes": [
     {
      "id": "manuel-menendez-tuya-fl1787-n0",
@@ -5582,14 +6472,69 @@
      "sourceIds": [
       "hid-1794-L33-0076r"
      ]
+    },
+    {
+     "id": "manuel-menendez-tuya-fl1787-n1",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch contributed: PID PQJY-XZV (Manuel Menendez), shown as the father of Manuel Menendez-Tuya (PQJY-D2X), with wife Josefa Sanchez (PQJY-5C4). This agrees with our PROPOSED identification; the only source attached is an \"España, Provincia de Asturias, registros municipales\" entry with no URL captured, so the link stays proposed. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
+    "fs-tree-kyler-2026-10-01",
     "hid-1787-L32-0108r",
     "hid-1794-L33-0076r",
     "hid-1801-L34-0073v"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PQJY-XZV",
+   "line": "Menéndez",
+   "livingStatus": "deceased-or-presumed",
+   "familyIds": [
+    "fam-manuel-menendez-tuya"
+   ]
+  },
+  {
+   "id": "josefa-sanchez-wife-of-manuel-menendez-tuya",
+   "given": "Josefa",
+   "surnames": "Sánchez",
+   "sex": "F",
+   "alsoKnownAs": [],
+   "birth": {
+    "date": null,
+    "place": null,
+    "quality": "unknown",
+    "sourceIds": []
+   },
+   "death": {
+    "date": null,
+    "place": null,
+    "quality": "unknown",
+    "sourceIds": []
+   },
+   "events": [],
+   "parents": [],
+   "parentLinks": [],
+   "spouses": [
+    "manuel-menendez-tuya-fl1787"
+   ],
+   "notes": [
+    {
+     "id": "josefa-sanchez-wife-of-manuel-menendez-tuya-n0",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch contributed: new person, PID PQJY-5C4, wife of Manuel Menendez (PQJY-XZV) and mother of Manuel Menendez-Tuya (PQJY-D2X). Her only source on FamilySearch is an \"España, Provincia de Asturias, registros municipales\" entry (no URL captured; unfinished attachment). Mother links are proposed, like the father links. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
+    }
+   ],
+   "sourceIds": [
+    "fs-tree-kyler-2026-10-01"
+   ],
+   "familySearchPid": "PQJY-5C4",
    "line": "Menéndez",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -5601,7 +6546,9 @@
    "given": "Manuel",
    "surnames": "Menéndez Fuya",
    "sex": "M",
-   "alsoKnownAs": [],
+   "alsoKnownAs": [
+    "Manuel Menendez-Tuya"
+   ],
    "birth": {
     "date": "abt 1786",
     "place": "La Pedrera, Gijón, Asturias, Spain",
@@ -5664,11 +6611,17 @@
     }
    ],
    "parents": [
-    "manuel-menendez-tuya-fl1787"
+    "manuel-menendez-tuya-fl1787",
+    "josefa-sanchez-wife-of-manuel-menendez-tuya"
    ],
    "parentLinks": [
     {
      "id": "manuel-menendez-tuya-fl1787",
+     "status": "proposed",
+     "familyId": "fam-manuel-menendez-tuya"
+    },
+    {
+     "id": "josefa-sanchez-wife-of-manuel-menendez-tuya",
      "status": "proposed",
      "familyId": "fam-manuel-menendez-tuya"
     }
@@ -5699,19 +6652,58 @@
      "status": "proposed",
      "text": "Link to parents (fam-manuel-menendez-tuya) is PROPOSED — see the family notes.",
      "sourceIds": []
+    },
+    {
+     "id": "manuel-menendez-fuya-abt1786-n3",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PQJY-D2X (Manuel Menendez-Tuya); attached index entries for his Nieto grandchildren's births in 1841, 1846, 1849 and 1852 (two entries) (1841/1846/1852 are acts already in this file, now humanVerified; 1849 is new). Tree parents Manuel Menendez (PQJY-XZV) × Josefa Sanchez (PQJY-5C4); tree children José Antonio 1822, María 1824, Ramona.",
+     "sourceIds": [
+      "rc-1841N0108r",
+      "rc-1846N0107r",
+      "fs-spain-civil-1849-ramon-nieto",
+      "rc-1852N0089r"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PQJY-D2X"
+     }
+    },
+    {
+     "id": "manuel-menendez-fuya-abt1786-n4",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "Conflict: FamilySearch (PQJY-D2X) gives birth 1784, Cenero, and death 1 Dec 1863 (death registration Oviedo). We have birth abt 1786, natural de la Pedrera (from his probable 1861 death record), and death 21 Jan 1861, el Carmen, Gijón (probable). Kept ours. No birth or death record is attached on FamilySearch.",
+     "sourceIds": [
+      "rc-1861D0008r",
+      "fs-tree-kyler-2026-10-01"
+     ]
+    },
+    {
+     "id": "manuel-menendez-fuya-abt1786-n5",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "FamilySearch tree error (not imported): PQJY-D2X and his wife PQJY-HVT have Puerto Rico records attached: two 1875 parish entries for an \"Antonio Menendez\" household (8586-VN6Z, 851Z-PFMM; wife 8586-VNN2, 851Z-PF3Z) and an unidentified Puerto Rico civil entry (6BCD-2B3K; wife 6BH5-DX6W). They cannot be this Asturian couple (he died 1861 or 1863).",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
+    "fs-spain-civil-1849-ramon-nieto",
+    "fs-tree-kyler-2026-10-01",
     "hid-1794-L33-0076r",
     "hid-1801-L34-0073v",
     "hid-1831-L37-0096v",
     "rc-1817N0058r",
     "rc-1841N0108r",
+    "rc-1846N0107r",
     "rc-1848M0033v",
     "rc-1852N0089r",
     "rc-1861D0008r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PQJY-D2X",
    "line": "Menéndez",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -5726,10 +6718,13 @@
    "sex": "F",
    "alsoKnownAs": [],
    "birth": {
-    "date": null,
-    "place": null,
-    "quality": "unknown",
-    "sourceIds": []
+    "date": "abt 1784",
+    "place": "Cenero, Gijón, Asturias, Spain",
+    "quality": "probable",
+    "sourceIds": [
+     "fs-tree-kyler-2026-10-01"
+    ],
+    "details": "FamilySearch tree (Kyler), no record attached"
    },
    "death": {
     "date": null,
@@ -5760,15 +6755,47 @@
      "status": "excluded",
      "text": "No fitting death 1861–68 (candidates of 1856, 1859, 1866 ×2, 1868 rejected).",
      "sourceIds": []
+    },
+    {
+     "id": "josefa-rodriguez-pedrera-n2",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PQJY-HVT; birth abt 1784 Cenero (tree fact, probable); attached index entries for her grandchildren's births in 1841, 1846, 1849 and 1852, and an Asturias municipal record (QL39-ZNDF, content not captured).",
+     "sourceIds": [
+      "rc-1841N0108r",
+      "rc-1846N0107r",
+      "fs-spain-civil-1849-ramon-nieto",
+      "rc-1852N0089r",
+      "fs-asturias-municipal-josefa-rodriguez"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PQJY-HVT"
+     }
+    },
+    {
+     "id": "josefa-rodriguez-pedrera-n3",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "FamilySearch gives her birthplace as Cenero; our records call her \"of Pedrera\" (residence when her grandchildren were born). Not necessarily a conflict; the birthplace is unproven.",
+     "sourceIds": [
+      "rc-1841N0108r",
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
+    "fs-asturias-municipal-josefa-rodriguez",
+    "fs-spain-civil-1849-ramon-nieto",
+    "fs-tree-kyler-2026-10-01",
     "rc-1817N0058r",
     "rc-1841N0108r",
+    "rc-1846N0107r",
     "rc-1848M0033v",
     "rc-1852N0089r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PQJY-HVT",
    "line": "Menéndez",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -5813,11 +6840,22 @@
     }
    ],
    "spouses": [],
-   "notes": [],
+   "notes": [
+    {
+     "id": "jose-antonio-menendez-fuya-rodriguez-1822-n0",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch tree lists this person as PID GR3B-PV4, a child of Manuel Menendez-Tuya × Josefa Rodriguez; person page not captured. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
+    }
+   ],
    "sourceIds": [
+    "fs-tree-kyler-2026-10-01",
     "rc-1817N0058r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "GR3B-PV4",
    "line": "Menéndez",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -5874,12 +6912,22 @@
      "sourceIds": [
       "rc-1848M0033v"
      ]
+    },
+    {
+     "id": "maria-menendez-fuya-rodriguez-abt1824-n1",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch tree lists this person as PID LH2V-NCW, a child of Manuel Menendez-Tuya × Josefa Rodriguez; person page not captured. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
+    "fs-tree-kyler-2026-10-01",
     "rc-1848M0033v"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "LH2V-NCW",
    "line": "Menéndez",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -5941,13 +6989,17 @@
    "surnames": "Menéndez Fuya",
    "sex": "F",
    "alsoKnownAs": [
-    "Ramona Menéndez"
+    "Ramona Menéndez",
+    "Ramona Menéndez-Tuya y Rodríguez"
    ],
    "birth": {
     "date": null,
-    "place": null,
-    "quality": "unknown",
-    "sourceIds": []
+    "place": "Cenero, Gijón, Asturias, Spain",
+    "quality": "probable",
+    "sourceIds": [
+     "fs-tree-kyler-2026-10-01"
+    ],
+    "details": "FamilySearch tree (Kyler), no record attached (place only)"
    },
    "death": {
     "date": null,
@@ -5955,7 +7007,18 @@
     "quality": "unknown",
     "sourceIds": []
    },
-   "events": [],
+   "events": [
+    {
+     "type": "occupation",
+     "date": null,
+     "place": null,
+     "quality": "probable",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ],
+     "details": "Farmer (FamilySearch tree (Kyler), no record attached)"
+    }
+   ],
    "parents": [
     "manuel-menendez-fuya-abt1786",
     "josefa-rodriguez-pedrera"
@@ -5992,16 +7055,35 @@
      "status": "open",
      "text": "No José Nieto × Ramona Menéndez marriage in the 1836–37 books (1838–40 missing); no death of either to 1868 found.",
      "sourceIds": []
+    },
+    {
+     "id": "ramona-menendez-fuya-rodriguez-n2",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PSSX-R1K (Ramona Menéndez-Tuya y Rodríguez); born Cenero (no year) and occupation farmer (tree facts, probable); parents Manuel Menendez-Tuya (PQJY-D2X) × Josefa Rodriguez (PQJY-HVT); attached index entries for the births of her sons in 1841, 1846, 1849 and 1852 (see José Nieto González).",
+     "sourceIds": [
+      "rc-1841N0108r",
+      "rc-1846N0107r",
+      "fs-spain-civil-1849-ramon-nieto",
+      "rc-1852N0089r"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PSSX-R1K"
+     }
     }
    ],
    "sourceIds": [
+    "fs-spain-civil-1849-ramon-nieto",
+    "fs-tree-kyler-2026-10-01",
     "rc-1817N0049v",
     "rc-1841N0108r",
     "rc-1846N0107r",
     "rc-1848D0082r",
     "rc-1852N0089r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PSSX-R1K",
    "line": "Nieto",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -6016,10 +7098,13 @@
    "sex": "M",
    "alsoKnownAs": [],
    "birth": {
-    "date": null,
-    "place": null,
-    "quality": "unknown",
-    "sourceIds": []
+    "date": "abt 1775",
+    "place": "Cenero, Gijón, Asturias, Spain",
+    "quality": "probable",
+    "sourceIds": [
+     "fs-tree-kyler-2026-10-01"
+    ],
+    "details": "FamilySearch tree (Kyler), no record attached"
    },
    "death": {
     "date": "bef 1841",
@@ -6063,15 +7148,59 @@
      "status": "open",
      "text": "No José Nieto head in the Cenero hidalguía padrones 1773–1831 — family probably pechero. Cenero parish books burned 1936; try notarial/Catastro records.",
      "sourceIds": []
+    },
+    {
+     "id": "jose-nieto-fl1798-n2",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID G1VV-37L; birth abt 1775 Cenero (tree fact, probable); death \"before 1829\", Cenero (tree; we keep our estimate \"bef 1841\"). Attached FamilySearch index entries for his grandchildren's births in 1841, 1846, 1849 and 1852 (the 1841/1846/1852 acts are already in this file; 1849 is new) and two further records of 26 Nov 1857 and 27 May 1863 (content not captured).",
+     "sourceIds": [
+      "rc-1841N0108r",
+      "rc-1846N0107r",
+      "fs-spain-civil-1849-ramon-nieto",
+      "rc-1852N0089r",
+      "fs-spain-civil-1857-jose-nieto",
+      "fs-spain-civil-1863-jose-nieto"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID G1VV-37L"
+     }
+    },
+    {
+     "id": "jose-nieto-fl1798-n3",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "FamilySearch tree error / conflict (not imported): G1VV-37L also has a preferred second wife Bernarda González Valdés (G59K-D6B) with daughters Josefa 1820, María 1830 and Balbina 1834. Our research found José Nieto × Bernarda González Valdés (Peñaferruz) to be a different Cenero couple (excl-23). The tree is also internally inconsistent: it gives his death as before 1829 but children born 1830 and 1834. The 1857 and 1863 records attached to G1VV-37L may belong to that other family.",
+     "sourceIds": [
+      "fs-spain-civil-1857-jose-nieto",
+      "fs-spain-civil-1863-jose-nieto",
+      "fs-tree-kyler-2026-10-01"
+     ]
+    },
+    {
+     "id": "jose-nieto-fl1798-n4",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "Death: FamilySearch says before 1829 (Cenero); we keep \"bef 1841\" (no death in the 1836–37 or 1841–68 indexes). Nothing attached on FamilySearch supports the earlier limit.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
+    "fs-spain-civil-1849-ramon-nieto",
+    "fs-spain-civil-1857-jose-nieto",
+    "fs-spain-civil-1863-jose-nieto",
+    "fs-tree-kyler-2026-10-01",
     "rc-1841N0108r",
     "rc-1842D0085r",
     "rc-1842M0011r",
+    "rc-1846N0107r",
     "rc-1852N0089r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "G1VV-37L",
    "line": "Nieto",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -6085,13 +7214,17 @@
    "sex": "F",
    "alsoKnownAs": [
     "Bárbara del Valle",
-    "Bárbara González del Valle"
+    "Bárbara González del Valle",
+    "Bárbara González-Valle"
    ],
    "birth": {
     "date": null,
-    "place": null,
-    "quality": "unknown",
-    "sourceIds": []
+    "place": "Cenero, Gijón, Asturias, Spain",
+    "quality": "probable",
+    "sourceIds": [
+     "fs-tree-kyler-2026-10-01"
+    ],
+    "details": "FamilySearch tree (Kyler), no record attached (place only)"
    },
    "death": {
     "date": null,
@@ -6112,15 +7245,31 @@
      "status": "proposed",
      "text": "José González del Valle, Cenero 1801 (PMFGijónL34-0108r) — possible relative, unexamined.",
      "sourceIds": []
+    },
+    {
+     "id": "barbara-gonzalez-valle-n1",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID G1VV-GK7 (Bárbara González-Valle); born Cenero (no year; tree fact, probable); attached index entries for her grandchildren's births of 9 Sep 1841 and 7 Aug 1852 (the acts RCGijón1841N0108r and 1852N0089r, now humanVerified). Tree children Gaspar (1800), José and Ramón Nieto González-Valle.",
+     "sourceIds": [
+      "rc-1841N0108r",
+      "rc-1852N0089r"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID G1VV-GK7"
+     }
     }
    ],
    "sourceIds": [
+    "fs-tree-kyler-2026-10-01",
     "rc-1841N0108r",
     "rc-1842D0085r",
     "rc-1842M0011r",
     "rc-1852N0089r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "G1VV-GK7",
    "line": "Nieto",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -6196,6 +7345,123 @@
    ]
   },
   {
+   "id": "gaspar-nieto-gonzalez-valle-1800",
+   "given": "Gaspar",
+   "surnames": "Nieto González-Valle",
+   "sex": "M",
+   "alsoKnownAs": [],
+   "birth": {
+    "date": "1800",
+    "place": null,
+    "quality": "probable",
+    "sourceIds": [
+     "fs-tree-kyler-2026-10-01"
+    ],
+    "details": "FamilySearch tree (Kyler), no record attached; year from the children list on G1VV-37L"
+   },
+   "death": {
+    "date": null,
+    "place": null,
+    "quality": "unknown",
+    "sourceIds": []
+   },
+   "events": [],
+   "parents": [
+    "jose-nieto-fl1798",
+    "barbara-gonzalez-valle"
+   ],
+   "parentLinks": [
+    {
+     "id": "jose-nieto-fl1798",
+     "status": "probable",
+     "familyId": "fam-jose-nieto-barbara-gonzalez"
+    },
+    {
+     "id": "barbara-gonzalez-valle",
+     "status": "probable",
+     "familyId": "fam-jose-nieto-barbara-gonzalez"
+    }
+   ],
+   "spouses": [],
+   "notes": [
+    {
+     "id": "gaspar-nieto-gonzalez-valle-1800-n0",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch contributed: new person, PID G129-BQ2, listed as a son of José Nieto (G1VV-37L) × Bárbara González-Valle (G1VV-GK7), born 1800. Person page not captured; no record seen. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
+    }
+   ],
+   "sourceIds": [
+    "fs-tree-kyler-2026-10-01"
+   ],
+   "familySearchPid": "G129-BQ2",
+   "line": "Nieto (collateral)",
+   "livingStatus": "deceased-or-presumed",
+   "familyIds": [
+    "fam-jose-nieto-barbara-gonzalez"
+   ]
+  },
+  {
+   "id": "ramon-nieto-gonzalez-valle",
+   "given": "Ramón",
+   "surnames": "Nieto González-Valle",
+   "sex": "M",
+   "alsoKnownAs": [],
+   "birth": {
+    "date": null,
+    "place": null,
+    "quality": "unknown",
+    "sourceIds": []
+   },
+   "death": {
+    "date": null,
+    "place": null,
+    "quality": "unknown",
+    "sourceIds": []
+   },
+   "events": [],
+   "parents": [
+    "jose-nieto-fl1798",
+    "barbara-gonzalez-valle"
+   ],
+   "parentLinks": [
+    {
+     "id": "jose-nieto-fl1798",
+     "status": "probable",
+     "familyId": "fam-jose-nieto-barbara-gonzalez"
+    },
+    {
+     "id": "barbara-gonzalez-valle",
+     "status": "probable",
+     "familyId": "fam-jose-nieto-barbara-gonzalez"
+    }
+   ],
+   "spouses": [],
+   "notes": [
+    {
+     "id": "ramon-nieto-gonzalez-valle-n0",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch contributed: new person, PID G1VJ-XYY, listed as a son of José Nieto (G1VV-37L) × Bárbara González-Valle (G1VV-GK7), no dates. Person page not captured; no record seen. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
+    }
+   ],
+   "sourceIds": [
+    "fs-tree-kyler-2026-10-01"
+   ],
+   "familySearchPid": "G1VJ-XYY",
+   "line": "Nieto (collateral)",
+   "livingStatus": "deceased-or-presumed",
+   "familyIds": [
+    "fam-jose-nieto-barbara-gonzalez"
+   ]
+  },
+  {
    "id": "manuela-alvarez-llana-abt1816",
    "given": "Manuela",
    "surnames": "Álvarez Llana",
@@ -6253,9 +7519,12 @@
    ],
    "birth": {
     "date": null,
-    "place": null,
-    "quality": "unknown",
-    "sourceIds": []
+    "place": "Cenero, Gijón, Asturias, Spain",
+    "quality": "probable",
+    "sourceIds": [
+     "fs-tree-kyler-2026-10-01"
+    ],
+    "details": "FamilySearch tree (Kyler), no record attached (place only)"
    },
    "death": {
     "date": null,
@@ -6325,16 +7594,35 @@
       "rc-1841N0108r",
       "rc-1852N0089r"
      ]
+    },
+    {
+     "id": "jose-nieto-gonzalez-fl1838-n1",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PSSF-16J; born Cenero (no year; tree fact, probable); attached FamilySearch index entries for the births of his sons Rafael (9 Sep 1841), Jacinto (1846), Ramón (12 Mar 1849) and Manuel (7 Aug 1852). The 1841, 1846 and 1852 entries are the same acts as RCGijón1841N0108r, 1846N0107r and 1852N0089r (now humanVerified); the 1849 Ramón entry is new.",
+     "sourceIds": [
+      "rc-1841N0108r",
+      "rc-1846N0107r",
+      "fs-spain-civil-1849-ramon-nieto",
+      "rc-1852N0089r"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PSSF-16J"
+     }
     }
    ],
    "sourceIds": [
+    "fs-spain-civil-1849-ramon-nieto",
+    "fs-tree-kyler-2026-10-01",
     "rc-1817N0049v",
     "rc-1841N0108r",
     "rc-1846N0107r",
     "rc-1848D0082r",
     "rc-1852N0089r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PSSF-16J",
    "line": "Nieto",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -6429,11 +7717,22 @@
     }
    ],
    "spouses": [],
-   "notes": [],
+   "notes": [
+    {
+     "id": "rafael-antonio-nieto-menendez-1841-n0",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch tree lists this person as PID PQJB-RT9 (Rafael Antonio Nieto y Menendez-Tuya, 1841, son of PSSF-16J × PSSX-R1K); person page not captured. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
+    }
+   ],
    "sourceIds": [
+    "fs-tree-kyler-2026-10-01",
     "rc-1841N0108r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PQJB-RT9",
    "line": "Nieto",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -6481,12 +7780,101 @@
     }
    ],
    "spouses": [],
-   "notes": [],
+   "notes": [
+    {
+     "id": "jacinto-nieto-menendez-1846-n0",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch tree lists this person as PID PSSN-9L5 (Jacinto Nieto Menéndez, 1846–Deceased, son of PSSF-16J × PSSX-R1K); person page not captured. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
+    }
+   ],
    "sourceIds": [
+    "fs-tree-kyler-2026-10-01",
     "rc-1846N0107r",
     "rc-1848D0082r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PSSN-9L5",
+   "line": "Nieto",
+   "livingStatus": "deceased-or-presumed",
+   "familyIds": [
+    "fam-jose-nieto-ramona-menendez"
+   ]
+  },
+  {
+   "id": "ramon-nieto-menendez-1849",
+   "given": "Ramón",
+   "surnames": "Nieto Menéndez",
+   "sex": "M",
+   "alsoKnownAs": [],
+   "birth": {
+    "date": "1849-03-12",
+    "place": "Gijón, Asturias, Spain",
+    "quality": "verified",
+    "sourceIds": [
+     "fs-spain-civil-1849-ramon-nieto"
+    ],
+    "details": "Date of the FamilySearch-indexed civil record (birth or baptism); the Gijón image has not been read for this file"
+   },
+   "death": {
+    "date": "1925",
+    "place": null,
+    "quality": "probable",
+    "sourceIds": [
+     "fs-tree-kyler-2026-10-01"
+    ],
+    "details": "FamilySearch tree (Kyler), no record attached"
+   },
+   "events": [],
+   "parents": [
+    "jose-nieto-gonzalez-fl1838",
+    "ramona-menendez-fuya-rodriguez"
+   ],
+   "parentLinks": [
+    {
+     "id": "jose-nieto-gonzalez-fl1838",
+     "status": "verified",
+     "familyId": "fam-jose-nieto-ramona-menendez"
+    },
+    {
+     "id": "ramona-menendez-fuya-rodriguez",
+     "status": "verified",
+     "familyId": "fam-jose-nieto-ramona-menendez"
+    }
+   ],
+   "spouses": [],
+   "notes": [
+    {
+     "id": "ramon-nieto-menendez-1849-n0",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: new person, PID MR9Q-GG7 (Ramon Nieto Menéndez, 1849–1925), listed as a son of José Nieto González × Ramona Menéndez-Tuya. Birth from the attached FamilySearch index entry of 12 Mar 1849 (record 6BM6-72CC); death year 1925 is a tree fact (probable). His own person page was not captured.",
+     "sourceIds": [
+      "fs-spain-civil-1849-ramon-nieto"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID MR9Q-GG7"
+     }
+    },
+    {
+     "id": "ramon-nieto-menendez-1849-n1",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "Check against the Gijón 1849 birth image: our earlier index review attributed a \"Ramona 1849\" Nieto × Menéndez birth to Francisco Nieto × Josefa Menéndez Huergo (excl-24). Confirm that the 12 Mar 1849 act is a son Ramón of José Nieto × Ramona Menéndez Fuya, as the FamilySearch index says (with the right grandparents).",
+     "sourceIds": [
+      "fs-spain-civil-1849-ramon-nieto"
+     ]
+    }
+   ],
+   "sourceIds": [
+    "fs-spain-civil-1849-ramon-nieto",
+    "fs-tree-kyler-2026-10-01"
+   ],
+   "familySearchPid": "MR9Q-GG7",
    "line": "Nieto",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -6573,6 +7961,20 @@
      "status": "probable",
      "text": "Couple fam-manuel-nieto-cristina-uria is PROBABLE — see the family notes.",
      "sourceIds": []
+    },
+    {
+     "id": "manuel-antonio-nieto-menendez-1852-n3",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PSSN-SWT; birth and christening 7 Aug 1852 Cenero (agrees with our image-verified birth); attached records: RCGijón1852N0089r and its FamilySearch index entry 6BM9-GQQB (the same act), already in this file and now marked humanVerified. Tree siblings Rafael Antonio 1841, Jacinto 1846, Ramón 1849–1925 (new here); the tree has no José 1838.",
+     "sourceIds": [
+      "rc-1852N0089r"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PSSN-SWT"
+     }
     }
    ],
    "sourceIds": [
@@ -6580,7 +7982,7 @@
     "cen-1900-rebollada",
     "rc-1852N0089r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PSSN-SWT",
    "line": "Nieto",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -6667,6 +8069,20 @@
      "status": "probable",
      "text": "Couple fam-manuel-nieto-cristina-uria is PROBABLE — see the family notes.",
      "sourceIds": []
+    },
+    {
+     "id": "cristina-uria-rodriguez-1858-n3",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID PFL3-YNL; birth 7 Oct 1858 Pedrera (agrees); attached record RCGijón1858N0182r (already in this file, now marked humanVerified). Tree parents Jose Oria Alvarez (PFL3-JPC) × Maria Rodriguez Alvarez (PFL3-YSG). The couple Manuel × Cristina is in the tree with no marriage event, matching our PROBABLE status.",
+     "sourceIds": [
+      "rc-1858N0182r"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID PFL3-YNL"
+     }
     }
    ],
    "sourceIds": [
@@ -6674,7 +8090,7 @@
     "cen-1900-rebollada",
     "rc-1858N0182r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PFL3-YNL",
    "line": "Nieto",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -8405,9 +9821,19 @@
      "status": "probable",
      "text": "Link to parents (fam-manuel-de-la-uria-maria-menendez-somonte) is PROBABLE — see the family notes.",
      "sourceIds": []
+    },
+    {
+     "id": "manuel-uria-menendez-abt1790-n3",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch tree lists this person as PID PFLQ-4N3 (Manuel Uría, father of Jose Oria Alvarez (PFL3-JPC)); person page not captured. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
+    "fs-tree-kyler-2026-10-01",
     "hid-1794-L33-0081v",
     "hid-1801-L34-0122v",
     "hid-1824-L36-0160r",
@@ -8422,7 +9848,7 @@
     "rc-1861D0124r",
     "rc-1864N0202r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PFLQ-4N3",
    "line": "Uría",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -8481,9 +9907,19 @@
      "status": "open",
      "text": "Her parents unknown.",
      "sourceIds": []
+    },
+    {
+     "id": "antonia-alvarez-ruedes-n3",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch tree lists this person as PID PFL3-TM6 (Antonia Álvarez, mother of Jose Oria Alvarez (PFL3-JPC)); person page not captured. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
+    "fs-tree-kyler-2026-10-01",
     "rc-1817N0099r",
     "rc-1817N0100r",
     "rc-1817N0101v",
@@ -8494,7 +9930,7 @@
     "rc-1864D0068v",
     "rc-1864N0202r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PFL3-TM6",
    "line": "Uría",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -8789,7 +10225,8 @@
    "sex": "M",
    "alsoKnownAs": [
     "José Uría",
-    "José Oria"
+    "José Oria",
+    "Jose Oria Alvarez"
    ],
    "birth": {
     "date": "1834-05-27",
@@ -8843,9 +10280,19 @@
      "status": "excluded",
      "text": "The José Uría who died 26 Mar 1861 Pedrera (~33, RCGijón1861D0125r) is son of Domingo Uría × María Álvarez — not him.",
      "sourceIds": []
+    },
+    {
+     "id": "jose-antonio-uria-alvarez-1834-n2",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch contributed: PID PFL3-JPC (Jose Oria Alvarez), born Pedrera (agrees); parents Manuel Uría (PFLQ-4N3) × Antonia Álvarez (PFL3-TM6), agreeing with ours. Only attached source: a \"Spain, Civil Records\" 1858 entry with no URL captured (probably Cristina's birth, already in this file as RCGijón1858N0182r). FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
+    "fs-tree-kyler-2026-10-01",
     "rc-1817N0102r",
     "rc-1856M0049r",
     "rc-1857M0039v",
@@ -8853,7 +10300,7 @@
     "rc-1861N0196v",
     "rc-1864N0202r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PFL3-JPC",
    "line": "Uría",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -8866,7 +10313,9 @@
    "given": "María",
    "surnames": "Rodríguez Díaz",
    "sex": "F",
-   "alsoKnownAs": [],
+   "alsoKnownAs": [
+    "Maria Rodriguez Alvarez"
+   ],
    "birth": {
     "date": "abt 1827–1828",
     "place": "Ruedes, Gijón, Asturias, Spain",
@@ -8913,16 +10362,37 @@
       "rc-1857M0039v",
       "rc-1858N0182r"
      ]
+    },
+    {
+     "id": "maria-rodriguez-diaz-abt1828-n1",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch contributed: PID PFL3-YSG (Maria Rodriguez Alvarez), born Ruedes (agrees); parents Matías Rodríguez (PFLQ-D6F) × Teresa Díaz (PFLQ-6M7), agreeing with ours. Only attached source: a \"Spain, Civil Records\" 1858 entry with no URL captured. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
+    },
+    {
+     "id": "maria-rodriguez-diaz-abt1828-n2",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "Surname conflict: FamilySearch calls her \"Maria Rodriguez Alvarez\"; our records (her 1857 marriage, and her children's births naming her parents Matías Rodríguez × Teresa Díaz) give Rodríguez Díaz. Kept ours; added the FamilySearch form as an alias.",
+     "sourceIds": [
+      "rc-1857M0039v",
+      "rc-1858N0182r",
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
+    "fs-tree-kyler-2026-10-01",
     "rc-1856M0049r",
     "rc-1857M0039v",
     "rc-1858N0182r",
     "rc-1861N0196v",
     "rc-1864N0202r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PFL3-YSG",
    "line": "Uría",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -9751,9 +11221,19 @@
      "status": "probable",
      "text": "Link to parents (fam-jose-rodriguez-teresa-rodriguez) is PROBABLE — see the family notes.",
      "sourceIds": []
+    },
+    {
+     "id": "matias-rodriguez-rodriguez-abt1800-n2",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch tree lists this person as PID PFLQ-D6F (Matías Rodríguez, father of Maria Rodriguez Alvarez (PFL3-YSG)); person page not captured. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
+    "fs-tree-kyler-2026-10-01",
     "hid-1801-L34-0124r",
     "hid-1815-L35-0096r",
     "hid-1824-L36-0146v",
@@ -9766,7 +11246,7 @@
     "rc-1859D0109v",
     "rc-1864N0202r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PFLQ-D6F",
    "line": "Rodríguez",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -9997,9 +11477,19 @@
      "status": "excluded",
      "text": "Death not found 1859–68 (1856 urban; 1862 Bernueces 79; 1855/1861 Serín; 1866 Somió rejected). Her parents unknown; Leorio is covered by La Pedrera parish books.",
      "sourceIds": []
+    },
+    {
+     "id": "teresa-diaz-leorio-n2",
+     "date": "2026-10-01",
+     "status": "probable",
+     "text": "FamilySearch tree lists this person as PID PFLQ-6M7 (Teresa Díaz, mother of Maria Rodriguez Alvarez (PFL3-YSG)); person page not captured. FamilySearch tree (Kyler), no record attached.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
+    "fs-tree-kyler-2026-10-01",
     "rc-1817N0130r",
     "rc-1817N0131r",
     "rc-1857M0039v",
@@ -10007,7 +11497,7 @@
     "rc-1858N0182r",
     "rc-1864N0202r"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "PFLQ-6M7",
    "line": "Rodríguez",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -10193,11 +11683,11 @@
    "death": {
     "date": "1946",
     "place": null,
-    "quality": "proposed",
+    "quality": "probable",
     "sourceIds": [
      "fs-tree-bermudez"
     ],
-    "details": "FamilySearch tree date only (unsourced)"
+    "details": "FamilySearch tree date only (unsourced); FamilySearch tree (Kyler) gives \"abt 1946\", no record attached"
    },
    "events": [],
    "parents": [],
@@ -10231,6 +11721,20 @@
      "status": "verified",
      "text": "From research memory notes (27 Aug 2026), not from the Google Sheet; the sheet itself lists only \"Jose Bermudez (born 1867)\" and \"Maria Luisa Sanchez (born 1869)\".",
      "sourceIds": []
+    },
+    {
+     "id": "jose-bermudez-abt1867-n3",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: life dates abt 1867–abt 1946 (no places; tree facts, probable). Attached record: the 1981 Puerto Rico death record of daughter Dolores (persona QVJ9-54LW), already in this file and now marked humanVerified. No parents in the tree.",
+     "sourceIds": [
+      "fs-pr-death-dolores-1981"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID GGZG-464"
+     }
     }
    ],
    "sourceIds": [
@@ -10270,11 +11774,11 @@
    "death": {
     "date": "1949",
     "place": null,
-    "quality": "proposed",
+    "quality": "probable",
     "sourceIds": [
      "fs-tree-bermudez"
     ],
-    "details": "FamilySearch tree date only (unsourced)"
+    "details": "FamilySearch tree date only (unsourced); FamilySearch tree (Kyler) gives \"abt 1949\", no record attached"
    },
    "events": [],
    "parents": [],
@@ -10289,6 +11793,20 @@
      "status": "verified",
      "text": "From research memory notes (27 Aug 2026), not from the Google Sheet; the sheet itself lists only \"Jose Bermudez (born 1867)\" and \"Maria Luisa Sanchez (born 1869)\".",
      "sourceIds": []
+    },
+    {
+     "id": "maria-luisa-sanchez-1869-n1",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: life dates 1869–abt 1949 (no places; tree facts, probable). Attached record: the 1981 Puerto Rico death record of daughter Dolores (persona QVJ9-54L4), already in this file and now marked humanVerified. No parents in the tree.",
+     "sourceIds": [
+      "fs-pr-death-dolores-1981"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID GGZG-ZVQ"
+     }
     }
    ],
    "sourceIds": [
@@ -10314,18 +11832,20 @@
    "birth": {
     "date": "1894-04-17",
     "place": "Havana, Cuba",
-    "quality": "probable",
+    "quality": "verified",
     "sourceIds": [
-     "fs-pr-death-dolores-1981"
+     "fs-pr-death-dolores-1981",
+     "fs-ssdi-1981-dolores-bermudez"
     ],
-    "details": "as stated on her 1981 death certificate"
+    "details": "As stated on her 1981 death certificate and in the SSDI (17 Apr 1894)"
    },
    "death": {
     "date": "1981-02-06",
     "place": "San Juan, Puerto Rico",
     "quality": "verified",
     "sourceIds": [
-     "fs-pr-death-dolores-1981"
+     "fs-pr-death-dolores-1981",
+     "fs-ssdi-1981-dolores-bermudez"
     ]
    },
    "events": [],
@@ -10371,10 +11891,26 @@
      "status": "verified",
      "text": "From research memory notes (27 Aug 2026), not from the Google Sheet; the sheet itself lists only \"Jose Bermudez (born 1867)\" and \"Maria Luisa Sanchez (born 1869)\".",
      "sourceIds": []
+    },
+    {
+     "id": "maria-de-los-dolores-bermudez-sanchez-1894-n3",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: birth 17 Apr 1894 Havana and death 6 Feb 1981 (death registration San Juan, Puerto Rico). Attached records: SSDI (birth 17 Apr 1894, death Feb 1981, last residence San Juan) and the Puerto Rico civil death record (her persona QVJ9-54L7; the same record as fs-pr-death-dolores-1981, now humanVerified). Parents José Bermúdez (GGZG-464) × Maria Luisa Sánchez (GGZG-ZVQ); husband José Vázquez-Bouza, marriage abt 1915.",
+     "sourceIds": [
+      "fs-ssdi-1981-dolores-bermudez",
+      "fs-pr-death-dolores-1981"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID KC5T-574"
+     }
     }
    ],
    "sourceIds": [
     "fs-pr-death-dolores-1981",
+    "fs-ssdi-1981-dolores-bermudez",
     "fs-tree-bermudez",
     "note-research-log-2026-08-27",
     "ssda-246125"
@@ -10390,14 +11926,21 @@
   {
    "id": "jose-vazquez",
    "given": "José",
-   "surnames": "Vázquez",
+   "surnames": "Vázquez Bouza",
    "sex": "M",
-   "alsoKnownAs": [],
+   "alsoKnownAs": [
+    "José Vázquez-Bouza",
+    "Jose Vazquez",
+    "Jose Bazquez-Bouza"
+   ],
    "birth": {
-    "date": null,
-    "place": null,
-    "quality": "unknown",
-    "sourceIds": []
+    "date": "abt 1887",
+    "place": "Havana, Cuba",
+    "quality": "probable",
+    "sourceIds": [
+     "fs-tree-kyler-2026-10-01"
+    ],
+    "details": "FamilySearch tree (Kyler), no record attached. The attached Legacy NFS family source (Kirk Rasmussen's handwritten papers) instead gives 1887, La Borra, Asturias, Spain (open conflict note)."
    },
    "death": {
     "date": null,
@@ -10420,12 +11963,36 @@
      "sourceIds": [
       "fs-pr-death-dolores-1981"
      ]
+    },
+    {
+     "id": "jose-vazquez-n1",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: PID 2DTP-9MP (José Vázquez-Bouza; birth name Jose Vazquez); birth abt 1887 (tree fact, probable); marriage to Dolores Bermúdez abt 1915 (tree fact, probable); daughters Maria Antonia Leandra (L6TS-733) and Marina Petrona (L6GM-7B4). Attached record: the 1981 Puerto Rico death record of his wife (his persona QVJ9-54LH), already in this file and now marked humanVerified. No parents in the tree. The record id stays jose-vazquez.",
+     "sourceIds": [
+      "fs-pr-death-dolores-1981"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID 2DTP-9MP"
+     }
+    },
+    {
+     "id": "jose-vazquez-n2",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "Birthplace conflict within FamilySearch: the tree says Havana, Cuba; the attached Legacy NFS source (Kirk Rasmussen's handwritten family papers) says born 1887 in La Borra, Asturias, Spain. Neither is backed by a record. Recorded Havana as the tree value (probable); La Borra is worth checking.",
+     "sourceIds": [
+      "fs-tree-kyler-2026-10-01"
+     ]
     }
    ],
    "sourceIds": [
-    "fs-pr-death-dolores-1981"
+    "fs-pr-death-dolores-1981",
+    "fs-tree-kyler-2026-10-01"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "2DTP-9MP",
    "line": "Bermúdez (Havana)",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
@@ -10442,20 +12009,36 @@
     "Maria/Toni Lukacs"
    ],
    "birth": {
-    "date": null,
-    "place": null,
-    "quality": "unknown",
-    "sourceIds": []
+    "date": "1916-03-13",
+    "place": "Havana, Cuba",
+    "quality": "probable",
+    "sourceIds": [
+     "fs-tree-kyler-2026-10-01"
+    ],
+    "details": "FamilySearch tree (Kyler), no record attached (the attached obituary may state it; its text was not captured)"
    },
    "death": {
     "date": "2013-03-11",
     "place": "Bridgeport, Connecticut, USA",
-    "quality": "probable",
+    "quality": "verified",
     "sourceIds": [
+     "fs-obit-2013-maria-lukacs",
      "note-research-log-2026-08-27"
-    ]
+    ],
+    "details": "Obituary published 14 Mar 2013 (GenealogyBank index) and FamilySearch tree: 11 Mar 2013, Bridgeport, Fairfield, Connecticut"
    },
-   "events": [],
+   "events": [
+    {
+     "type": "residence",
+     "date": "2013-03-11",
+     "place": "Bridgeport, Fairfield, Connecticut, United States",
+     "quality": "verified",
+     "sourceIds": [
+      "fs-obit-2013-maria-lukacs"
+     ],
+     "details": "Residence at death (FamilySearch event; obituary attached)"
+    }
+   ],
    "parents": [
     "jose-vazquez",
     "maria-de-los-dolores-bermudez-sanchez-1894"
@@ -10499,10 +12082,28 @@
      "status": "probable",
      "text": "Couple fam-palko-lukacs-maria-antonia-vazquez is PROBABLE — see the family notes.",
      "sourceIds": []
+    },
+    {
+     "id": "maria-antonia-leandra-vazquez-n3",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: birth 13 Mar 1916 Havana (tree fact, probable); death 11 Mar 2013 Bridgeport, Connecticut, with an attached GenealogyBank obituary index entry (14 Mar 2013, \"Mrs Maria Or Toni Lukacs\", naming Palko Lukacs) and the Connecticut death index entry of her husband Paul S Lukacs (23 Mar 1989). Spouse Palko Sigmund Lukacs (L6TS-WWS, 1911–1989); no children.",
+     "sourceIds": [
+      "fs-obit-2013-maria-lukacs",
+      "fs-ct-death-1989-paul-lukacs"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID L6TS-733"
+     }
     }
    ],
    "sourceIds": [
+    "fs-ct-death-1989-paul-lukacs",
+    "fs-obit-2013-maria-lukacs",
     "fs-tree-bermudez",
+    "fs-tree-kyler-2026-10-01",
     "note-research-log-2026-08-27"
    ],
    "familySearchPid": "L6TS-733",
@@ -10523,18 +12124,23 @@
     "Marina Valdes"
    ],
    "birth": {
-    "date": null,
-    "place": null,
-    "quality": "unknown",
-    "sourceIds": []
+    "date": "1921-01-31",
+    "place": "Havana, Havana, Cuba",
+    "quality": "probable",
+    "sourceIds": [
+     "fs-tree-kyler-2026-10-01"
+    ],
+    "details": "FamilySearch tree (Kyler), no record attached (the attached SSDI probably carries the birth date, but it was not captured)"
    },
    "death": {
     "date": "2000-07-21",
     "place": "Miami, Florida, USA",
-    "quality": "probable",
+    "quality": "verified",
     "sourceIds": [
+     "fs-ssdi-2000-marina-valdes",
      "note-research-log-2026-08-27"
-    ]
+    ],
+    "details": "SSDI (Marina Valdes): 21 Jul 2000, Miami, Florida. Previously from the research notes only (probable)."
    },
    "events": [],
    "parents": [
@@ -10580,10 +12186,26 @@
      "status": "probable",
      "text": "Couple fam-juan-rafael-valdes-marina-vazquez is PROBABLE — see the family notes.",
      "sourceIds": []
+    },
+    {
+     "id": "marina-petrona-vazquez-bermudez-n3",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed: birth 31 Jan 1921 Havana (tree fact, probable); death 21 Jul 2000 Miami confirmed by the attached SSDI entry for Marina Valdes; parents José Vázquez-Bouza (2DTP-9MP) and María de los Dolores Bermúdez y Sánchez (KC5T-574); spouse Juan Rafael Valdés Pedrayes (GDML-8JK), no marriage event. A NUMIDENT suggestion was shown only as \"+ Add\" (not attached).",
+     "sourceIds": [
+      "fs-ssdi-2000-marina-valdes"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID L6GM-7B4"
+     }
     }
    ],
    "sourceIds": [
+    "fs-ssdi-2000-marina-valdes",
     "fs-tree-bermudez",
+    "fs-tree-kyler-2026-10-01",
     "note-research-log-2026-08-27"
    ],
    "familySearchPid": "L6GM-7B4",
@@ -10599,20 +12221,40 @@
    "given": "Palko Sigmund",
    "surnames": "Lukacs",
    "sex": "M",
-   "alsoKnownAs": [],
+   "alsoKnownAs": [
+    "Paul S Lukacs",
+    "Palko Lukacs"
+   ],
    "birth": {
-    "date": null,
+    "date": "1911",
     "place": null,
-    "quality": "unknown",
-    "sourceIds": []
+    "quality": "probable",
+    "sourceIds": [
+     "fs-tree-kyler-2026-10-01"
+    ],
+    "details": "FamilySearch tree (Kyler), no record attached (life dates on the spouse card)"
    },
    "death": {
-    "date": null,
-    "place": null,
-    "quality": "unknown",
-    "sourceIds": []
+    "date": "1989-03-23",
+    "place": "Bridgeport, Fairfield, Connecticut, United States",
+    "quality": "verified",
+    "sourceIds": [
+     "fs-ct-death-1989-paul-lukacs"
+    ],
+    "details": "Connecticut Death Index (Paul S Lukacs): residence 350 Grovers Av, Bridgeport; married"
    },
-   "events": [],
+   "events": [
+    {
+     "type": "occupation",
+     "date": "1989",
+     "place": "Fairfield University, Fairfield, Connecticut, United States",
+     "quality": "verified",
+     "sourceIds": [
+      "fs-ct-death-1989-paul-lukacs"
+     ],
+     "details": "professor emeritus"
+    }
+   ],
    "parents": [],
    "parentLinks": [],
    "spouses": [
@@ -10634,74 +12276,43 @@
      "status": "probable",
      "text": "Couple fam-palko-lukacs-maria-antonia-vazquez is PROBABLE — see the family notes.",
      "sourceIds": []
+    },
+    {
+     "id": "palko-sigmund-lukacs-n2",
+     "date": "2026-10-01",
+     "status": "verified",
+     "text": "FamilySearch contributed (via his wife's page L6TS-733): PID L6TS-WWS, life dates 1911–1989; his Connecticut death index entry (Paul S Lukacs, 23 Mar 1989, Bridgeport, professor emeritus, Fairfield University) and his wife's 2013 obituary are attached to her. His own page was not captured.",
+     "sourceIds": [
+      "fs-ct-death-1989-paul-lukacs",
+      "fs-obit-2013-maria-lukacs"
+     ],
+     "humanVerified": {
+      "by": "Kyler Rasmussen (FamilySearch tree)",
+      "date": "2026-10-01",
+      "comment": "Attached in Kyler's FamilySearch tree, PID L6TS-WWS"
+     }
+    },
+    {
+     "id": "palko-sigmund-lukacs-n3",
+     "date": "2026-10-01",
+     "status": "open",
+     "text": "The Connecticut death index entry reads \"Paul S Lukacs and BERNATH\"; the role of BERNATH (a parent's or spouse's surname) was not captured. Check before treating it as his wife's name.",
+     "sourceIds": [
+      "fs-ct-death-1989-paul-lukacs"
+     ]
     }
    ],
    "sourceIds": [
+    "fs-ct-death-1989-paul-lukacs",
+    "fs-obit-2013-maria-lukacs",
+    "fs-tree-kyler-2026-10-01",
     "note-research-log-2026-08-27"
    ],
-   "familySearchPid": null,
+   "familySearchPid": "L6TS-WWS",
    "line": "Bermúdez (in-law)",
    "livingStatus": "deceased-or-presumed",
    "familyIds": [
     "fam-palko-lukacs-maria-antonia-vazquez"
-   ]
-  },
-  {
-   "id": "juan-rafael-valdes-pedrayes",
-   "given": "Juan Rafael",
-   "surnames": "Valdés Pedrayes",
-   "sex": "M",
-   "alsoKnownAs": [
-    "Juan Rafael Valdes-Pedrayes"
-   ],
-   "birth": {
-    "date": "1924",
-    "place": null,
-    "quality": "probable",
-    "sourceIds": [
-     "note-research-log-2026-08-27"
-    ]
-   },
-   "death": {
-    "date": "2014",
-    "place": null,
-    "quality": "probable",
-    "sourceIds": [
-     "note-research-log-2026-08-27"
-    ]
-   },
-   "events": [],
-   "parents": [],
-   "parentLinks": [],
-   "spouses": [
-    "marina-petrona-vazquez-bermudez"
-   ],
-   "notes": [
-    {
-     "id": "juan-rafael-valdes-pedrayes-n0",
-     "date": "2026-08-27",
-     "status": "probable",
-     "text": "Husband of Marina Petrona Vázquez Bermúdez (research notes). No link to the Asturian Valdés line is known.",
-     "sourceIds": [
-      "note-research-log-2026-08-27"
-     ]
-    },
-    {
-     "id": "juan-rafael-valdes-pedrayes-n1",
-     "date": "2026-10-01",
-     "status": "probable",
-     "text": "Couple fam-juan-rafael-valdes-marina-vazquez is PROBABLE — see the family notes.",
-     "sourceIds": []
-    }
-   ],
-   "sourceIds": [
-    "note-research-log-2026-08-27"
-   ],
-   "familySearchPid": null,
-   "line": "Bermúdez (in-law)",
-   "livingStatus": "deceased-or-presumed",
-   "familyIds": [
-    "fam-juan-rafael-valdes-marina-vazquez"
    ]
   }
  ],
@@ -10746,7 +12357,8 @@
     "jose-antonio-valdes-uria-1826",
     "juan-antonio-valdes-uria-1829",
     "juan-antonio-valdes-uria-1832",
-    "antonio-valdes-uria-1835"
+    "antonio-valdes-uria-1835",
+    "josefa-valdes-uria-1836"
    ],
    "childLinks": [
     {
@@ -10772,6 +12384,10 @@
     {
      "id": "antonio-valdes-uria-1835",
      "status": "verified"
+    },
+    {
+     "id": "josefa-valdes-uria-1836",
+     "status": "probable"
     }
    ],
    "marriage": {
@@ -10781,7 +12397,8 @@
     "source": null
    },
    "notes": [
-    "Marriage predates the civil marriage books (~1820). All six children are named as theirs in birth, death or marriage records."
+    "Marriage predates the civil marriage books (~1820). All six children are named as theirs in birth, death or marriage records.",
+    "Josefa (1836, FamilySearch KVV8-6V5) added 1 Oct 2026 from Kyler's FamilySearch tree only; no record seen (probable)."
    ]
   },
   {
@@ -10926,25 +12543,32 @@
   {
    "id": "fam-juan-antonio-valdes-nieto",
    "husband": "juan-antonio-valdes-nieto-abt1895",
-   "wife": null,
-   "coupleStatus": "probable",
+   "wife": "elvira-rosa-pedrayes-1896",
+   "coupleStatus": "verified",
    "children": [
-    "juan-valdes-grandfather"
+    "juan-rafael-valdes-pedrayes",
+    "rolando-valdes-pedrayes-1928"
    ],
    "childLinks": [
     {
-     "id": "juan-valdes-grandfather",
-     "status": "probable"
+     "id": "juan-rafael-valdes-pedrayes",
+     "status": "verified"
+    },
+    {
+     "id": "rolando-valdes-pedrayes-1928",
+     "status": "verified"
     }
    ],
    "marriage": {
-    "date": null,
-    "place": null,
-    "quality": "unknown",
+    "date": "abt 1922",
+    "place": "Havana, Cuba",
+    "quality": "probable",
     "source": null
    },
    "notes": [
-    "Wife unknown. The son Juan Valdés is identified from family knowledge (Kyler Rasmussen's grandfather), not yet checked against a record."
+    "Wife unknown. The son Juan Valdés is identified from family knowledge (Kyler Rasmussen's grandfather), not yet checked against a record.",
+    "Updated 1 Oct 2026 from Kyler's FamilySearch tree (KH44-RC2 × KZ19-XD6): the wife is Elvira Rosa Pedrayes, so the \"wife unknown\" note above is superseded, and the son formerly recorded as juan-valdes-grandfather is Juan Rafael Valdés Pedrayes (GDML-8JK, merged). Marriage abt 1922 in Havana is a tree fact with no record attached (probable). Rolando's NUMIDENT names his parents Juan Valdes and Elvira Pedrayes. Juan Rafael's link is verified by Kyler's decision (he is Kyler's maternal grandfather, per the FamilySearch tree).",
+    "FamilySearch tree error, not imported: GDML-8JK's page also lists Rolando (26K6-LL7) as a child of Juan Rafael and Marina; Rolando is Juan Rafael's brother."
    ]
   },
   {
@@ -11306,7 +12930,7 @@
   {
    "id": "fam-manuel-menendez-tuya",
    "husband": "manuel-menendez-tuya-fl1787",
-   "wife": null,
+   "wife": "josefa-sanchez-wife-of-manuel-menendez-tuya",
    "coupleStatus": "verified",
    "children": [
     "manuel-menendez-fuya-abt1786",
@@ -11329,7 +12953,8 @@
     "source": null
    },
    "notes": [
-    "Wife unknown. Padrón sons Josef (1787) and Manuel (1794); identification with Manuel Menéndez Fuya (good fit) and José Menéndez Fuya of Porceyo (hypothesis) is PROPOSED only."
+    "Wife unknown. Padrón sons Josef (1787) and Manuel (1794); identification with Manuel Menéndez Fuya (good fit) and José Menéndez Fuya of Porceyo (hypothesis) is PROPOSED only.",
+    "1 Oct 2026: Kyler's FamilySearch tree names the wife of Manuel Menendez (PQJY-XZV) as Josefa Sanchez (PQJY-5C4), mother of Manuel Menendez-Tuya only. Added as wife from the tree. Her link to José Menéndez Fuya is part of our own hypothesis, not FamilySearch's; all mother links are proposed, like the father links."
    ]
   },
   {
@@ -11386,7 +13011,9 @@
    "coupleStatus": "verified",
    "children": [
     "manuel-nieto-gonzalez-abt1799",
-    "jose-nieto-gonzalez-fl1838"
+    "jose-nieto-gonzalez-fl1838",
+    "gaspar-nieto-gonzalez-valle-1800",
+    "ramon-nieto-gonzalez-valle"
    ],
    "childLinks": [
     {
@@ -11396,6 +13023,14 @@
     {
      "id": "jose-nieto-gonzalez-fl1838",
      "status": "verified"
+    },
+    {
+     "id": "gaspar-nieto-gonzalez-valle-1800",
+     "status": "probable"
+    },
+    {
+     "id": "ramon-nieto-gonzalez-valle",
+     "status": "probable"
     }
    ],
    "marriage": {
@@ -11404,7 +13039,9 @@
     "quality": "estimated",
     "source": null
    },
-   "notes": []
+   "notes": [
+    "Gaspar (1800, G129-BQ2) and Ramón (G1VJ-XYY) Nieto González-Valle added 1 Oct 2026 from Kyler's FamilySearch tree only (probable). FamilySearch's second wife Bernarda González Valdés and her daughters are NOT imported (excl-23)."
+   ]
   },
   {
    "id": "fam-manuel-nieto-manuela-alvarez",
@@ -11432,6 +13069,7 @@
     "jose-nieto-menendez-1838",
     "rafael-antonio-nieto-menendez-1841",
     "jacinto-nieto-menendez-1846",
+    "ramon-nieto-menendez-1849",
     "manuel-antonio-nieto-menendez-1852"
    ],
    "childLinks": [
@@ -11448,6 +13086,10 @@
      "status": "verified"
     },
     {
+     "id": "ramon-nieto-menendez-1849",
+     "status": "verified"
+    },
+    {
      "id": "manuel-antonio-nieto-menendez-1852",
      "status": "verified"
     }
@@ -11459,7 +13101,8 @@
     "source": null
    },
    "notes": [
-    "Other Nieto × Menéndez births in the index belong to Francisco Nieto × Josefa Menéndez Huergo and Bernardo Nieto × María/Ramona Menéndez (Tuya) — not this couple."
+    "Other Nieto × Menéndez births in the index belong to Francisco Nieto × Josefa Menéndez Huergo and Bernardo Nieto × María/Ramona Menéndez (Tuya) — not this couple.",
+    "Ramón (12 Mar 1849, FamilySearch MR9Q-GG7) added 1 Oct 2026 from a FamilySearch index entry attached in Kyler's tree, naming José Nieto × Ramona Menéndez with grandparents José Nieto, Manuel Menéndez and Josefa Rodríguez. The Gijón image is still to be read (see his open note)."
    ]
   },
   {
@@ -11904,13 +13547,14 @@
     }
    ],
    "marriage": {
-    "date": null,
+    "date": "abt 1915",
     "place": null,
-    "quality": "unknown",
+    "quality": "probable",
     "source": null
    },
    "notes": [
-    "Daughters attributed to Dolores in the research notes / FamilySearch tree; José Vázquez as their father is inferred from their surname and his being Dolores's spouse (PROBABLE)."
+    "Daughters attributed to Dolores in the research notes / FamilySearch tree; José Vázquez as their father is inferred from their surname and his being Dolores's spouse (PROBABLE).",
+    "1 Oct 2026: Kyler's FamilySearch tree (2DTP-9MP × KC5T-574) gives the marriage as abt 1915 (no place, no record attached: probable) and lists both daughters. Child links left probable; no attached record names José as their father."
    ]
   },
   {
@@ -11996,7 +13640,12 @@
     "valdes_uria_header.jpg"
    ],
    "imageUrl": "https://fondos.gijon.es/fotoweb/cache/v2/7/T/ayArchivo/Libros%20Registro%20Civil/Libro%2002%20%5B1817-1845%20-%20Nacimientos%20rurales%5D/RCGij%C3%B3n1817N0057r.JPG.jCfr7MeGMrcxL4dhwCUA.TxUdelJaKq.jpg",
-   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/a/Z/ayArchivo/Libros%20Registro%20Civil/Libro%2002%20%5B1817-1845%20-%20Nacimientos%20rurales%5D/RCGij%C3%B3n1817N0057r.JPG.jCfr7MeGMrcxL4dhIAcA.YkfXIv0hDX.jpg"
+   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/a/Z/ayArchivo/Libros%20Registro%20Civil/Libro%2002%20%5B1817-1845%20-%20Nacimientos%20rurales%5D/RCGij%C3%B3n1817N0057r.JPG.jCfr7MeGMrcxL4dhIAcA.YkfXIv0hDX.jpg",
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2024-04-26",
+    "comment": "Attached in Kyler's FamilySearch tree, PID 9V7Q-7LZ"
+   }
   },
   {
    "id": "rc-1817N0057v",
@@ -12403,7 +14052,15 @@
    "imageCode": "RCGijón1841N0108r",
    "url": "https://fondos.gijon.es/fotoweb/archives/5004-Archivo/ayArchivo/Libros%20Registro%20Civil/Libro%2009%20[1841%20-%20Nacimientos]/RCGij%C3%B3n1841N0108r.JPG.info",
    "urlDerived": false,
-   "altUrls": [],
+   "altUrls": [
+    "https://www.familysearch.org/ark:/61903/1:1:659B-3NGJ",
+    "https://www.familysearch.org/ark:/61903/1:1:659B-3NGV",
+    "https://www.familysearch.org/ark:/61903/1:1:659B-3NGK",
+    "https://www.familysearch.org/ark:/61903/1:1:659B-3NG2",
+    "https://www.familysearch.org/ark:/61903/1:1:659B-3NGL",
+    "https://www.familysearch.org/ark:/61903/1:1:659B-3NGG",
+    "https://www.familysearch.org/ark:/61903/1:1:659B-3NGP"
+   ],
    "citationText": "\"Spain, Gijón Civil Registry, Births 1841,\" Libro 9, folio 106r, Rafael Antonio Nieto, 9 Sep 1841; Archivo Municipal de Gijón, Libros Registro Civil, image RCGijón1841N0108r, https://fondos.gijon.es/fotoweb/archives/5004-Archivo/ayArchivo/Libros%20Registro%20Civil/Libro%2009%20[1841%20-%20Nacimientos]/RCGijón1841N0108r.JPG.info.",
    "transcription": "Rafael Antonio, 9 Sep 1841, barrio Carbaínos; parents José Nieto, labrador × Ramona Menéndez FUYA, Cenero; paternal grandparents José Nieto × Bárbara González Valle (Cenero); maternal grandparents Manuel Menéndez Fuya × Josefa Rodríguez (Pedrera); baptized S. Juan de Cenero.",
    "personIds": [
@@ -12420,7 +14077,12 @@
     "birth_1841_rafael_antonio_nieto_Cenero_Carbainos_of_jose_nieto_ramona_menendez_FUYA_gp_manuel_menendez_fuya_josefa_rodriguez_Pedrera.jpg"
    ],
    "imageUrl": "https://fondos.gijon.es/fotoweb/cache/v2/Z/S/ayArchivo/Libros%20Registro%20Civil/Libro%2009%20%5B1841%20-%20Nacimientos%5D/RCGij%C3%B3n1841N0108r.JPG.jCfo1MWGMlVbL4dhwCUA.OInw0GUJWl.jpg",
-   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/u/d/ayArchivo/Libros%20Registro%20Civil/Libro%2009%20%5B1841%20-%20Nacimientos%5D/RCGij%C3%B3n1841N0108r.JPG.jCfo1MWGMlVbL4dhIAcA.ALrbnHOZNW.jpg"
+   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/u/d/ayArchivo/Libros%20Registro%20Civil/Libro%2009%20%5B1841%20-%20Nacimientos%5D/RCGij%C3%B3n1841N0108r.JPG.jCfo1MWGMlVbL4dhIAcA.ALrbnHOZNW.jpg",
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2025-08-21",
+    "comment": "Attached in Kyler's FamilySearch tree, PIDs G1VV-37L, G1VV-GK7, PQJY-D2X, PQJY-HVT, PSSF-16J, PSSX-R1K"
+   }
   },
   {
    "id": "rc-1846N0107r",
@@ -12432,20 +14094,35 @@
    "imageCode": "RCGijón1846N0107r",
    "url": "https://fondos.gijon.es/fotoweb/archives/5004-Archivo/ayArchivo/Libros%20Registro%20Civil/Libro%2024%20[1846%20-%20Nacimientos]/RCGij%C3%B3n1846N0107r.JPG.info",
    "urlDerived": false,
-   "altUrls": [],
+   "altUrls": [
+    "https://www.familysearch.org/ark:/61903/1:1:6BMD-Y349",
+    "https://www.familysearch.org/ark:/61903/1:1:6BMD-Y34S",
+    "https://www.familysearch.org/ark:/61903/1:1:6BMD-Y343",
+    "https://www.familysearch.org/ark:/61903/1:1:6BMD-Y34Q",
+    "https://www.familysearch.org/ark:/61903/1:1:6BMD-Y34W",
+    "https://www.familysearch.org/ark:/61903/1:1:6BMD-Y344"
+   ],
    "citationText": "\"Spain, Gijón Civil Registry, Births 1846,\" Libro 24, folio 105r, entry 53, Jacinto Nieto, 21 Sep 1846; Archivo Municipal de Gijón, Libros Registro Civil, image RCGijón1846N0107r, https://fondos.gijon.es/fotoweb/archives/5004-Archivo/ayArchivo/Libros%20Registro%20Civil/Libro%2024%20[1846%20-%20Nacimientos]/RCGijón1846N0107r.JPG.info.",
    "transcription": "Jacinto, 21 Sep 1846, Carbaínos; parents José Nieto × Ramona Menéndez (maternal grandfather miswritten \"Manuel Nieto\").",
    "personIds": [
     "jacinto-nieto-menendez-1846",
     "jose-nieto-gonzalez-fl1838",
-    "ramona-menendez-fuya-rodriguez"
+    "ramona-menendez-fuya-rodriguez",
+    "jose-nieto-fl1798",
+    "manuel-menendez-fuya-abt1786",
+    "josefa-rodriguez-pedrera"
    ],
    "candidatePersonIds": [],
    "verifiedCrops": [
     "birth_1846_jacinto_nieto_Cenero_Carbainos_of_jose_nieto_ramona_menendez.jpg"
    ],
    "imageUrl": "https://fondos.gijon.es/fotoweb/cache/v2/u/q/ayArchivo/Libros%20Registro%20Civil/Libro%2024%20%5B1846%20-%20Nacimientos%5D/RCGij%C3%B3n1846N0107r.JPG.jCe9sMGGMrfXL4dhwCUA.JI-EqgGlhn.jpg",
-   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/u/R/ayArchivo/Libros%20Registro%20Civil/Libro%2024%20%5B1846%20-%20Nacimientos%5D/RCGij%C3%B3n1846N0107r.JPG.jCe9sMGGMrfXL4dhIAcA.fE1k8__R28.jpg"
+   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/u/R/ayArchivo/Libros%20Registro%20Civil/Libro%2024%20%5B1846%20-%20Nacimientos%5D/RCGij%C3%B3n1846N0107r.JPG.jCe9sMGGMrfXL4dhIAcA.fE1k8__R28.jpg",
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2025-04-17",
+    "comment": "Attached in Kyler's FamilySearch tree, PIDs G1VV-37L, PQJY-D2X, PQJY-HVT, PSSF-16J, PSSX-R1K"
+   }
   },
   {
    "id": "rc-1852N0089r",
@@ -12457,7 +14134,15 @@
    "imageCode": "RCGijón1852N0089r",
    "url": "https://fondos.gijon.es/fotoweb/archives/5004-Archivo/ayArchivo/Libros%20Registro%20Civil/Libro%2042%20[1852%20-%20Nacimientos]/RCGij%C3%B3n1852N0089r.JPG.info",
    "urlDerived": false,
-   "altUrls": [],
+   "altUrls": [
+    "https://www.familysearch.org/ark:/61903/1:1:6BM9-GQQB",
+    "https://www.familysearch.org/ark:/61903/1:1:6BM9-GQQ1",
+    "https://www.familysearch.org/ark:/61903/1:1:6BM9-GQ7M",
+    "https://www.familysearch.org/ark:/61903/1:1:6BM9-GQ79",
+    "https://www.familysearch.org/ark:/61903/1:1:6BM9-GQ7S",
+    "https://www.familysearch.org/ark:/61903/1:1:6BM9-GQ73",
+    "https://www.familysearch.org/ark:/61903/1:1:6BM9-GQ7Q"
+   ],
    "citationText": "\"Spain, Gijón Civil Registry, Births 1852,\" Libro 42, folio 87r, entry 84, Manuel Antonio Nieto Menéndez, 7 Aug 1852; Archivo Municipal de Gijón, Libros Registro Civil, image RCGijón1852N0089r, https://fondos.gijon.es/fotoweb/archives/5004-Archivo/ayArchivo/Libros%20Registro%20Civil/Libro%2042%20[1852%20-%20Nacimientos]/RCGijón1852N0089r.JPG.info.",
    "transcription": "Born 7 Aug 1852 (\"siete de Agosto\"), 1 pm, barrio la Revollada, parish of Cenero; baptized Cenero. Father José Nieto of Cenero; mother Ramona Menéndez of Cenero. Paternal grandparents José Nieto and Bárbara González Valle, both Cenero. Maternal grandparents Manuel Menéndez and Josefa Rodríguez of Pedrera.",
    "personIds": [
@@ -12476,7 +14161,12 @@
     "manuel_nieto_1852_parents.jpg"
    ],
    "imageUrl": "https://fondos.gijon.es/fotoweb/cache/v2/E/h/ayArchivo/Libros%20Registro%20Civil/Libro%2042%20%5B1852%20-%20Nacimientos%5D/RCGij%C3%B3n1852N0089r.JPG.jCf88sOGMg2FMYdhwCUA.SWBOQahGRY.jpg",
-   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/p/7/ayArchivo/Libros%20Registro%20Civil/Libro%2042%20%5B1852%20-%20Nacimientos%5D/RCGij%C3%B3n1852N0089r.JPG.jCf88sOGMg2FMYdhIAcA.3INLaIDxCM.jpg"
+   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/p/7/ayArchivo/Libros%20Registro%20Civil/Libro%2042%20%5B1852%20-%20Nacimientos%5D/RCGij%C3%B3n1852N0089r.JPG.jCf88sOGMg2FMYdhIAcA.3INLaIDxCM.jpg",
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2025-04-17",
+    "comment": "Attached in Kyler's FamilySearch tree, PIDs G1VV-37L, G1VV-GK7, PQJY-D2X, PQJY-HVT, PSSF-16J, PSSN-SWT, PSSX-R1K"
+   }
   },
   {
    "id": "rc-1858N0182r",
@@ -12507,7 +14197,12 @@
     "cristina_uria_1858_parents.jpg"
    ],
    "imageUrl": "https://fondos.gijon.es/fotoweb/cache/v2/h/7/ayArchivo/Libros%20Registro%20Civil/Libro%2058%20%5B1858%20-%20Nacimientos%5D/RCGij%C3%B3n1858N0182r.JPG.jCfLgMCGMktJI7NhwCUA.a_5FPKe__k.jpg",
-   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/4/l/ayArchivo/Libros%20Registro%20Civil/Libro%2058%20%5B1858%20-%20Nacimientos%5D/RCGij%C3%B3n1858N0182r.JPG.jCfLgMCGMktJI7NhIAcA.HksN8wgohC.jpg"
+   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/4/l/ayArchivo/Libros%20Registro%20Civil/Libro%2058%20%5B1858%20-%20Nacimientos%5D/RCGij%C3%B3n1858N0182r.JPG.jCfLgMCGMktJI7NhIAcA.HksN8wgohC.jpg",
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2026-09-06",
+    "comment": "Attached in Kyler's FamilySearch tree, PID PFL3-YNL"
+   }
   },
   {
    "id": "rc-1861N0196v",
@@ -12721,7 +14416,12 @@
     "juan_valdes_maria_sanchez_1854_entry.jpg"
    ],
    "imageUrl": "https://fondos.gijon.es/fotoweb/cache/v2/0/a/ayArchivo/Libros%20Registro%20Civil/Libro%2047%20%5B1854%20-%20Matrimonios%5D/RCGij%C3%B3n1854M0036v.JPG.jCfYx8GGMrOxMYdhwCUA.H8NOauPWEf.jpg",
-   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/m/X/ayArchivo/Libros%20Registro%20Civil/Libro%2047%20%5B1854%20-%20Matrimonios%5D/RCGij%C3%B3n1854M0036v.JPG.jCfYx8GGMrOxMYdhIAcA.QrtnZLLTtV.jpg"
+   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/m/X/ayArchivo/Libros%20Registro%20Civil/Libro%2047%20%5B1854%20-%20Matrimonios%5D/RCGij%C3%B3n1854M0036v.JPG.jCfYx8GGMrOxMYdhIAcA.QrtnZLLTtV.jpg",
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2026-09-27",
+    "comment": "Attached in Kyler's FamilySearch tree, PIDs 9V7Q-7L2, 9V7Q-7LL, 9V7Q-7LZ, PN77-BD5, PN77-FCT, PN7W-7Q3"
+   }
   },
   {
    "id": "rc-1856M0049r",
@@ -12917,7 +14617,11 @@
    "imageCode": "RCGijón1843D0093r",
    "url": "https://fondos.gijon.es/fotoweb/archives/5004-Archivo/ayArchivo/Libros%20Registro%20Civil/Libro%2017%20[1843%20-%20Defunciones]/RCGij%C3%B3n1843D0093r.JPG.info",
    "urlDerived": false,
-   "altUrls": [],
+   "altUrls": [
+    "https://www.familysearch.org/ark:/61903/1:1:655R-PJT3",
+    "https://www.familysearch.org/ark:/61903/1:1:655R-PJTQ",
+    "https://www.familysearch.org/ark:/61903/1:1:655R-PJT7"
+   ],
    "citationText": "\"Spain, Gijón Civil Registry, Deaths 1843,\" Libro 17, folio 91r, entry 44, Antonia Valdés Uría, 29 Dec 1843; Archivo Municipal de Gijón, Libros Registro Civil, image RCGijón1843D0093r, https://fondos.gijon.es/fotoweb/archives/5004-Archivo/ayArchivo/Libros%20Registro%20Civil/Libro%2017%20[1843%20-%20Defunciones]/RCGijón1843D0093r.JPG.info.",
    "transcription": "Antonia Valdés, 18 (\"diez y ocho\"), soltera, labradora, natural de Cenero, died 29 Dec 1843 of fiebre (not tisis), lived barrio de Piñera, buried Campo Santo de Cenero. Parents D. Santiago Valdés (labrador) × Dª Teresa Uría, both of Porceyo.",
    "personIds": [
@@ -12932,7 +14636,12 @@
    ],
    "imageVerified": "2026-10-01",
    "imageUrl": "https://fondos.gijon.es/fotoweb/cache/v2/_/r/ayArchivo/Libros%20Registro%20Civil/Libro%2017%20%5B1843%20-%20Defunciones%5D/RCGij%C3%B3n1843D0093r.JPG.jCeB5r2GMuuBL4dhwCUA.kmYW40hKqE.jpg",
-   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/h/_/ayArchivo/Libros%20Registro%20Civil/Libro%2017%20%5B1843%20-%20Defunciones%5D/RCGij%C3%B3n1843D0093r.JPG.jCeB5r2GMuuBL4dhIAcA.pTKgQI9vnq.jpg"
+   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/h/_/ayArchivo/Libros%20Registro%20Civil/Libro%2017%20%5B1843%20-%20Defunciones%5D/RCGij%C3%B3n1843D0093r.JPG.jCeB5r2GMuuBL4dhIAcA.pTKgQI9vnq.jpg",
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2024-04-26",
+    "comment": "Attached in Kyler's FamilySearch tree, PIDs 9V7Q-7L2, 9V7Q-7LL"
+   }
   },
   {
    "id": "rc-1844D0022r",
@@ -12971,7 +14680,11 @@
    "imageCode": "RCGijón1844D0022v",
    "url": "https://fondos.gijon.es/fotoweb/archives/5004-Archivo/ayArchivo/Libros%20Registro%20Civil/Libro%2020%20[1844%20-%20Defunciones]/RCGij%C3%B3n1844D0022v.JPG.info",
    "urlDerived": false,
-   "altUrls": [],
+   "altUrls": [
+    "https://www.familysearch.org/ark:/61903/1:1:65TW-GZF7",
+    "https://www.familysearch.org/ark:/61903/1:1:65TW-GZFW",
+    "https://www.familysearch.org/ark:/61903/1:1:65TW-GZF4"
+   ],
    "citationText": "\"Spain, Gijón Civil Registry, Deaths 1844,\" Libro 20, folio 20v, entry 4, José Valdés, 13 Jan 1844; Archivo Municipal de Gijón, Libros Registro Civil, image RCGijón1844D0022v, https://fondos.gijon.es/fotoweb/archives/5004-Archivo/ayArchivo/Libros%20Registro%20Civil/Libro%2020%20[1844%20-%20Defunciones]/RCGijón1844D0022v.JPG.info.",
    "transcription": "José Valdés, 16 (\"diez y seis\"; not 18), soltero, labrador, natural de Cenero, died 13 Jan 1844 of fiebre, lived barrio de Piñera, buried camposanto de Cenero. Parents Santiago Valdés (labrador) × Teresa Uría, both of Porceyo.",
    "personIds": [
@@ -12986,7 +14699,12 @@
    ],
    "imageVerified": "2026-10-01",
    "imageUrl": "https://fondos.gijon.es/fotoweb/cache/v2/s/e/ayArchivo/Libros%20Registro%20Civil/Libro%2020%20%5B1844%20-%20Defunciones%5D/RCGij%C3%B3n1844D0022v.JPG.jCet0ciGMhmTL4dhwCUA.HizCuB1C5C.jpg",
-   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/p/b/ayArchivo/Libros%20Registro%20Civil/Libro%2020%20%5B1844%20-%20Defunciones%5D/RCGij%C3%B3n1844D0022v.JPG.jCet0ciGMhmTL4dhIAcA.NkxAbLi8H4.jpg"
+   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/p/b/ayArchivo/Libros%20Registro%20Civil/Libro%2020%20%5B1844%20-%20Defunciones%5D/RCGij%C3%B3n1844D0022v.JPG.jCet0ciGMhmTL4dhIAcA.NkxAbLi8H4.jpg",
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2024-04-26",
+    "comment": "Attached in Kyler's FamilySearch tree, PIDs 9V7Q-7L2, 9V7Q-7LL"
+   }
   },
   {
    "id": "rc-1844D0037v",
@@ -14050,7 +15768,12 @@
     "008034665_01236"
    ],
    "imageUrl": "https://fondos.gijon.es/fotoweb/cache/v2/u/E/ayArchivo/Libros%20Padron%20Habitantes/Libro%2002/008034665_01236.tif.jCft08uGMpNfBelhwCUA.Jxl5VwfU8b.jpg",
-   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/Z/a/ayArchivo/Libros%20Padron%20Habitantes/Libro%2002/008034665_01236.tif.jCft08uGMpNfBelhIAcA.noGl5vYoLv.jpg"
+   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/Z/a/ayArchivo/Libros%20Padron%20Habitantes/Libro%2002/008034665_01236.tif.jCft08uGMpNfBelhIAcA.noGl5vYoLv.jpg",
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2026-09-06",
+    "comment": "Attached in Kyler's FamilySearch tree, PIDs 9V7Q-7LZ, KH44-RC2, PFF7-31T, PFFQ-CZ3, PN77-BD5, PNM8-CLT, PNM8-GC3"
+   }
   },
   {
    "id": "cen-1910-pinera",
@@ -14084,7 +15807,12 @@
     "008034666_00575"
    ],
    "imageUrl": "https://fondos.gijon.es/fotoweb/cache/v2/N/X/ayArchivo/Libros%20Padron%20Habitantes/Libro%2004/008034666_00575.tif.jCf47byGMpNNBelhwCUA.JqZW79IZDj.jpg",
-   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/L/G/ayArchivo/Libros%20Padron%20Habitantes/Libro%2004/008034666_00575.tif.jCf47byGMpNNBelhIAcA.2rrJNOCVGw.jpg"
+   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/L/G/ayArchivo/Libros%20Padron%20Habitantes/Libro%2004/008034666_00575.tif.jCf47byGMpNNBelhIAcA.2rrJNOCVGw.jpg",
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2026-09-06",
+    "comment": "Attached in Kyler's FamilySearch tree, PIDs KH44-RC2, PFF7-31T, PFFQ-CZ3, PNM8-CLT, PNM8-GC3, PNM8-GT5, PNM8-PDD, PNM8-RS4, PNM8-SV9, PNM8-YDY"
+   }
   },
   {
    "id": "cen-1914-nieto-cadavieco",
@@ -14177,7 +15905,12 @@
     "008034666_02502"
    ],
    "imageUrl": "https://fondos.gijon.es/fotoweb/cache/v2/a/L/ayArchivo/Libros%20Padron%20Habitantes/Libro%2008/008034666_02502.tif.jCednsWGMiFZBelhwCUA.bdzGzWwVvg.jpg",
-   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/Z/R/ayArchivo/Libros%20Padron%20Habitantes/Libro%2008/008034666_02502.tif.jCednsWGMiFZBelhIAcA.ynvi3tpKfw.jpg"
+   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/Z/R/ayArchivo/Libros%20Padron%20Habitantes/Libro%2008/008034666_02502.tif.jCednsWGMiFZBelhIAcA.ynvi3tpKfw.jpg",
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2026-09-06",
+    "comment": "Attached in Kyler's FamilySearch tree, PIDs PFF7-31T, PFFQ-CZ3, PNM8-CLT, PNM8-GC3, PNM8-GT5, PNM8-PDD, PNM8-RS4, PNM8-SV9, PNM8-VMQ, PNMD-9L9"
+   }
   },
   {
    "id": "cen-1919-pinera",
@@ -14213,7 +15946,12 @@
     "008034667_01202"
    ],
    "imageUrl": "https://fondos.gijon.es/fotoweb/cache/v2/2/n/ayArchivo/Libros%20Padron%20Habitantes/Libro%2014/008034667_01201.tif.jCff_MGGMvc_BelhwCUA.Z16KXPFVM6.jpg",
-   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/E/2/ayArchivo/Libros%20Padron%20Habitantes/Libro%2014/008034667_01201.tif.jCff_MGGMvc_BelhIAcA.yybHlK-_J0.jpg"
+   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/E/2/ayArchivo/Libros%20Padron%20Habitantes/Libro%2014/008034667_01201.tif.jCff_MGGMvc_BelhIAcA.yybHlK-_J0.jpg",
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2026-09-06",
+    "comment": "Attached in Kyler's FamilySearch tree, PIDs PFF7-31T, PFFQ-CZ3, PNM8-BDF, PNM8-GT5, PNM8-PDD, PNM8-RS4, PNM8-SV9, PNM8-VMQ, PNMD-3ZY, PNMD-9L9"
+   }
   },
   {
    "id": "cen-1920-pinera3",
@@ -14389,7 +16127,12 @@
     "filomena-nieto-uria-abt1876"
    ],
    "candidatePersonIds": [],
-   "verifiedCrops": []
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2026-07-26",
+    "comment": "Attached in Kyler's FamilySearch tree, PID KH44-RC2"
+   }
   },
   {
    "id": "ahn-causa-general-1342-5",
@@ -14497,7 +16240,11 @@
    "imageCode": "ark:/61903/1:1:QVJ9-54LW",
    "url": "https://www.familysearch.org/ark:/61903/1:1:QVJ9-54LW",
    "urlDerived": false,
-   "altUrls": [],
+   "altUrls": [
+    "https://www.familysearch.org/ark:/61903/1:1:QVJ9-54L7",
+    "https://www.familysearch.org/ark:/61903/1:1:QVJ9-54LH",
+    "https://www.familysearch.org/ark:/61903/1:1:QVJ9-54L4"
+   ],
    "citationText": "\"Puerto Rico, Registro Civil,\" death of Dolores Bermúdez Sánchez, San Juan, 6 Feb 1981; FamilySearch, https://www.familysearch.org/ark:/61903/1:1:QVJ9-54LW.",
    "transcription": "Dolores Bermúdez Sánchez, born 17 Apr 1894 Havana, died 6 Feb 1981 San Juan. Father José Bermúdez, natural de Habana, Cuba; mother María Luisa Sánchez, also of Havana. Spouse José Vázquez. (As summarized in the research memory notes of 27 Aug 2026; not re-read for this file.)",
    "personIds": [
@@ -14507,7 +16254,12 @@
     "jose-vazquez"
    ],
    "candidatePersonIds": [],
-   "verifiedCrops": []
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2023-11-18",
+    "comment": "Attached in Kyler's FamilySearch tree, PIDs 2DTP-9MP, GGZG-464, GGZG-ZVQ, KC5T-574"
+   }
   },
   {
    "id": "fs-tree-bermudez",
@@ -14706,6 +16458,448 @@
    ],
    "candidatePersonIds": [],
    "verifiedCrops": []
+  },
+  {
+   "id": "fs-tree-kyler-2026-10-01",
+   "title": "FamilySearch Family Tree: Kyler Rasmussen's tree, Valdés Pedrayes, Valdés Nieto, Vázquez-Bermúdez and Asturian ancestors (read-only capture, 1 Oct 2026)",
+   "type": "online family tree (secondary)",
+   "date": "2026-10-01",
+   "place": null,
+   "repository": "FamilySearch",
+   "imageCode": null,
+   "url": "https://www.familysearch.org/tree/person/details/GDML-8JK",
+   "urlDerived": false,
+   "altUrls": [],
+   "citationText": "FamilySearch Family Tree, person pages GDML-8JK, KH44-RC2, KZ19-XD6, 26K6-LL7, PFF7-31T, PFFQ-CZ3 and related persons (read-only capture of Kyler Rasmussen's tree, 1 Oct 2026); https://www.familysearch.org/tree/person/details/GDML-8JK.",
+   "transcription": "Cited only for tree facts that have no record attached on FamilySearch (status probable). Facts backed by an attached record cite that record instead.",
+   "personIds": [
+    "juan-rafael-valdes-pedrayes",
+    "juan-antonio-valdes-nieto-abt1895",
+    "elvira-rosa-pedrayes-1896",
+    "rolando-valdes-pedrayes-1928",
+    "marina-petrona-vazquez-bermudez",
+    "alvaro-valdes-nieto-abt1897",
+    "maria-valdes-nieto-abt1898",
+    "marcelino-valdes-nieto-abt1901",
+    "nieves-valdes-nieto-abt1903",
+    "manuel-valdes-nieto-abt1906",
+    "bautista-valdes-nieto-abt1908",
+    "rosaura-valdes-sanchez-abt1876",
+    "antonia-valdes-uria-abt1825",
+    "jose-antonio-valdes-uria-1826",
+    "antonio-valdes-uria-1835",
+    "santiago-valdes-fl1824",
+    "teresa-uria-porceyo",
+    "josefa-valdes-uria-1836",
+    "jose-nieto-gonzalez-fl1838",
+    "ramona-menendez-fuya-rodriguez",
+    "ramon-nieto-menendez-1849",
+    "jose-nieto-fl1798",
+    "barbara-gonzalez-valle",
+    "gaspar-nieto-gonzalez-valle-1800",
+    "ramon-nieto-gonzalez-valle",
+    "manuel-menendez-fuya-abt1786",
+    "josefa-rodriguez-pedrera",
+    "manuel-menendez-tuya-fl1787",
+    "josefa-sanchez-wife-of-manuel-menendez-tuya",
+    "jose-antonio-menendez-fuya-rodriguez-1822",
+    "maria-menendez-fuya-rodriguez-abt1824",
+    "jose-antonio-uria-alvarez-1834",
+    "maria-rodriguez-diaz-abt1828",
+    "manuel-uria-menendez-abt1790",
+    "antonia-alvarez-ruedes",
+    "matias-rodriguez-rodriguez-abt1800",
+    "teresa-diaz-leorio",
+    "rafael-antonio-nieto-menendez-1841",
+    "jacinto-nieto-menendez-1846",
+    "jose-vazquez",
+    "maria-antonia-leandra-vazquez",
+    "palko-sigmund-lukacs"
+   ],
+   "candidatePersonIds": [],
+   "verifiedCrops": []
+  },
+  {
+   "id": "fs-nypl-1954-juan-r-valdes",
+   "title": "New York, New York Passenger and Crew Lists, 1909, 1925-1958, Juan R Valdes, 1954",
+   "type": "passenger list",
+   "date": "1954",
+   "place": "New York City, New York, United States",
+   "repository": "FamilySearch",
+   "imageCode": "ark:/61903/1:1:2H4D-J7R",
+   "url": "https://www.familysearch.org/ark:/61903/1:1:2H4D-J7R",
+   "urlDerived": false,
+   "altUrls": [],
+   "citationText": "\"New York, New York Passenger and Crew Lists, 1909, 1925-1958,\" FamilySearch, entry for Juan R Valdes, 1954; https://www.familysearch.org/ark:/61903/1:1:2H4D-J7R.",
+   "transcription": "Juan R Valdes, passenger from Cuba to New York, 1954 (index entry; reason attached: Cuba to New York). Details beyond the index summary were not captured.",
+   "personIds": [
+    "juan-rafael-valdes-pedrayes"
+   ],
+   "candidatePersonIds": [],
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2023-11-23",
+    "comment": "Attached in Kyler's FamilySearch tree, PID GDML-8JK"
+   }
+  },
+  {
+   "id": "fs-uspr-2007-juan-r-valdes",
+   "title": "United States, Public Records, 1970-2009, Juan R Valdes, 2007",
+   "type": "public records index",
+   "date": "1 Jul 2007",
+   "place": "Surfside, Florida, United States",
+   "repository": "FamilySearch",
+   "imageCode": "ark:/61903/1:1:KLX1-XCW",
+   "url": "https://www.familysearch.org/ark:/61903/1:1:KLX1-XCW",
+   "urlDerived": false,
+   "altUrls": [],
+   "citationText": "\"United States, Public Records, 1970-2009,\" FamilySearch, entry for Juan R Valdes, 1 Jul 2007, Surfside, Florida; https://www.familysearch.org/ark:/61903/1:1:KLX1-XCW.",
+   "transcription": "Juan R Valdes, residence Surfside, Florida (list year 2007); prior residences Tampa, Florida.",
+   "personIds": [
+    "juan-rafael-valdes-pedrayes"
+   ],
+   "candidatePersonIds": [],
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2014-07-06",
+    "comment": "Attached in Kyler's FamilySearch tree, PID GDML-8JK"
+   }
+  },
+  {
+   "id": "fs-ssdi-2000-marina-valdes",
+   "title": "United States, Social Security Death Index, Marina Valdes, 21 Jul 2000",
+   "type": "death index (SSDI)",
+   "date": "21 Jul 2000",
+   "place": "Miami, Florida, United States",
+   "repository": "FamilySearch",
+   "imageCode": "ark:/61903/1:1:J2M6-C38",
+   "url": "https://www.familysearch.org/ark:/61903/1:1:J2M6-C38",
+   "urlDerived": false,
+   "altUrls": [],
+   "citationText": "\"United States, Social Security Death Index,\" FamilySearch, entry for Marina Valdes, 21 Jul 2000; https://www.familysearch.org/ark:/61903/1:1:J2M6-C38.",
+   "transcription": "Marina Valdes, death 21 Jul 2000, Miami, Florida (as indexed). The birth date on the index was not captured.",
+   "personIds": [
+    "marina-petrona-vazquez-bermudez"
+   ],
+   "candidatePersonIds": [],
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2020-05-17",
+    "comment": "Attached in Kyler's FamilySearch tree, PID L6GM-7B4"
+   }
+  },
+  {
+   "id": "fs-ssdi-1984-elvira-pedrayes",
+   "title": "United States, Social Security Death Index, Elvira Pedrayes, Jun 1984",
+   "type": "death index (SSDI)",
+   "date": "Jun 1984",
+   "place": "Hudson, New Jersey, United States",
+   "repository": "FamilySearch",
+   "imageCode": "ark:/61903/1:1:JY9Q-6NY",
+   "url": "https://www.familysearch.org/ark:/61903/1:1:JY9Q-6NY",
+   "urlDerived": false,
+   "altUrls": [],
+   "citationText": "\"United States, Social Security Death Index,\" FamilySearch, entry for Elvira Pedrayes, Jun 1984; https://www.familysearch.org/ark:/61903/1:1:JY9Q-6NY.",
+   "transcription": "Elvira Pedrayes, birth 11 Jul 1896, death Jun 1984, residence Hudson, New Jersey.",
+   "personIds": [
+    "elvira-rosa-pedrayes-1896"
+   ],
+   "candidatePersonIds": [],
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2023-06-18",
+    "comment": "Attached in Kyler's FamilySearch tree, PID KZ19-XD6"
+   }
+  },
+  {
+   "id": "fs-nypl-1954-rolando-valdes",
+   "title": "New York, New York Passenger and Crew Lists, 1909, 1925-1958, Rolando Valdes, 1954",
+   "type": "passenger list",
+   "date": "1954",
+   "place": "New York City, New York, United States",
+   "repository": "FamilySearch",
+   "imageCode": "ark:/61903/1:1:2H4D-J75",
+   "url": "https://www.familysearch.org/ark:/61903/1:1:2H4D-J75",
+   "urlDerived": false,
+   "altUrls": [],
+   "citationText": "\"New York, New York Passenger and Crew Lists, 1909, 1925-1958,\" FamilySearch, entry for Rolando Valdes, 1954; https://www.familysearch.org/ark:/61903/1:1:2H4D-J75.",
+   "transcription": "Rolando Valdes, immigration, New York City, 1954 (reason attached: boarding record for New York of \"Ronaldo Valdes\", 1954).",
+   "personIds": [
+    "rolando-valdes-pedrayes-1928"
+   ],
+   "candidatePersonIds": [],
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2023-11-23",
+    "comment": "Attached in Kyler's FamilySearch tree, PID 26K6-LL7"
+   }
+  },
+  {
+   "id": "fs-ssdi-2002-rolando-valdes",
+   "title": "United States, Social Security Death Index, Rolando Valdes, 16 Jul 2002",
+   "type": "death index (SSDI)",
+   "date": "16 Jul 2002",
+   "place": "Florida, United States",
+   "repository": "FamilySearch",
+   "imageCode": "ark:/61903/1:1:JKTG-73F",
+   "url": "https://www.familysearch.org/ark:/61903/1:1:JKTG-73F",
+   "urlDerived": false,
+   "altUrls": [],
+   "citationText": "\"United States, Social Security Death Index,\" FamilySearch, entry for Rolando Valdes, 16 Jul 2002; https://www.familysearch.org/ark:/61903/1:1:JKTG-73F.",
+   "transcription": "Rolando Valdes, birth 12 Sep 1928, death 16 Jul 2002, age 74; last residence Florida, ZIP 33154; state New Jersey.",
+   "personIds": [
+    "rolando-valdes-pedrayes-1928"
+   ],
+   "candidatePersonIds": [],
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2023-06-23",
+    "comment": "Attached in Kyler's FamilySearch tree, PID 26K6-LL7"
+   }
+  },
+  {
+   "id": "fs-numident-rolando-valdes",
+   "title": "United States, Social Security Numerical Identification Files (NUMIDENT), 1936-2007, Rolando Valdes",
+   "type": "social security index (NUMIDENT)",
+   "date": "Oct 1960; 16 Jul 2002",
+   "place": "United States",
+   "repository": "FamilySearch",
+   "imageCode": "ark:/61903/1:1:6K9F-Y3NJ",
+   "url": "https://www.familysearch.org/ark:/61903/1:1:6K9F-Y3NJ",
+   "urlDerived": false,
+   "altUrls": [
+    "https://www.familysearch.org/ark:/61903/1:1:6K9F-Y3NV",
+    "https://www.familysearch.org/ark:/61903/1:1:6K9F-BDN2"
+   ],
+   "citationText": "\"United States, Social Security Numerical Identification Files (NUMIDENT), 1936-2007,\" FamilySearch, entry for Rolando Valdes, parents Juan Valdes and Elvira Pedrayes; https://www.familysearch.org/ark:/61903/1:1:6K9F-Y3NJ.",
+   "transcription": "Rolando Valdes, born Havana, Cuba; Social Program Application Oct 1960; residence Miami Beach, Miami-Dade, Florida; death 16 Jul 2002. Parents indexed as Juan Valdes and Elvira Pedrayes (their persona entries 6K9F-Y3NV and 6K9F-BDN2).",
+   "personIds": [
+    "rolando-valdes-pedrayes-1928",
+    "juan-antonio-valdes-nieto-abt1895",
+    "elvira-rosa-pedrayes-1896"
+   ],
+   "candidatePersonIds": [],
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2023-06-18",
+    "comment": "Attached in Kyler's FamilySearch tree, PID 26K6-LL7"
+   }
+  },
+  {
+   "id": "fs-ssdi-1981-dolores-bermudez",
+   "title": "United States, Social Security Death Index, Dolores Bermudez, Feb 1981",
+   "type": "death index (SSDI)",
+   "date": "Feb 1981",
+   "place": "San Juan, Puerto Rico",
+   "repository": "FamilySearch",
+   "imageCode": "ark:/61903/1:1:JPZG-H4C",
+   "url": "https://www.familysearch.org/ark:/61903/1:1:JPZG-H4C",
+   "urlDerived": false,
+   "altUrls": [],
+   "citationText": "\"United States, Social Security Death Index,\" FamilySearch, entry for Dolores Bermudez, Feb 1981; https://www.familysearch.org/ark:/61903/1:1:JPZG-H4C.",
+   "transcription": "Dolores Bermudez, birth 17 Apr 1894, death Feb 1981; residence Puerto Rico, last residence San Juan, Puerto Rico.",
+   "personIds": [
+    "maria-de-los-dolores-bermudez-sanchez-1894"
+   ],
+   "candidatePersonIds": [],
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2023-11-18",
+    "comment": "Attached in Kyler's FamilySearch tree, PID KC5T-574"
+   }
+  },
+  {
+   "id": "fs-ct-death-1989-paul-lukacs",
+   "title": "Connecticut, Death Index, 1949-2001, Paul S Lukacs, 23 Mar 1989",
+   "type": "death index",
+   "date": "23 Mar 1989",
+   "place": "Bridgeport, Fairfield, Connecticut, United States",
+   "repository": "FamilySearch",
+   "imageCode": "ark:/61903/1:1:V6WX-KLB",
+   "url": "https://www.familysearch.org/ark:/61903/1:1:V6WX-KLB",
+   "urlDerived": false,
+   "altUrls": [],
+   "citationText": "\"Connecticut, Death Index, 1949-2001,\" FamilySearch, entry for Paul S Lukacs and BERNATH, 23 Mar 1989; https://www.familysearch.org/ark:/61903/1:1:V6WX-KLB.",
+   "transcription": "Paul S Lukacs, death 23 Mar 1989; residence Bridgeport, Fairfield, Connecticut, 350 Grovers Av; married; professor emeritus, Fairfield University. Second name in the entry: BERNATH (role not captured). Attached on FamilySearch to his wife Maria (L6TS-733).",
+   "personIds": [
+    "maria-antonia-leandra-vazquez",
+    "palko-sigmund-lukacs"
+   ],
+   "candidatePersonIds": [],
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2023-06-30",
+    "comment": "Attached in Kyler's FamilySearch tree, PID L6TS-733"
+   }
+  },
+  {
+   "id": "fs-obit-2013-maria-lukacs",
+   "title": "United States, GenealogyBank Obituaries, Births, and Marriages, 1980-2015, Mrs Maria Or Toni Lukacs, 14 Mar 2013",
+   "type": "obituary index",
+   "date": "14 Mar 2013",
+   "place": "Bridgeport, Connecticut, United States",
+   "repository": "FamilySearch",
+   "imageCode": "ark:/61903/1:1:QKPT-GMN6",
+   "url": "https://www.familysearch.org/ark:/61903/1:1:QKPT-GMN6",
+   "urlDerived": false,
+   "altUrls": [],
+   "citationText": "\"United States, GenealogyBank Obituaries, Births, and Marriages, 1980-2015,\" FamilySearch, entry for Mrs Maria Or Toni Lukacs and Palko Lukacs, 14 Mar 2013; https://www.familysearch.org/ark:/61903/1:1:QKPT-GMN6.",
+   "transcription": "Obituary of Mrs Maria (Toni) Lukacs, published 14 Mar 2013, naming Palko Lukacs. Obituary text not captured.",
+   "personIds": [
+    "maria-antonia-leandra-vazquez",
+    "palko-sigmund-lukacs"
+   ],
+   "candidatePersonIds": [],
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2023-06-23",
+    "comment": "Attached in Kyler's FamilySearch tree, PID L6TS-733"
+   }
+  },
+  {
+   "id": "fs-spain-civil-1849-ramon-nieto",
+   "title": "Spain, Civil Records, 1475-2005, Gijón, 12 Mar 1849, Ramón, son of José Nieto and Ramona Menéndez (FamilySearch index)",
+   "type": "civil birth (FamilySearch index)",
+   "date": "12 Mar 1849",
+   "place": "Gijón, Asturias, Spain",
+   "repository": "FamilySearch",
+   "imageCode": "ark:/61903/1:1:6BM6-72CC",
+   "url": "https://www.familysearch.org/ark:/61903/1:1:6BM6-72CC",
+   "urlDerived": false,
+   "altUrls": [
+    "https://www.familysearch.org/ark:/61903/1:1:6BM6-72CZ",
+    "https://www.familysearch.org/ark:/61903/1:1:6BM6-72C8",
+    "https://www.familysearch.org/ark:/61903/1:1:6BM6-72CD",
+    "https://www.familysearch.org/ark:/61903/1:1:6BM6-72CX",
+    "https://www.familysearch.org/ark:/61903/1:1:6BM6-72CF"
+   ],
+   "citationText": "\"Spain, Civil Records, 1475-2005,\" FamilySearch, entry for Ramón, son of José Nieto and Ramona Menéndez, 12 Mar 1849, Gijón; https://www.familysearch.org/ark:/61903/1:1:6BM6-72CC.",
+   "transcription": "FamilySearch index only (the Gijón image has not been read for this file): son Ramón, 12 Mar 1849; father José Nieto, mother Ramona Menéndez; grandparents indexed as José Nieto, Manuel Menéndez (card title \"Manuel Nieto\") and Josefa Rodríguez. Persona arks attached in the tree: 6BM6-72CZ (José Nieto), 6BM6-72C8 (Ramona), 6BM6-72CD (José Nieto, grandfather), 6BM6-72CX (Manuel Menéndez), 6BM6-72CF (Josefa Rodríguez).",
+   "personIds": [
+    "jose-nieto-gonzalez-fl1838",
+    "ramona-menendez-fuya-rodriguez",
+    "jose-nieto-fl1798",
+    "manuel-menendez-fuya-abt1786",
+    "josefa-rodriguez-pedrera",
+    "ramon-nieto-menendez-1849"
+   ],
+   "candidatePersonIds": [],
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2025-04-17",
+    "comment": "Attached in Kyler's FamilySearch tree, PIDs G1VV-37L, PQJY-D2X, PQJY-HVT, PSSF-16J, PSSX-R1K"
+   }
+  },
+  {
+   "id": "fs-spain-civil-1866-santiago-teresa",
+   "title": "Spain, Civil Records, 1475-2005, Gijón, 1866, record naming Santiago Valdez and Teresa Uria (FamilySearch index)",
+   "type": "civil record (FamilySearch index; event not captured)",
+   "date": "1866",
+   "place": "Gijón, Asturias, Spain",
+   "repository": "FamilySearch",
+   "imageCode": "ark:/61903/1:1:65SW-MD2Q",
+   "url": "https://www.familysearch.org/ark:/61903/1:1:65SW-MD2Q",
+   "urlDerived": false,
+   "altUrls": [
+    "https://www.familysearch.org/ark:/61903/1:1:65SW-MD2C",
+    "https://www.familysearch.org/ark:/61903/1:1:65SW-MD2Z"
+   ],
+   "citationText": "\"Spain, Civil Records, 1475-2005,\" FamilySearch, record naming Santiago Valdez and Teresa Uria, 1866; https://www.familysearch.org/ark:/61903/1:1:65SW-MD2Q.",
+   "transcription": "FamilySearch index only; the event, the principal and whether Santiago and Teresa are named as living were not captured. Persona arks: 65SW-MD2C (Santiago Valdez), 65SW-MD2Z (Teresa Uria).",
+   "personIds": [
+    "santiago-valdes-fl1824",
+    "teresa-uria-porceyo"
+   ],
+   "candidatePersonIds": [],
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2024-04-26",
+    "comment": "Attached in Kyler's FamilySearch tree, PIDs 9V7Q-7L2, 9V7Q-7LL"
+   }
+  },
+  {
+   "id": "fs-spain-civil-1857-jose-nieto",
+   "title": "Spain, Civil Records, 1475-2005, Gijón, 26 Nov 1857, record naming José Nieto (FamilySearch index)",
+   "type": "civil record (FamilySearch index; event not captured)",
+   "date": "26 Nov 1857",
+   "place": "Gijón, Asturias, Spain",
+   "repository": "FamilySearch",
+   "imageCode": "ark:/61903/1:1:XSMJ-2P45",
+   "url": "https://www.familysearch.org/ark:/61903/1:1:XSMJ-2P45",
+   "urlDerived": false,
+   "altUrls": [],
+   "citationText": "\"Spain, Civil Records, 1475-2005,\" FamilySearch, record naming José Nieto, 26 Nov 1857; https://www.familysearch.org/ark:/61903/1:1:XSMJ-2P45.",
+   "transcription": "FamilySearch index only; event and principal not captured. Attached to José Nieto (G1VV-37L), whose tree record also includes the José Nieto × Bernarda González Valdés family (excluded here, excl-23), so this record may belong to that family.",
+   "personIds": [
+    "jose-nieto-fl1798"
+   ],
+   "candidatePersonIds": [],
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2026-03-11",
+    "comment": "Attached in Kyler's FamilySearch tree, PID G1VV-37L"
+   }
+  },
+  {
+   "id": "fs-spain-civil-1863-jose-nieto",
+   "title": "Spain, Civil Records, 1475-2005, Gijón, 27 May 1863, record naming José Nieto (FamilySearch index)",
+   "type": "civil record (FamilySearch index; event not captured)",
+   "date": "27 May 1863",
+   "place": "Gijón, Asturias, Spain",
+   "repository": "FamilySearch",
+   "imageCode": "ark:/61903/1:1:65S9-LKH7",
+   "url": "https://www.familysearch.org/ark:/61903/1:1:65S9-LKH7",
+   "urlDerived": false,
+   "altUrls": [],
+   "citationText": "\"Spain, Civil Records, 1475-2005,\" FamilySearch, record naming José Nieto, 27 May 1863; https://www.familysearch.org/ark:/61903/1:1:65S9-LKH7.",
+   "transcription": "FamilySearch index only; event and principal not captured. Same caveat as the 1857 record: it may belong to the excluded José Nieto × Bernarda González Valdés family (excl-23).",
+   "personIds": [
+    "jose-nieto-fl1798"
+   ],
+   "candidatePersonIds": [],
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2026-05-20",
+    "comment": "Attached in Kyler's FamilySearch tree, PID G1VV-37L"
+   }
+  },
+  {
+   "id": "fs-asturias-municipal-josefa-rodriguez",
+   "title": "España, Provincia de Asturias, registros municipales, 1470-1897, Josefa Rodriguez (FamilySearch index)",
+   "type": "municipal record (FamilySearch index; content not captured)",
+   "date": null,
+   "place": "Asturias, Spain",
+   "repository": "FamilySearch",
+   "imageCode": "ark:/61903/1:1:QL39-ZNDF",
+   "url": "https://www.familysearch.org/ark:/61903/1:1:QL39-ZNDF",
+   "urlDerived": false,
+   "altUrls": [],
+   "citationText": "\"España, Provincia de Asturias, registros municipales, 1470-1897,\" FamilySearch, entry for Josefa Rodriguez; https://www.familysearch.org/ark:/61903/1:1:QL39-ZNDF.",
+   "transcription": "FamilySearch index only; date and content not captured (FamilySearch shows an unfinished-attachment notice).",
+   "personIds": [
+    "josefa-rodriguez-pedrera"
+   ],
+   "candidatePersonIds": [],
+   "verifiedCrops": [],
+   "humanVerified": {
+    "by": "Kyler Rasmussen (FamilySearch tree)",
+    "date": "2025-08-21",
+    "comment": "Attached in Kyler's FamilySearch tree, PID PQJY-HVT"
+   }
   }
  ],
  "researchLeads": [
@@ -14762,9 +16956,11 @@
    "id": "lead-juan-antonio-cuba",
    "title": "Juan Antonio Valdés Nieto in Cuba?",
    "status": "open",
-   "detail": "The 1916 prófugo is the most likely emigrant. Not yet run: navegante.es (Gijón embarkation lists), Archivo de Indianos (Centro Asturiano de La Habana / Asturiana de Beneficencia, by email), CubaGenWeb passenger DB; logged-in FamilySearch searches. A prófugo entry in later quintas may say \"reside en Cuba\".",
+   "detail": "The 1916 prófugo is the most likely emigrant. Not yet run: navegante.es (Gijón embarkation lists), Archivo de Indianos (Centro Asturiano de La Habana / Asturiana de Beneficencia, by email), CubaGenWeb passenger DB; logged-in FamilySearch searches. A prófugo entry in later quintas may say \"reside en Cuba\". Update 1 Oct 2026: Kyler's FamilySearch tree (KH44-RC2) shows him in Havana: married Elvira Rosa Pedrayes abt 1922; sons Juan Rafael (b. Havana 1924) and Rolando (b. Havana 1928); died 25 Feb 1948. A Cuban marriage record or the sons' Havana births would confirm it from records.",
    "personIds": [
-    "juan-antonio-valdes-nieto-abt1895"
+    "juan-antonio-valdes-nieto-abt1895",
+    "juan-rafael-valdes-pedrayes",
+    "elvira-rosa-pedrayes-1896"
    ]
   },
   {

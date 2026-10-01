@@ -1,10 +1,10 @@
 /** Pure helpers and the in-memory index over data.json. */
 
-export const DEFAULT_ROOT = 'juan-valdes-grandfather';
+export const DEFAULT_ROOT = 'juan-rafael-valdes-pedrayes';
 export const DEFAULT_DEPTH = 2;
 
 export const LINE_ROOTS = [
-  ['Valdés', 'juan-valdes-grandfather'],
+  ['Valdés', 'juan-rafael-valdes-pedrayes'],
   ['Sánchez', 'francisco-sanchez-fl1780'],
   ['Menéndez', 'manuel-menendez-tuya-fl1787'],
   ['Nieto', 'jose-nieto-fl1798'],
