@@ -72,6 +72,7 @@ In-laws' own parents are modelled only where the line's records name them and th
 | `text` | the note |
 | `sourceIds[]` | sources the note relies on |
 | `humanVerified` | optional. `{by, date, comment?}`. A person has checked this note. `by` is a non-empty string, `date` is `YYYY-MM-DD`, and `comment` is an optional string. Omit the field until then. This does not change `status`. |
+| `corrections[]` | optional, backward-compatible. Each entry is `{by, date, kind, comment, status, resolution}` after a suggestion has been decided. `kind` is `Correction`, `Clarifying note`, `Wrong person linked`, or `Other`. `status` is `applied` or `declined`. `resolution` says what was done. Omit the array until then. |
 
 ## families[]
 
@@ -105,6 +106,7 @@ In-laws' own parents are modelled only where the line's records name them and th
 | `verifiedCrops[]` | crop filenames that confirm the reading |
 | `imageUrl`, `thumbUrl` | optional direct JPEG links (fondos.gijon.es). The site shows the thumbnail and links to the full image. |
 | `humanVerified` | optional, same shape as on notes: `{by, date, comment?}`. A person has checked this source. Omit the field until then. |
+| `corrections[]` | optional, same entries as on notes: `{by, date, kind, comment, status, resolution}`. |
 | `imageVerified`, `frames`, `localImages` | optional extras |
 
 ## researchLeads[] / excluded[]
@@ -114,7 +116,7 @@ In-laws' own parents are modelled only where the line's records name them and th
 
 ## Human verification
 
-`humanVerified` is optional on every note and every source. The site can also store a mark in the browser before it is committed. When `data.json` contains `humanVerified` for that id, the committed value wins and the browser mark is dropped.
+`humanVerified` is optional on every note and every source. The site can also store a mark in the browser before it is committed. Submit files the pending marks as an issue and keeps them in a separate submitted list so the next issue does not repeat them. When `data.json` contains `humanVerified` for that id, the committed value wins and the browser mark is dropped.
 
 Applying a mark from a GitHub issue means adding the object and nothing else:
 
@@ -124,6 +126,25 @@ Applying a mark from a GitHub issue means adding the object and nothing else:
 
 `comment` may be omitted.
 
+## Corrections
+
+`corrections` is an optional array on a note or a source. Older files without it are still valid. The site does not write this array. A suggestion is queued in the browser and submitted as a GitHub issue titled "Corrections and notes" (label `correction`). The maintainer applies or declines it by hand, then adds:
+
+```json
+"corrections": [
+  {
+    "by": "Ada",
+    "date": "2026-10-03",
+    "kind": "Correction",
+    "comment": "The page number looks wrong.",
+    "status": "applied",
+    "resolution": "Updated the image code to 0108v."
+  }
+]
+```
+
+`kind` is one of `Correction`, `Clarifying note`, `Wrong person linked`, `Other`. `status` is `applied` or `declined`. When an `applied` entry is present, the site shows a Corrected badge and the history. A browser suggestion for that source or note is dropped when an entry matches its `by`, `kind`, and `comment`.
+
 ## Validation
 
 `validate.py` checks:
@@ -132,6 +153,7 @@ Applying a mark from a GitHub issue means adding the object and nothing else:
 - No duplicate ids, including note ids.
 - Every note has a stable `id`.
 - `humanVerified`, when present, has `by`, a real `YYYY-MM-DD` `date`, and an optional string `comment`.
+- `corrections`, when present on a note or source, is an array of `{by, date, kind, comment, status, resolution}` with an allowed `kind` and `status` of `applied` or `declined`.
 - No orphan people: every person belongs to a family or a source.
 - No orphan sources.
 - Parents are at least 14 years older than their children.

@@ -26,8 +26,17 @@ function blankStore() {
 }
 
 export function verifierName() {
-  const name = read(NAME_KEY, '');
-  return typeof name === 'string' ? name : '';
+  try {
+    const raw = localStorage.getItem(NAME_KEY);
+    if (!raw) return '';
+    if (raw.startsWith('"')) {
+      const parsed = JSON.parse(raw);
+      if (typeof parsed === 'string') return parsed;
+    }
+    return raw;
+  } catch {
+    return '';
+  }
 }
 
 export function setVerifierName(name) {
@@ -69,6 +78,7 @@ export function effectiveVerification(record, kind, id) {
     date: local.date,
     comment: local.comment || '',
     origin: 'local',
+    submitted: local.submitted || '',
   };
 }
 
@@ -109,34 +119,80 @@ export function reconcileStore(index) {
   if (changed) saveStore(store);
 }
 
-export function pendingEntries(index) {
+function localEntry(kind, id, value, index) {
+  if (!value || !value.by || !value.date) return null;
+  if (kind === 'note') {
+    const row = index.notesById.get(id);
+    if (row && dataVerification(row.note)) return null;
+    return {
+      kind,
+      id,
+      by: value.by,
+      date: value.date,
+      comment: value.comment || '',
+      submitted: value.submitted || '',
+      batch: value.batch || '',
+      label: row ? personName(row.person) : 'Unknown person',
+    };
+  }
+  const source = index.sourcesById[id];
+  if (source && dataVerification(source)) return null;
+  return {
+    kind,
+    id,
+    by: value.by,
+    date: value.date,
+    comment: value.comment || '',
+    submitted: value.submitted || '',
+    batch: value.batch || '',
+    label: source ? source.title : id,
+  };
+}
+
+function localEntries(index, wantSubmitted) {
   const store = loadStore();
   const entries = [];
   for (const [id, value] of Object.entries(store.notes)) {
-    const row = index.notesById.get(id);
-    if (row && dataVerification(row.note)) continue;
-    entries.push({
-      kind: 'note',
-      id,
-      by: value.by,
-      date: value.date,
-      comment: value.comment || '',
-      label: row ? personName(row.person) : 'Unknown person',
-    });
+    const entry = localEntry('note', id, value, index);
+    if (!entry) continue;
+    if (wantSubmitted ? entry.submitted : !entry.submitted) entries.push(entry);
   }
   for (const [id, value] of Object.entries(store.sources)) {
-    const source = index.sourcesById[id];
-    if (source && dataVerification(source)) continue;
-    entries.push({
-      kind: 'source',
-      id,
-      by: value.by,
-      date: value.date,
-      comment: value.comment || '',
-      label: source ? source.title : id,
-    });
+    const entry = localEntry('source', id, value, index);
+    if (!entry) continue;
+    if (wantSubmitted ? entry.submitted : !entry.submitted) entries.push(entry);
   }
   return entries;
+}
+
+export function pendingEntries(index) {
+  return localEntries(index, false);
+}
+
+export function submittedEntries(index) {
+  return localEntries(index, true);
+}
+
+export function markVerificationsSubmitted(entries, submitted, batch) {
+  const store = loadStore();
+  for (const entry of entries) {
+    const bucket = entry.kind === 'note' ? store.notes : store.sources;
+    const local = bucket[entry.id];
+    if (!local || local.submitted) continue;
+    local.submitted = submitted;
+    local.batch = batch;
+  }
+  saveStore(store);
+}
+
+export function clearSubmittedVerifications() {
+  const store = loadStore();
+  for (const bucket of [store.notes, store.sources]) {
+    for (const id of Object.keys(bucket)) {
+      if (bucket[id] && bucket[id].submitted) delete bucket[id];
+    }
+  }
+  saveStore(store);
 }
 
 export function verificationCounts(index) {
