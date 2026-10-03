@@ -19,11 +19,14 @@ import {
 import { mountTree } from './tree.js';
 import {
   ISSUE_NEW,
+  clearFamilySearch,
   clearLocal,
   clearSubmittedVerifications,
+  effectiveFamilySearch,
   effectiveVerification,
   isAttached,
   issueLink,
+  markFamilySearch,
   markLocal,
   markVerificationsSubmitted,
   passesVerifyFilter,
@@ -98,6 +101,20 @@ function humanBadge(verification) {
     ? ''
     : `<span class="pending-flag">${verification.submitted ? 'submitted' : 'saved here'}</span>`;
   return `<span class="badge human"${title}>${HUMAN_ICON}<span>${esc(bits.join(' · '))}</span></span>${pending}`;
+}
+
+function familySearchBadge(mark) {
+  if (!mark) return '';
+  const bits = ['Added to FamilySearch', mark.date, mark.by].filter(Boolean);
+  const title = mark.comment ? ` title="${esc(mark.comment)}"` : '';
+  const pending = mark.origin !== 'local'
+    ? ''
+    : `<span class="pending-flag">${mark.submitted ? 'submitted' : 'saved here'}</span>`;
+  return `<span class="badge fs-added"${title}><span>${esc(bits.join(' · '))}</span></span>${pending}`;
+}
+
+function recordBadges(record, kind, id) {
+  return `${humanBadge(effectiveVerification(record, kind, id))}${familySearchBadge(effectiveFamilySearch(record, kind, id))}`;
 }
 
 function livingBadge(person) {
@@ -231,24 +248,43 @@ async function copyText(text, button) {
   setLive('Copied');
 }
 
-function verifyControls(kind, id, record) {
-  const verification = effectiveVerification(record, kind, id);
-  if (verification?.origin === 'data') return '';
-  if (verification?.origin === 'local') {
-    return `<button type="button" class="btn btn-small btn-ghost" data-action="clear-verify" data-kind="${esc(kind)}" data-id="${esc(id)}">Remove local mark</button>`;
-  }
-  const open = ui.openVerify && ui.openVerify.kind === kind && ui.openVerify.id === id;
-  if (!open) {
-    return `<button type="button" class="btn btn-small" data-action="open-verify" data-kind="${esc(kind)}" data-id="${esc(id)}">Mark verified</button>`;
-  }
+function markForm(kind, id, mark) {
+  const legend = mark === 'addedToFamilySearch' ? 'Added to FamilySearch' : 'Mark verified';
   return `
-    <form class="verify-form" data-kind="${esc(kind)}" data-id="${esc(id)}">
+    <form class="verify-form" data-kind="${esc(kind)}" data-id="${esc(id)}" data-mark="${esc(mark)}">
+      <p class="hint">${esc(legend)}</p>
       <label>By <input name="by" required value="${esc(verifierName())}" autocomplete="name"></label>
       <label>Date <input name="date" type="date" required value="${esc(todayISO())}"></label>
       <label>Comment <input name="comment" placeholder="Optional"></label>
       <button type="submit" class="btn btn-small btn-primary">Save</button>
       <button type="button" class="btn btn-small btn-ghost" data-action="cancel-verify">Cancel</button>
     </form>`;
+}
+
+function oneMarkControl(kind, id, record, mark) {
+  const current = mark === 'addedToFamilySearch'
+    ? effectiveFamilySearch(record, kind, id)
+    : effectiveVerification(record, kind, id);
+  if (current?.origin === 'data') return '';
+  if (current?.origin === 'local') {
+    const label = mark === 'addedToFamilySearch' ? 'Remove FamilySearch mark' : 'Remove verification';
+    const title = mark === 'addedToFamilySearch'
+      ? 'Remove the Added to FamilySearch mark saved in this browser'
+      : 'Remove the human-verification mark saved in this browser';
+    return `<button type="button" class="btn btn-small btn-ghost" data-action="clear-verify" data-kind="${esc(kind)}" data-id="${esc(id)}" data-mark="${esc(mark)}" title="${title}">${label}</button>`;
+  }
+  const open = ui.openVerify && ui.openVerify.kind === kind && ui.openVerify.id === id && (ui.openVerify.mark || 'humanVerified') === mark;
+  if (open) return markForm(kind, id, mark);
+  if (mark === 'addedToFamilySearch') {
+    return `<button type="button" class="btn btn-small" data-action="open-verify" data-kind="${esc(kind)}" data-id="${esc(id)}" data-mark="addedToFamilySearch" title="Save an Added to FamilySearch mark in this browser">Added to FamilySearch</button>`;
+  }
+  return `<button type="button" class="btn btn-small" data-action="open-verify" data-kind="${esc(kind)}" data-id="${esc(id)}" data-mark="humanVerified" title="Save a human-verification mark in this browser">Mark verified</button>`;
+}
+
+function verifyControls(kind, id, record) {
+  const open = ui.openVerify && ui.openVerify.kind === kind && ui.openVerify.id === id;
+  if (open) return oneMarkControl(kind, id, record, ui.openVerify.mark || 'humanVerified');
+  return `${oneMarkControl(kind, id, record, 'humanVerified')} ${oneMarkControl(kind, id, record, 'addedToFamilySearch')}`;
 }
 
 function suggestionKey(target) {
@@ -296,7 +332,7 @@ function suggestControls(target) {
 
 function howItWorksHtml(collapsible) {
   const body = `
-    <p>Marks and suggestions are saved only in this browser until you submit them. Nobody else can see them yet.</p>
+    <p>Mark verified, Added to FamilySearch, and suggestions are saved only in this browser until you submit them. Nobody else can see them yet.</p>
     <p>Submit opens a prefilled GitHub issue. Create that issue there — you need a GitHub account. Those items then move to Submitted, so the next issue includes only new ones.</p>
     <p>The family-history maintainer applies the issue in the next revision and closes it. The change then shows on the site for everyone, and the matching items leave your submitted list. If the issue was never created, use Resubmit. Clear drops them from this browser.</p>`;
   if (collapsible) {
@@ -390,7 +426,7 @@ function sourceCard(source, { personId = null, candidate = false, onDetail = fal
   const alts = (source.altUrls || []).map((url, index) =>
     `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Alternate link ${index + 1}</a>`).join(' · ');
   const checklist = personId
-    ? `<label class="check"><input type="checkbox" data-action="fs" data-person="${esc(personId)}" data-source="${esc(source.id)}" ${isAttached(personId, source.id) ? 'checked' : ''}> Added on FamilySearch</label>`
+    ? `<label class="check"><input type="checkbox" data-action="fs" data-person="${esc(personId)}" data-source="${esc(source.id)}" ${isAttached(personId, source.id) ? 'checked' : ''} title="Private checklist for this person. It stays on this computer and is not submitted."> Added on FamilySearch</label>`
     : '';
   const candidateNote = candidate ? '<p class="warn">Candidate only — not confirmed for this person.</p>' : '';
   return `
@@ -400,7 +436,7 @@ function sourceCard(source, { personId = null, candidate = false, onDetail = fal
         <p class="kicker">${esc(source.type || 'Source')} · ${esc(source.id)}</p>
         <h3>${sourceTitleHtml(source)}</h3>
         <p class="meta-line">${esc([source.date, source.place, source.repository].filter(Boolean).join(' · '))}</p>
-        <div class="badge-row">${humanBadge(effectiveVerification(source, 'source', source.id))}</div>
+        <div class="badge-row">${recordBadges(source, 'source', source.id)}</div>
         ${correctionHistoryHtml(source)}
         <div class="verify-slot">${verifyControls('source', source.id, source)} ${suggestControls({ targetType: 'source', targetId: source.id, personId: personId || '' })}</div>
         <h4>Transcription</h4>
@@ -432,7 +468,7 @@ function noteArticle(person, note) {
       <header class="note-head">
         <time datetime="${esc(note.date)}">${esc(note.date)}</time>
         ${statusBadge(note.status)}
-        ${humanBadge(effectiveVerification(note, 'note', note.id))}
+        ${recordBadges(note, 'note', note.id)}
         ${verifyControls('note', note.id, note)}
         ${open ? '' : suggestControls(target)}
       </header>
@@ -669,10 +705,11 @@ function verificationRow(entry) {
     : sourceHref(findSource(entry.id)?.id || entry.id);
   return `
     <li>
-      <strong>${entry.kind === 'note' ? 'Note' : 'Source'}</strong>
+      <strong>${entry.action === 'addedToFamilySearch' ? 'Added to FamilySearch' : 'Human-verified'}</strong>
+      <span class="muted">${entry.kind === 'note' ? 'Note' : 'Source'}</span>
       <a href="${href}">${esc(entry.label || entry.id)}</a>
       <span>${esc(entry.by)} · ${esc(entry.date)}${entry.comment ? ` · ${esc(entry.comment)}` : ''}</span>
-      <button type="button" class="btn btn-small btn-ghost" data-action="clear-verify" data-kind="${esc(entry.kind)}" data-id="${esc(entry.id)}">Remove</button>
+      <button type="button" class="btn btn-small btn-ghost" data-action="clear-verify" data-kind="${esc(entry.kind)}" data-id="${esc(entry.id)}" data-mark="${esc(entry.action || 'humanVerified')}">Remove</button>
     </li>`;
 }
 
@@ -733,14 +770,14 @@ function pendingPanel() {
   return `
     <section class="panel pending-panel" id="pending-panel">
       <div class="section-head">
-        <h2>Saved checks <span class="muted">${entries.length}</span></h2>
+        <h2>Verified and FamilySearch <span class="muted">${entries.length}</span></h2>
         <div class="btn-row">
           <button type="button" class="btn btn-small btn-primary" data-action="open-issue" ${entries.length ? '' : 'disabled'}>Submit</button>
           <button type="button" class="btn btn-small" data-action="copy-json" ${entries.length ? '' : 'disabled'}>Copy list</button>
         </div>
       </div>
-      <p class="hint">Not submitted yet. Submit sends only this list.</p>
-      ${entries.length ? `<ul class="pending-list">${rows}</ul>` : '<p class="empty">No saved checks.</p>'}
+      <p class="hint">Not submitted yet. Submit sends only these verifications and FamilySearch marks.</p>
+      ${entries.length ? `<ul class="pending-list">${rows}</ul>` : '<p class="empty">No saved verifications or FamilySearch marks.</p>'}
       ${submittedFold('verifications', submittedEntries(INDEX), verificationRow)}
     </section>`;
 }
@@ -750,7 +787,7 @@ function noteCard(note, person) {
     <article class="note carousel-card">
       <p class="kicker">${esc(note.date)} · ${esc(cap(note.status))}</p>
       <h3><a href="${personHref(person.id)}?note=${encodeURIComponent(note.id)}">${esc(personName(person))}</a></h3>
-      ${humanBadge(effectiveVerification(note, 'note', note.id))}
+      ${recordBadges(note, 'note', note.id)}
       <p class="clamp">${linkify(note.text)}</p>
     </article>`;
 }
@@ -1028,7 +1065,7 @@ function renderNotes() {
     <li class="note">
       <p class="kicker">${esc(note.date)} · ${esc(cap(note.status))}</p>
       <h3><a href="${personHref(person.id)}?note=${encodeURIComponent(note.id)}">${esc(personName(person))}</a></h3>
-      ${humanBadge(effectiveVerification(note, 'note', note.id))}
+      ${recordBadges(note, 'note', note.id)}
       <p>${linkify(note.text)}</p>
     </li>`).join('');
   return `
@@ -1406,7 +1443,7 @@ function onClick(event) {
   }
   if (action === 'open-verify') {
     ui.openSuggest = null;
-    ui.openVerify = { kind: button.dataset.kind, id: button.dataset.id };
+    ui.openVerify = { kind: button.dataset.kind, id: button.dataset.id, mark: button.dataset.mark || 'humanVerified' };
     refreshVisible();
     return;
   }
@@ -1443,7 +1480,8 @@ function onClick(event) {
     return;
   }
   if (action === 'clear-verify') {
-    clearLocal(button.dataset.kind, button.dataset.id);
+    if (button.dataset.mark === 'addedToFamilySearch') clearFamilySearch(button.dataset.kind, button.dataset.id);
+    else clearLocal(button.dataset.kind, button.dataset.id);
     ui.openVerify = null;
     refreshVisible();
     return;
@@ -1587,10 +1625,12 @@ function onSubmit(event) {
     setLive('Enter your name and a date.');
     return;
   }
-  markLocal(form.dataset.kind, form.dataset.id, { by, date, comment });
+  const fields = { by, date, comment };
+  if (form.dataset.mark === 'addedToFamilySearch') markFamilySearch(form.dataset.kind, form.dataset.id, fields);
+  else markLocal(form.dataset.kind, form.dataset.id, fields);
   ui.openVerify = null;
   refreshVisible();
-  setLive('Saved on this computer.');
+  setLive('Saved in this browser. Open Pending to submit it.');
 }
 
 function onInput(event) {

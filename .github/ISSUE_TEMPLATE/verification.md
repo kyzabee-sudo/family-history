@@ -7,7 +7,12 @@ labels: verification
 
 Apply each object in the JSON block to `data/data.json`, then close this issue.
 
-Set `humanVerified` to `{"by","date","comment?"}` on the matching note (`noteId`) or source (`sourceId`). A value in data.json overrides a browser-only mark.
+Each item has an `action`. On the matching note (`noteId`) or source (`sourceId`), set that field to `{"by","date","comment?"}`:
+
+- `humanVerified` when action is `humanVerified`
+- `addedToFamilySearch` when action is `addedToFamilySearch`
+
+A value in data.json overrides a browser-only mark.
 
 ```json
 {

@@ -72,6 +72,7 @@ In-laws' own parents are modelled only where the line's records name them and th
 | `text` | the note |
 | `sourceIds[]` | sources the note relies on |
 | `humanVerified` | optional. `{by, date, comment?}`. A person has checked this note. `by` is a non-empty string, `date` is `YYYY-MM-DD`, and `comment` is an optional string. Omit the field until then. This does not change `status`. |
+| `addedToFamilySearch` | optional. Same shape as `humanVerified`: `{by, date, comment?}`. Someone has added this note to FamilySearch. Omit the field until then. |
 | `corrections[]` | optional, backward-compatible. Each entry is `{by, date, kind, comment, status, resolution}` after a suggestion has been decided. `kind` is `Correction`, `Clarifying note`, `Wrong person linked`, or `Other`. `status` is `applied` or `declined`. `resolution` says what was done. Omit the array until then. |
 
 ## families[]
@@ -106,6 +107,7 @@ In-laws' own parents are modelled only where the line's records name them and th
 | `verifiedCrops[]` | crop filenames that confirm the reading |
 | `imageUrl`, `thumbUrl` | optional direct JPEG links (fondos.gijon.es). The site shows the thumbnail and links to the full image. |
 | `humanVerified` | optional, same shape as on notes: `{by, date, comment?}`. A person has checked this source. Omit the field until then. |
+| `addedToFamilySearch` | optional, same shape as on notes: `{by, date, comment?}`. Someone has added this source to FamilySearch. Omit the field until then. |
 | `corrections[]` | optional, same entries as on notes: `{by, date, kind, comment, status, resolution}`. |
 | `imageVerified`, `frames`, `localImages` | optional extras |
 
@@ -125,6 +127,14 @@ Applying a mark from a GitHub issue means adding the object and nothing else:
 ```
 
 `comment` may be omitted.
+
+## Added to FamilySearch
+
+`addedToFamilySearch` is optional on every note and every source, with the same shape as `humanVerified`: `{by, date, comment?}`. It means the note or source has been added on FamilySearch. The site queues it in the browser and files it in the same "Human verifications" issue, with `action` set to `addedToFamilySearch`. When `data.json` contains the field, that value wins and the browser mark is dropped. The site shows an Added to FamilySearch badge.
+
+```json
+"addedToFamilySearch": {"by": "Ada", "date": "2026-10-03", "comment": "Attached the padrón image"}
+```
 
 ## Corrections
 
@@ -152,7 +162,7 @@ Applying a mark from a GitHub issue means adding the object and nothing else:
 - Every id referenced anywhere exists: parents, spouses, parentLinks, familyIds, family members, sourceIds, marriage sources, source personIds and candidatePersonIds, lead and excluded personIds.
 - No duplicate ids, including note ids.
 - Every note has a stable `id`.
-- `humanVerified`, when present, has `by`, a real `YYYY-MM-DD` `date`, and an optional string `comment`.
+- `humanVerified` and `addedToFamilySearch`, when present, each have `by`, a real `YYYY-MM-DD` `date`, and an optional string `comment`.
 - `corrections`, when present on a note or source, is an array of `{by, date, kind, comment, status, resolution}` with an allowed `kind` and `status` of `applied` or `declined`.
 - No orphan people: every person belongs to a family or a source.
 - No orphan sources.

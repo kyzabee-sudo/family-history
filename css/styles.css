@@ -213,6 +213,7 @@ button.stat { width: 100%; cursor: pointer; }
 .badge.excluded { color: #7a2e28; background: #f8e8e6; }
 .badge.estimated { color: #3f4d63; background: #e8edf4; }
 .badge.human { color: #322b86; background: #ece9fb; border-color: #d5d0f3; }
+.badge.fs-added { color: #1d4e6f; background: #e5f2f8; border-color: #c5dde8; }
 .badge.living { color: #6a4a12; background: #fff6e4; }
 .badge.corrected { color: #145c38; background: #e5f4eb; }
 .badge.declined { color: #7a2e28; background: #f8e8e6; }
