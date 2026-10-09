@@ -231,11 +231,13 @@ export function timelineOf(index, person) {
       details: vital.details || '',
       sort: dateSortKey(vital.date),
       tie: kind === 'birth' ? 0 : 3,
+      targetId: `${person.id}:${kind}`,
+      field: kind,
     });
   };
   pushVital('birth', person.birth);
   pushVital('death', person.death);
-  for (const event of person.events || []) {
+  (person.events || []).forEach((event, index) => {
     items.push({
       kind: event.type || 'event',
       date: event.date,
@@ -244,8 +246,10 @@ export function timelineOf(index, person) {
       details: event.details || '',
       sort: dateSortKey(event.date),
       tie: 2,
+      targetId: `${person.id}:event:${index}`,
+      field: event.type || 'event',
     });
-  }
+  });
   for (const familyId of person.familyIds || []) {
     const family = index.familiesById[familyId];
     if (!family) continue;
@@ -261,6 +265,8 @@ export function timelineOf(index, person) {
       details: spouseId ? `Spouse: ${personName(index.peopleById[spouseId])}` : '',
       sort: dateSortKey(marriage.date),
       tie: 1,
+      targetId: `${person.id}:marriage:${familyId}`,
+      field: 'marriage',
     });
   }
   items.sort((a, b) => a.sort - b.sort || a.tie - b.tie);

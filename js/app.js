@@ -18,20 +18,40 @@ import {
 } from './model.js';
 import { mountTree } from './tree.js';
 import {
+  ISSUE_NEW,
+  clearFamilySearch,
   clearLocal,
+  clearSubmittedVerifications,
+  effectiveFamilySearch,
   effectiveVerification,
   isAttached,
   issueLink,
+  markFamilySearch,
   markLocal,
+  markVerificationsSubmitted,
   passesVerifyFilter,
   pendingEntries,
   reconcileStore,
   setAttached,
+  submittedEntries,
   todayISO,
   verificationCounts,
   verificationPayload,
   verifierName,
 } from './verify.js';
+import {
+  SUGGESTION_KINDS,
+  addSuggestion,
+  clearSubmittedSuggestions,
+  clearSuggestions,
+  markSuggestionsSubmitted,
+  pendingSuggestions,
+  reconcileSuggestions,
+  removeSuggestion,
+  submittedSuggestions,
+  suggestionIssueLink,
+  suggestionPayload,
+} from './suggest.js';
 
 const SITE = 'Valdés Family History';
 const MAX_GEN = 8;
@@ -45,11 +65,13 @@ const ui = {
   verifyFilter: 'all',
   onlyUnattached: false,
   openVerify: null,
+  openSuggest: null,
   peopleLine: 'all',
   peopleSort: { key: 'name', dir: 1 },
   sourceType: 'all',
   sourceVerify: 'all',
   familiesQuery: '',
+  openSubmitted: null,
 };
 const treeState = { forcedOpen: new Set(), forcedClosed: new Set() };
 let treeHandle = null;
@@ -75,8 +97,24 @@ function humanBadge(verification) {
   if (!verification) return '';
   const bits = ['Human-verified', verification.date, verification.by].filter(Boolean);
   const title = verification.comment ? ` title="${esc(verification.comment)}"` : '';
-  const pending = verification.origin === 'local' ? '<span class="pending-flag">saved here</span>' : '';
+  const pending = verification.origin !== 'local'
+    ? ''
+    : `<span class="pending-flag">${verification.submitted ? 'submitted' : 'saved here'}</span>`;
   return `<span class="badge human"${title}>${HUMAN_ICON}<span>${esc(bits.join(' · '))}</span></span>${pending}`;
+}
+
+function familySearchBadge(mark) {
+  if (!mark) return '';
+  const bits = ['Added to FamilySearch', mark.date, mark.by].filter(Boolean);
+  const title = mark.comment ? ` title="${esc(mark.comment)}"` : '';
+  const pending = mark.origin !== 'local'
+    ? ''
+    : `<span class="pending-flag">${mark.submitted ? 'submitted' : 'saved here'}</span>`;
+  return `<span class="badge fs-added"${title}><span>${esc(bits.join(' · '))}</span></span>${pending}`;
+}
+
+function recordBadges(record, kind, id) {
+  return `${humanBadge(effectiveVerification(record, kind, id))}${familySearchBadge(effectiveFamilySearch(record, kind, id))}`;
 }
 
 function livingBadge(person) {
@@ -167,6 +205,25 @@ function setLive(message) {
   if (live) live.textContent = message;
 }
 
+function newBatch() {
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
+}
+
+function batchKey(entry) {
+  return entry.batch || entry.submitted || 'submitted';
+}
+
+function openPreparedIssue(link, payload, title, labels, opened) {
+  if (link.tooLong) {
+    copyText(JSON.stringify(payload, null, 2));
+    setLive('The form link was too long. The list was copied — paste it into the form that opens.');
+    window.open(`${ISSUE_NEW}?${new URLSearchParams({ title, labels })}`, '_blank', 'noopener');
+    return;
+  }
+  window.open(link.url, '_blank', 'noopener');
+  setLive(opened);
+}
+
 async function copyText(text, button) {
   try {
     await navigator.clipboard.writeText(text);
@@ -191,24 +248,106 @@ async function copyText(text, button) {
   setLive('Copied');
 }
 
-function verifyControls(kind, id, record) {
-  const verification = effectiveVerification(record, kind, id);
-  if (verification?.origin === 'data') return '';
-  if (verification?.origin === 'local') {
-    return `<button type="button" class="btn btn-small btn-ghost" data-action="clear-verify" data-kind="${esc(kind)}" data-id="${esc(id)}">Remove local mark</button>`;
-  }
-  const open = ui.openVerify && ui.openVerify.kind === kind && ui.openVerify.id === id;
-  if (!open) {
-    return `<button type="button" class="btn btn-small" data-action="open-verify" data-kind="${esc(kind)}" data-id="${esc(id)}">Mark verified</button>`;
-  }
+function markForm(kind, id, mark) {
+  const legend = mark === 'addedToFamilySearch' ? 'Added to FamilySearch' : 'Mark verified';
   return `
-    <form class="verify-form" data-kind="${esc(kind)}" data-id="${esc(id)}">
+    <form class="verify-form" data-kind="${esc(kind)}" data-id="${esc(id)}" data-mark="${esc(mark)}">
+      <p class="hint">${esc(legend)}</p>
       <label>By <input name="by" required value="${esc(verifierName())}" autocomplete="name"></label>
       <label>Date <input name="date" type="date" required value="${esc(todayISO())}"></label>
       <label>Comment <input name="comment" placeholder="Optional"></label>
       <button type="submit" class="btn btn-small btn-primary">Save</button>
       <button type="button" class="btn btn-small btn-ghost" data-action="cancel-verify">Cancel</button>
     </form>`;
+}
+
+function oneMarkControl(kind, id, record, mark) {
+  const current = mark === 'addedToFamilySearch'
+    ? effectiveFamilySearch(record, kind, id)
+    : effectiveVerification(record, kind, id);
+  if (current?.origin === 'data') return '';
+  if (current?.origin === 'local') {
+    const label = mark === 'addedToFamilySearch' ? 'Remove FamilySearch mark' : 'Remove verification';
+    const title = mark === 'addedToFamilySearch'
+      ? 'Remove the Added to FamilySearch mark saved in this browser'
+      : 'Remove the human-verification mark saved in this browser';
+    return `<button type="button" class="btn btn-small btn-ghost" data-action="clear-verify" data-kind="${esc(kind)}" data-id="${esc(id)}" data-mark="${esc(mark)}" title="${title}">${label}</button>`;
+  }
+  const open = ui.openVerify && ui.openVerify.kind === kind && ui.openVerify.id === id && (ui.openVerify.mark || 'humanVerified') === mark;
+  if (open) return markForm(kind, id, mark);
+  if (mark === 'addedToFamilySearch') {
+    return `<button type="button" class="btn btn-small" data-action="open-verify" data-kind="${esc(kind)}" data-id="${esc(id)}" data-mark="addedToFamilySearch" title="Save an Added to FamilySearch mark in this browser">Added to FamilySearch</button>`;
+  }
+  return `<button type="button" class="btn btn-small" data-action="open-verify" data-kind="${esc(kind)}" data-id="${esc(id)}" data-mark="humanVerified" title="Save a human-verification mark in this browser">Mark verified</button>`;
+}
+
+function verifyControls(kind, id, record) {
+  const open = ui.openVerify && ui.openVerify.kind === kind && ui.openVerify.id === id;
+  if (open) return oneMarkControl(kind, id, record, ui.openVerify.mark || 'humanVerified');
+  return `${oneMarkControl(kind, id, record, 'humanVerified')} ${oneMarkControl(kind, id, record, 'addedToFamilySearch')}`;
+}
+
+function suggestionKey(target) {
+  return [target.targetType, target.targetId, target.field || ''].join('|');
+}
+
+function correctionHistoryHtml(record) {
+  const items = Array.isArray(record?.corrections) ? record.corrections : [];
+  if (!items.length) return '';
+  const applied = items.some((item) => item.status === 'applied');
+  const rows = items.map((item) => `
+    <li>
+      <span class="badge ${item.status === 'applied' ? 'corrected' : 'declined'}">${item.status === 'applied' ? 'Corrected' : 'Declined'}</span>
+      ${esc(item.date)} · ${esc(item.by)} · ${esc(item.kind)}
+      ${item.resolution ? `<span class="muted">${esc(item.resolution)}</span>` : ''}
+    </li>`).join('');
+  return `
+    <div class="correction-history">
+      ${applied ? '<span class="badge corrected">Corrected</span>' : ''}
+      <ul class="plain">${rows}</ul>
+    </div>`;
+}
+
+function suggestControls(target) {
+  const key = suggestionKey(target);
+  const open = ui.openSuggest && ui.openSuggest.key === key;
+  if (!open) {
+    const person = target.personId ? ` data-person-id="${esc(target.personId)}"` : '';
+    const field = target.field ? ` data-field="${esc(target.field)}"` : '';
+    return `<button type="button" class="btn btn-small" data-action="open-suggest" data-suggest-key="${esc(key)}" data-target-type="${esc(target.targetType)}" data-target-id="${esc(target.targetId)}"${person}${field}>Suggest correction</button>`;
+  }
+  const kinds = SUGGESTION_KINDS.map((kind) => `<option value="${esc(kind)}">${esc(kind)}</option>`).join('');
+  return `
+    <form class="verify-form suggest-form" data-target-type="${esc(target.targetType)}" data-target-id="${esc(target.targetId)}" data-person-id="${esc(target.personId || '')}" data-field="${esc(target.field || '')}">
+      <label>Kind <select name="kind">${kinds}</select></label>
+      <label>Comment <textarea name="comment" required placeholder="What should we change or add?"></textarea></label>
+      <label>Suggested value <input name="suggestedValue" placeholder="Optional"></label>
+      <label>Your name <input name="by" required value="${esc(verifierName())}" autocomplete="name"></label>
+      <div class="btn-row">
+        <button type="submit" class="btn btn-small btn-primary">Save</button>
+        <button type="button" class="btn btn-small btn-ghost" data-action="cancel-suggest">Cancel</button>
+      </div>
+    </form>`;
+}
+
+function howItWorksHtml(collapsible) {
+  const body = `
+    <p>Mark verified, Added to FamilySearch, and suggestions are saved only in this browser until you submit them. Nobody else can see them yet.</p>
+    <p>Submit opens a prefilled GitHub issue. Create that issue there — you need a GitHub account. Those items then move to Submitted, so the next issue includes only new ones.</p>
+    <p>The family-history maintainer applies the issue in the next revision and closes it. The change then shows on the site for everyone, and the matching items leave your submitted list. If the issue was never created, use Resubmit. Clear drops them from this browser.</p>`;
+  if (collapsible) {
+    return `<details class="how-it-works excluded"><summary>How verifying and corrections work</summary>${body}</details>`;
+  }
+  return `<section class="how-it-works panel"><h2>How verifying and corrections work</h2>${body}</section>`;
+}
+
+function focusOpenForm() {
+  const comment = document.querySelector('.suggest-form textarea[name="comment"]');
+  if (comment) {
+    comment.focus();
+    return;
+  }
+  document.querySelector('.verify-form input[name="by"]')?.focus();
 }
 
 function filterButtons(action, currentFilter) {
@@ -287,7 +426,7 @@ function sourceCard(source, { personId = null, candidate = false, onDetail = fal
   const alts = (source.altUrls || []).map((url, index) =>
     `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Alternate link ${index + 1}</a>`).join(' · ');
   const checklist = personId
-    ? `<label class="check"><input type="checkbox" data-action="fs" data-person="${esc(personId)}" data-source="${esc(source.id)}" ${isAttached(personId, source.id) ? 'checked' : ''}> Added on FamilySearch</label>`
+    ? `<label class="check"><input type="checkbox" data-action="fs" data-person="${esc(personId)}" data-source="${esc(source.id)}" ${isAttached(personId, source.id) ? 'checked' : ''} title="Private checklist for this person. It stays on this computer and is not submitted."> Added on FamilySearch</label>`
     : '';
   const candidateNote = candidate ? '<p class="warn">Candidate only — not confirmed for this person.</p>' : '';
   return `
@@ -297,8 +436,9 @@ function sourceCard(source, { personId = null, candidate = false, onDetail = fal
         <p class="kicker">${esc(source.type || 'Source')} · ${esc(source.id)}</p>
         <h3>${sourceTitleHtml(source)}</h3>
         <p class="meta-line">${esc([source.date, source.place, source.repository].filter(Boolean).join(' · '))}</p>
-        <div class="badge-row">${humanBadge(effectiveVerification(source, 'source', source.id))}</div>
-        <div class="verify-slot">${verifyControls('source', source.id, source)}</div>
+        <div class="badge-row">${recordBadges(source, 'source', source.id)}</div>
+        ${correctionHistoryHtml(source)}
+        <div class="verify-slot">${verifyControls('source', source.id, source)} ${suggestControls({ targetType: 'source', targetId: source.id, personId: personId || '' })}</div>
         <h4>Transcription</h4>
         <p class="transcription">${esc(source.transcription || 'No transcription')}</p>
         <div class="btn-row">
@@ -321,15 +461,20 @@ function noteArticle(person, note) {
     const label = source?.id || id;
     return `<a href="${sourceHref(source?.id || id)}">${esc(label)}</a>`;
   }).join(', ');
+  const target = { targetType: 'note', targetId: note.id, personId: person.id };
+  const open = ui.openSuggest && ui.openSuggest.key === suggestionKey(target);
   return `
     <article class="note" id="note-${esc(note.id)}">
       <header class="note-head">
         <time datetime="${esc(note.date)}">${esc(note.date)}</time>
         ${statusBadge(note.status)}
-        ${humanBadge(effectiveVerification(note, 'note', note.id))}
+        ${recordBadges(note, 'note', note.id)}
         ${verifyControls('note', note.id, note)}
+        ${open ? '' : suggestControls(target)}
       </header>
+      ${correctionHistoryHtml(note)}
       <p>${linkify(note.text)}</p>
+      ${open ? suggestControls(target) : ''}
       ${sources ? `<p class="meta-line"><span class="muted">Sources:</span> ${sources}</p>` : ''}
     </article>`;
 }
@@ -418,6 +563,7 @@ function timelineHtml(person) {
         ${statusBadge(item.quality)}
         ${item.place ? `<span class="meta-line">${esc(item.place)}</span>` : ''}
         ${item.details ? `<p>${esc(item.details)}</p>` : ''}
+        ${item.targetId ? suggestControls({ targetType: 'event', targetId: item.targetId, personId: person.id, field: item.field || item.kind }) : ''}
       </div>
     </li>`).join('')}</ol>`;
 }
@@ -447,7 +593,7 @@ function excludedHtml(personId) {
     </details>`;
 }
 
-function vitalBlock(label, vital) {
+function vitalBlock(label, vital, target) {
   if (!vital) return '';
   const date = vital.date || 'Unknown';
   const place = vital.place ? `<span class="meta-line">${esc(vital.place)}</span>` : '';
@@ -458,7 +604,15 @@ function vitalBlock(label, vital) {
       <p>${esc(date)} ${statusBadge(vital.quality)}</p>
       ${place}
       ${details}
+      ${target ? suggestControls(target) : ''}
     </div>`;
+}
+
+function vitalsHtml(person) {
+  return `
+    ${vitalBlock('Birth', person.birth, { targetType: 'event', targetId: `${person.id}:birth`, personId: person.id, field: 'birth' })}
+    ${vitalBlock('Death', person.death, { targetType: 'event', targetId: `${person.id}:death`, personId: person.id, field: 'death' })}
+  `;
 }
 
 function renderPerson(id) {
@@ -488,15 +642,14 @@ function renderPerson(id) {
         <div class="person-main">
           <section class="panel">
             <h2>Vitals</h2>
-            <div class="vitals">
-              ${vitalBlock('Birth', person.birth)}
-              ${vitalBlock('Death', person.death)}
+            <div class="vitals" id="vitals-mount">
+              ${vitalsHtml(person)}
             </div>
           </section>
           <section class="panel">${familyHtml(person)}</section>
           <section class="panel">
             <h2>Timeline</h2>
-            ${timelineHtml(person)}
+            <div id="timeline-mount">${timelineHtml(person)}</div>
           </section>
         </div>
         <div class="person-side">
@@ -545,32 +698,87 @@ function searchResultsHtml(query) {
     </div>`;
 }
 
-function pendingPanel() {
-  const entries = pendingEntries(INDEX);
-  const rows = entries.map((entry) => {
-    const noteRow = entry.kind === 'note' ? INDEX.notesById.get(entry.id) : null;
-    const href = noteRow
-      ? `${personHref(noteRow.person.id)}?note=${encodeURIComponent(entry.id)}`
-      : sourceHref(findSource(entry.id)?.id || entry.id);
-    return `
+function verificationRow(entry) {
+  const noteRow = entry.kind === 'note' ? INDEX.notesById.get(entry.id) : null;
+  const href = noteRow
+    ? `${personHref(noteRow.person.id)}?note=${encodeURIComponent(entry.id)}`
+    : sourceHref(findSource(entry.id)?.id || entry.id);
+  return `
     <li>
-      <strong>${entry.kind === 'note' ? 'Note' : 'Source'}</strong>
+      <strong>${entry.action === 'addedToFamilySearch' ? 'Added to FamilySearch' : 'Human-verified'}</strong>
+      <span class="muted">${entry.kind === 'note' ? 'Note' : 'Source'}</span>
       <a href="${href}">${esc(entry.label || entry.id)}</a>
       <span>${esc(entry.by)} · ${esc(entry.date)}${entry.comment ? ` · ${esc(entry.comment)}` : ''}</span>
-      <button type="button" class="btn btn-small btn-ghost" data-action="clear-verify" data-kind="${esc(entry.kind)}" data-id="${esc(entry.id)}">Remove</button>
+      <button type="button" class="btn btn-small btn-ghost" data-action="clear-verify" data-kind="${esc(entry.kind)}" data-id="${esc(entry.id)}" data-mark="${esc(entry.action || 'humanVerified')}">Remove</button>
     </li>`;
-  }).join('');
+}
+
+function suggestionRow(entry) {
+  const bits = [entry.targetType, entry.targetId, entry.field].filter(Boolean).join(' · ');
+  return `
+    <li>
+      <strong>${esc(entry.kind)}</strong>
+      <span class="muted">${esc(bits)}</span>
+      <span>${esc(entry.comment)}</span>
+      ${entry.suggestedValue ? `<span class="muted">Suggested: ${esc(entry.suggestedValue)}</span>` : ''}
+      <span>${esc(entry.by)} · ${esc(entry.date)}</span>
+      <button type="button" class="btn btn-small btn-ghost" data-action="clear-suggestion" data-id="${esc(entry.id)}">Remove</button>
+    </li>`;
+}
+
+function groupByBatch(entries) {
+  const groups = [];
+  const map = new Map();
+  for (const entry of entries) {
+    const key = batchKey(entry);
+    let group = map.get(key);
+    if (!group) {
+      group = { key, date: entry.submitted || '', entries: [] };
+      map.set(key, group);
+      groups.push(group);
+    }
+    group.entries.push(entry);
+  }
+  return groups.reverse();
+}
+
+function submittedFold(kind, entries, rowHtml) {
+  if (!entries.length) return '';
+  const groups = groupByBatch(entries).map((group) => `
+    <div class="submit-batch">
+      <div class="section-head">
+        <p class="hint">Submitted ${esc(group.date || 'earlier')}</p>
+        <button type="button" class="btn btn-small" data-action="resubmit-${kind}" data-batch="${esc(group.key)}">Resubmit</button>
+      </div>
+      <ul class="pending-list">${group.entries.map(rowHtml).join('')}</ul>
+    </div>`).join('');
+  const open = ui.openSubmitted === kind ? ' open' : '';
+  return `
+    <details class="submitted-fold"${open}>
+      <summary>Submitted, awaiting maintainer <span class="muted">${entries.length}</span></summary>
+      <p class="hint">Waiting on the maintainer. Resubmit a batch if that GitHub issue was never created. Clear drops the whole list from this browser. Applied items disappear on their own.</p>
+      <div class="btn-row">
+        <button type="button" class="btn btn-small btn-ghost" data-action="clear-submitted-${kind}">Clear</button>
+      </div>
+      ${groups}
+    </details>`;
+}
+
+function pendingPanel() {
+  const entries = pendingEntries(INDEX);
+  const rows = entries.map(verificationRow).join('');
   return `
     <section class="panel pending-panel" id="pending-panel">
       <div class="section-head">
-        <h2>Saved checks <span class="muted">${entries.length}</span></h2>
+        <h2>Verified and FamilySearch <span class="muted">${entries.length}</span></h2>
         <div class="btn-row">
-          <button type="button" class="btn btn-small btn-primary" data-action="open-issue" ${entries.length ? '' : 'disabled'}>Send these checks</button>
+          <button type="button" class="btn btn-small btn-primary" data-action="open-issue" ${entries.length ? '' : 'disabled'}>Submit</button>
           <button type="button" class="btn btn-small" data-action="copy-json" ${entries.length ? '' : 'disabled'}>Copy list</button>
         </div>
       </div>
-      <p class="hint">These checks are saved on this computer. Send them so they can be added to the family record.</p>
-      ${entries.length ? `<ul class="pending-list">${rows}</ul>` : '<p class="empty">No saved checks.</p>'}
+      <p class="hint">Not submitted yet. Submit sends only these verifications and FamilySearch marks.</p>
+      ${entries.length ? `<ul class="pending-list">${rows}</ul>` : '<p class="empty">No saved verifications or FamilySearch marks.</p>'}
+      ${submittedFold('verifications', submittedEntries(INDEX), verificationRow)}
     </section>`;
 }
 
@@ -579,7 +787,7 @@ function noteCard(note, person) {
     <article class="note carousel-card">
       <p class="kicker">${esc(note.date)} · ${esc(cap(note.status))}</p>
       <h3><a href="${personHref(person.id)}?note=${encodeURIComponent(note.id)}">${esc(personName(person))}</a></h3>
-      ${humanBadge(effectiveVerification(note, 'note', note.id))}
+      ${recordBadges(note, 'note', note.id)}
       <p class="clamp">${linkify(note.text)}</p>
     </article>`;
 }
@@ -683,6 +891,7 @@ function renderHome() {
         <input id="q" type="search" placeholder="Try Valdes, Porceyo, Bermúdez" autocomplete="off">
       </form>
       <div id="search-results"></div>
+      ${howItWorksHtml(true)}
       <div class="bands">
         ${carouselHtml('recent-notes', 'Recently updated notes', '#/notes', notes, 'No notes yet.')}
         ${carouselHtml('open-leads', 'Open research leads', '#/leads', leads, 'No open leads.')}
@@ -833,6 +1042,7 @@ function renderFamily(id) {
       ${crumbs([['#/', 'Home'], ['#/families', 'Families'], [null, label]])}
       <h1>${esc(label)}</h1>
       <p class="badge-row">${statusBadge(family.coupleStatus)}</p>
+      <div class="btn-row">${suggestControls({ targetType: 'family', targetId: family.id })}</div>
       <section class="panel">
         <h2>Couple</h2>
         <p>Husband: ${personLink(family.husband)}</p>
@@ -855,7 +1065,7 @@ function renderNotes() {
     <li class="note">
       <p class="kicker">${esc(note.date)} · ${esc(cap(note.status))}</p>
       <h3><a href="${personHref(person.id)}?note=${encodeURIComponent(note.id)}">${esc(personName(person))}</a></h3>
-      ${humanBadge(effectiveVerification(note, 'note', note.id))}
+      ${recordBadges(note, 'note', note.id)}
       <p>${linkify(note.text)}</p>
     </li>`).join('');
   return `
@@ -961,12 +1171,33 @@ function renderSource(id) {
     </div>`;
 }
 
+function suggestionsPanel() {
+  const entries = pendingSuggestions();
+  const rows = entries.map(suggestionRow).join('');
+  return `
+    <section class="panel pending-panel" id="suggestions-panel">
+      <div class="section-head">
+        <h2>Suggestions <span class="muted">${entries.length}</span></h2>
+        <div class="btn-row">
+          <button type="button" class="btn btn-small btn-primary" data-action="submit-suggestions" ${entries.length ? '' : 'disabled'}>Submit</button>
+          <button type="button" class="btn btn-small" data-action="copy-suggestions" ${entries.length ? '' : 'disabled'}>Copy list</button>
+          <button type="button" class="btn btn-small btn-ghost" data-action="clear-suggestions" ${entries.length ? '' : 'disabled'}>Clear list</button>
+        </div>
+      </div>
+      <p class="hint">Not submitted yet. Submit sends only this list.</p>
+      ${entries.length ? `<ul class="pending-list">${rows}</ul>` : '<p class="empty">No saved suggestions.</p>'}
+      ${submittedFold('suggestions', submittedSuggestions(), suggestionRow)}
+    </section>`;
+}
+
 function renderPending() {
   return `
     <div class="wrap">
-      ${crumbs([['#/', 'Home'], [null, 'Saved checks']])}
-      <h1>Saved checks</h1>
+      ${crumbs([['#/', 'Home'], [null, 'Pending']])}
+      <h1>Pending</h1>
+      ${howItWorksHtml(false)}
       ${pendingPanel()}
+      ${suggestionsPanel()}
     </div>`;
 }
 
@@ -1041,7 +1272,7 @@ function updateChrome() {
     if (link.dataset.nav === name) link.setAttribute('aria-current', 'page');
     else link.removeAttribute('aria-current');
   });
-  const count = pendingEntries(INDEX).length;
+  const count = pendingEntries(INDEX).length + pendingSuggestions().length;
   const pill = document.getElementById('pending-count');
   if (pill) {
     pill.textContent = String(count);
@@ -1064,7 +1295,7 @@ function titles(route) {
   if (route.name === 'notes') return `Notes · ${SITE}`;
   if (route.name === 'leads') return `Open research leads · ${SITE}`;
   if (route.name === 'unverified') return `Needs verification · ${SITE}`;
-  if (route.name === 'pending') return `Saved checks · ${SITE}`;
+  if (route.name === 'pending') return `Pending · ${SITE}`;
   return SITE;
 }
 
@@ -1091,6 +1322,7 @@ function paint() {
   updateChrome();
   bindThumbs(main());
   bindCarousels(main());
+  focusOpenForm();
   if (route.name === 'tree') {
     const focusId = INDEX.peopleById[route.id] ? route.id : DEFAULT_ROOT;
     const stage = document.getElementById('tree-stage');
@@ -1172,8 +1404,12 @@ function refreshVisible() {
       toggle.textContent = unattachedLabel();
       toggle.classList.toggle('btn-primary', ui.onlyUnattached);
     }
+    const vitals = document.getElementById('vitals-mount');
+    if (vitals) vitals.innerHTML = vitalsHtml(person);
+    const timeline = document.getElementById('timeline-mount');
+    if (timeline) timeline.innerHTML = timelineHtml(person);
     updateChrome();
-    document.querySelector('.verify-form input[name="by"]')?.focus();
+    focusOpenForm();
     return;
   }
   if (current.name === 'sources' && document.getElementById('source-mount')) {
@@ -1185,10 +1421,10 @@ function refreshVisible() {
       button.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
     updateChrome();
-    document.querySelector('.verify-form input[name="by"]')?.focus();
+    focusOpenForm();
     return;
   }
-  if (current.name === 'home' || current.name === 'pending' || current.name === 'source' || current.name === 'unverified' || current.name === 'notes') paint();
+  if (current.name === 'home' || current.name === 'pending' || current.name === 'source' || current.name === 'family' || current.name === 'unverified' || current.name === 'notes') paint();
   else updateChrome();
 }
 
@@ -1206,7 +1442,8 @@ function onClick(event) {
     return;
   }
   if (action === 'open-verify') {
-    ui.openVerify = { kind: button.dataset.kind, id: button.dataset.id };
+    ui.openSuggest = null;
+    ui.openVerify = { kind: button.dataset.kind, id: button.dataset.id, mark: button.dataset.mark || 'humanVerified' };
     refreshVisible();
     return;
   }
@@ -1215,8 +1452,36 @@ function onClick(event) {
     refreshVisible();
     return;
   }
+  if (action === 'open-suggest') {
+    ui.openVerify = null;
+    ui.openSuggest = {
+      key: button.dataset.suggestKey,
+      targetType: button.dataset.targetType,
+      targetId: button.dataset.targetId,
+      personId: button.dataset.personId || '',
+      field: button.dataset.field || '',
+    };
+    refreshVisible();
+    return;
+  }
+  if (action === 'cancel-suggest') {
+    ui.openSuggest = null;
+    refreshVisible();
+    return;
+  }
+  if (action === 'clear-suggestion') {
+    removeSuggestion(button.dataset.id);
+    refreshVisible();
+    return;
+  }
+  if (action === 'clear-suggestions') {
+    clearSuggestions();
+    refreshVisible();
+    return;
+  }
   if (action === 'clear-verify') {
-    clearLocal(button.dataset.kind, button.dataset.id);
+    if (button.dataset.mark === 'addedToFamilySearch') clearFamilySearch(button.dataset.kind, button.dataset.id);
+    else clearLocal(button.dataset.kind, button.dataset.id);
     ui.openVerify = null;
     refreshVisible();
     return;
@@ -1268,13 +1533,50 @@ function onClick(event) {
     const entries = pendingEntries(INDEX);
     if (!entries.length) return;
     const link = issueLink(entries);
-    if (link.tooLong) {
-      copyText(JSON.stringify(verificationPayload(entries), null, 2));
-      setLive('The form link was too long. The list was copied — paste it into the form that opens.');
-      window.open(`https://github.com/kyzabee-sudo/family-history/issues/new?${new URLSearchParams({ title: 'Human verifications', labels: 'verification' })}`, '_blank', 'noopener');
-      return;
-    }
-    window.open(link.url, '_blank', 'noopener');
+    markVerificationsSubmitted(entries, todayISO(), newBatch());
+    ui.openSubmitted = 'verifications';
+    refreshVisible();
+    openPreparedIssue(link, verificationPayload(entries), 'Human verifications', 'verification', 'The issue form is open. Create it on GitHub. These checks will not be included again.');
+    return;
+  }
+  if (action === 'resubmit-verifications') {
+    const entries = submittedEntries(INDEX).filter((entry) => batchKey(entry) === button.dataset.batch);
+    if (!entries.length) return;
+    const link = issueLink(entries);
+    openPreparedIssue(link, verificationPayload(entries), 'Human verifications', 'verification', 'The issue form is open again. Create it on GitHub if the last one was never created.');
+    return;
+  }
+  if (action === 'clear-submitted-verifications') {
+    clearSubmittedVerifications();
+    ui.openSubmitted = null;
+    refreshVisible();
+    return;
+  }
+  if (action === 'submit-suggestions') {
+    const entries = pendingSuggestions();
+    if (!entries.length) return;
+    const link = suggestionIssueLink(entries);
+    markSuggestionsSubmitted(entries.map((entry) => entry.id), todayISO(), newBatch());
+    ui.openSubmitted = 'suggestions';
+    refreshVisible();
+    openPreparedIssue(link, suggestionPayload(entries), 'Corrections and notes', 'correction', 'The issue form is open. Create it on GitHub. These suggestions will not be included again.');
+    return;
+  }
+  if (action === 'resubmit-suggestions') {
+    const entries = submittedSuggestions().filter((entry) => batchKey(entry) === button.dataset.batch);
+    if (!entries.length) return;
+    const link = suggestionIssueLink(entries);
+    openPreparedIssue(link, suggestionPayload(entries), 'Corrections and notes', 'correction', 'The issue form is open again. Create it on GitHub if the last one was never created.');
+    return;
+  }
+  if (action === 'clear-submitted-suggestions') {
+    clearSubmittedSuggestions();
+    ui.openSubmitted = null;
+    refreshVisible();
+    return;
+  }
+  if (action === 'copy-suggestions') {
+    copyText(JSON.stringify(suggestionPayload(pendingSuggestions()), null, 2), button);
     return;
   }
   if (action === 'copy-json') {
@@ -1284,6 +1586,34 @@ function onClick(event) {
 }
 
 function onSubmit(event) {
+  const suggest = event.target.closest?.('.suggest-form');
+  if (suggest) {
+    event.preventDefault();
+    const data = new FormData(suggest);
+    const by = String(data.get('by') || '').trim();
+    const comment = String(data.get('comment') || '').trim();
+    const kind = String(data.get('kind') || '');
+    const suggestedValue = String(data.get('suggestedValue') || '');
+    if (!by || !comment || !SUGGESTION_KINDS.includes(kind)) {
+      setLive('Enter a comment and your name.');
+      return;
+    }
+    addSuggestion({
+      targetType: suggest.dataset.targetType,
+      targetId: suggest.dataset.targetId,
+      personId: suggest.dataset.personId || '',
+      field: suggest.dataset.field || '',
+      kind,
+      comment,
+      suggestedValue,
+      by,
+      date: todayISO(),
+    });
+    ui.openSuggest = null;
+    refreshVisible();
+    setLive('Saved in this browser. Open Pending to submit it.');
+    return;
+  }
   const form = event.target.closest?.('.verify-form');
   if (!form) return;
   event.preventDefault();
@@ -1295,10 +1625,12 @@ function onSubmit(event) {
     setLive('Enter your name and a date.');
     return;
   }
-  markLocal(form.dataset.kind, form.dataset.id, { by, date, comment });
+  const fields = { by, date, comment };
+  if (form.dataset.mark === 'addedToFamilySearch') markFamilySearch(form.dataset.kind, form.dataset.id, fields);
+  else markLocal(form.dataset.kind, form.dataset.id, fields);
   ui.openVerify = null;
   refreshVisible();
-  setLive('Saved on this computer.');
+  setLive('Saved in this browser. Open Pending to submit it.');
 }
 
 function onInput(event) {
@@ -1397,6 +1729,8 @@ function route() {
     else if (verify === 'all') ui.sourceVerify = 'all';
   }
   ui.openVerify = null;
+  ui.openSuggest = null;
+  ui.openSubmitted = null;
   const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   if (!reduce && !(current.name === 'home' && current.params.get('at'))) window.scrollTo(0, 0);
   paint();
@@ -1410,6 +1744,7 @@ async function start() {
     return;
   }
   reconcileStore(INDEX);
+  reconcileSuggestions(INDEX);
   document.addEventListener('click', onClick);
   document.addEventListener('submit', onSubmit);
   document.addEventListener('input', onInput);

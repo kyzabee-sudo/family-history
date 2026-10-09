@@ -58,27 +58,65 @@ def walk(ctx, o):
     elif isinstance(o, list):
         [walk(ctx, v) for v in o]
 
-def check_human_verified(hv, ctx):
+def check_stamp(hv, ctx, label):
     if not isinstance(hv, dict):
-        errs.append(f'{ctx}: humanVerified must be an object')
+        errs.append(f'{ctx}: {label} must be an object')
         return
     extra = set(hv) - {'by', 'date', 'comment'}
     if extra:
-        errs.append(f'{ctx}: humanVerified has unknown fields {sorted(extra)}')
+        errs.append(f'{ctx}: {label} has unknown fields {sorted(extra)}')
     by = hv.get('by')
     if not isinstance(by, str) or not by.strip():
-        errs.append(f'{ctx}: humanVerified.by must be a non-empty string')
+        errs.append(f'{ctx}: {label}.by must be a non-empty string')
     date = hv.get('date')
     if not isinstance(date, str) or not re.fullmatch(r'\d{4}-\d{2}-\d{2}', date):
-        errs.append(f'{ctx}: humanVerified.date must be YYYY-MM-DD')
+        errs.append(f'{ctx}: {label}.date must be YYYY-MM-DD')
     else:
         y, m, day = (int(x) for x in date.split('-'))
         try:
             datetime.date(y, m, day)
         except ValueError:
-            errs.append(f'{ctx}: humanVerified.date is not a real date')
+            errs.append(f'{ctx}: {label}.date is not a real date')
     if 'comment' in hv and not isinstance(hv['comment'], str):
-        errs.append(f'{ctx}: humanVerified.comment must be a string')
+        errs.append(f'{ctx}: {label}.comment must be a string')
+
+def check_human_verified(hv, ctx):
+    check_stamp(hv, ctx, 'humanVerified')
+
+CORRECTION_KINDS = {'Correction', 'Clarifying note', 'Wrong person linked', 'Other'}
+CORRECTION_STATUS = {'applied', 'declined'}
+
+def check_corrections(items, ctx):
+    if not isinstance(items, list):
+        errs.append(f'{ctx}: corrections must be an array')
+        return
+    for i, item in enumerate(items):
+        c = f'{ctx} corrections[{i}]'
+        if not isinstance(item, dict):
+            errs.append(f'{c}: must be an object')
+            continue
+        extra = set(item) - {'by', 'date', 'kind', 'comment', 'status', 'resolution'}
+        if extra:
+            errs.append(f'{c}: unknown fields {sorted(extra)}')
+        if not isinstance(item.get('by'), str) or not item.get('by').strip():
+            errs.append(f'{c}: by must be a non-empty string')
+        date = item.get('date')
+        if not isinstance(date, str) or not re.fullmatch(r'\d{4}-\d{2}-\d{2}', date):
+            errs.append(f'{c}: date must be YYYY-MM-DD')
+        else:
+            y, m, day = (int(x) for x in date.split('-'))
+            try:
+                datetime.date(y, m, day)
+            except ValueError:
+                errs.append(f'{c}: date is not a real date')
+        if item.get('kind') not in CORRECTION_KINDS:
+            errs.append(f'{c}: kind must be one of {sorted(CORRECTION_KINDS)}')
+        if not isinstance(item.get('comment'), str) or not item.get('comment').strip():
+            errs.append(f'{c}: comment must be a non-empty string')
+        if item.get('status') not in CORRECTION_STATUS:
+            errs.append(f'{c}: status must be applied or declined')
+        if not isinstance(item.get('resolution'), str) or not item.get('resolution').strip():
+            errs.append(f'{c}: resolution must be a non-empty string')
 
 seen_notes = {}
 for p in d['people']:
@@ -105,6 +143,10 @@ for p in d['people']:
             seen_notes[nid] = p['id']
         if 'humanVerified' in n:
             check_human_verified(n['humanVerified'], f'{ctx} ({nid})')
+        if 'addedToFamilySearch' in n:
+            check_stamp(n['addedToFamilySearch'], f'{ctx} ({nid})', 'addedToFamilySearch')
+        if 'corrections' in n:
+            check_corrections(n['corrections'], f'{ctx} ({nid})')
 
 for f in d['families']:
     need(f['husband'], f['id'], P)
@@ -118,6 +160,10 @@ for s in d['sources']:
         need(x, s['id'], P)
     if 'humanVerified' in s:
         check_human_verified(s['humanVerified'], f'{s["id"]} humanVerified')
+    if 'addedToFamilySearch' in s:
+        check_stamp(s['addedToFamilySearch'], f'{s["id"]}', 'addedToFamilySearch')
+    if 'corrections' in s:
+        check_corrections(s['corrections'], f'{s["id"]}')
 
 for l in d['researchLeads']:
     [need(x, l['id'], P) for x in l['personIds']]
