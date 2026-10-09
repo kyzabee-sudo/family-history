@@ -15150,7 +15150,12 @@
     "padron_1794_Porceyo_L33-0073r_Juan_de_Valdes_hijos_Juan_Santiago_Domingo_Sanchez_y_Antonio.jpg"
    ],
    "imageUrl": "https://fondos.gijon.es/fotoweb/cache/v2/q/z/ayArchivo/Libros%20Padrones%20Hidalgia/Libro%2033/PMFGij%C3%B3nL33-0073r.JPG.jCfr8suGMpUnoedhwCUA.qvaP_NBami.jpg",
-   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/Y/g/ayArchivo/Libros%20Padrones%20Hidalgia/Libro%2033/PMFGij%C3%B3nL33-0073r.JPG.jCfr8suGMpUnoedhIAcA.LHGuFu95rg.jpg"
+   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/Y/g/ayArchivo/Libros%20Padrones%20Hidalgia/Libro%2033/PMFGij%C3%B3nL33-0073r.JPG.jCfr8suGMpUnoedhIAcA.LHGuFu95rg.jpg",
+   "humanVerified": {
+    "by": "Kyler Rasmussen",
+    "date": "2026-10-03",
+    "comment": "Confirmed the transcription and that it's associated with a 1794 record."
+   }
   },
   {
    "id": "hid-1794-L33-0076r",
@@ -15372,7 +15377,12 @@
     "padron_1801_Porceyo_L34-0127r_Juan_de_Valdes_hijos_Juan_Santiago.jpg"
    ],
    "imageUrl": "https://fondos.gijon.es/fotoweb/cache/v2/a/t/ayArchivo/Libros%20Padrones%20Hidalgia/Libro%2034/PMFGij%C3%B3nL34-0127r.JPG.jCfcssOGMn1LoedhwCUA.oO_KyT8eXF.jpg",
-   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/5/Q/ayArchivo/Libros%20Padrones%20Hidalgia/Libro%2034/PMFGij%C3%B3nL34-0127r.JPG.jCfcssOGMn1LoedhIAcA.WiJ3hxeb2c.jpg"
+   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/5/Q/ayArchivo/Libros%20Padrones%20Hidalgia/Libro%2034/PMFGij%C3%B3nL34-0127r.JPG.jCfcssOGMn1LoedhIAcA.WiJ3hxeb2c.jpg",
+   "humanVerified": {
+    "by": "Kyler Rasmussen",
+    "date": "2026-10-03",
+    "comment": "Confirmed the transcription."
+   }
   },
   {
    "id": "hid-1815-L35-0096r",
@@ -15979,7 +15989,12 @@
     "008034668_00956"
    ],
    "imageUrl": "https://fondos.gijon.es/fotoweb/cache/v2/_/L/ayArchivo/Libros%20Padron%20Habitantes/Libro%2018/008034668_00955.tif.jCfUwcuGMtnvS0tjwCUA.sp3fcZVPJ7.jpg",
-   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/E/t/ayArchivo/Libros%20Padron%20Habitantes/Libro%2018/008034668_00955.tif.jCfUwcuGMtnvS0tjIAcA.oVLXdXMMSa.jpg"
+   "thumbUrl": "https://fondos.gijon.es/fotoweb/cache/v2/E/t/ayArchivo/Libros%20Padron%20Habitantes/Libro%2018/008034668_00955.tif.jCfUwcuGMtnvS0tjIAcA.oVLXdXMMSa.jpg",
+   "humanVerified": {
+    "by": "Kyler Rasmussen",
+    "date": "2026-10-04",
+    "comment": "Confirmed that the transcription doesn't contain the Valdes Nieto household."
+   }
   },
   {
    "id": "cen-1920-gonzalez-nieto",
